@@ -1,7 +1,7 @@
 import React from "react";
 
 const FilteringPanel = (props) => {
-  const platforms = ["PS3", "PS4", "PS5"];
+  const platforms = ["PS3", "PS4", "PS5"].sort();
   const languages = [
     "English",
     "Spanish",
@@ -9,7 +9,7 @@ const FilteringPanel = (props) => {
     "German",
     "Russian",
     "Polish",
-  ];
+  ].sort();
 
   const { filter, onFilterChange } = props;
 

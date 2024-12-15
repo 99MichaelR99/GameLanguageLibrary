@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import Games from "./games";
-import Like from "./common/like";
 import FilteringPanel from "./common/filteringPanel";
+import GamesTable from "./gamesTable";
 import Pagination from "./common/pagination";
-import { getGames } from "../services/fakeGamesService";
 import { paginate } from "../utils/paginate";
+import { getGames } from "../services/fakeGamesService";
 import "./gamesPage.css";
 
 class GamesPage extends Component {
@@ -24,16 +23,36 @@ class GamesPage extends Component {
     this.setState({ games: getGames() });
   }
 
-  handleDelete = (game) => {
-    const games = this.state.games.filter((g) => g._id !== game._id);
+  handleDelete = (game, version) => {
+    const games = this.state.games
+      .map((g) => {
+        if (g._id === game._id) {
+          // Filter out the deleted version
+          const updatedVersions = g.versions.filter(
+            (v) => v.code !== version.code
+          );
+          return updatedVersions.length > 0
+            ? { ...g, versions: updatedVersions }
+            : null;
+        }
+        return g;
+      })
+      .filter((g) => g !== null); // Remove games with no versions left
+
     this.setState({ games });
   };
 
-  handleLike = (game) => {
-    const games = [...this.state.games];
-    const index = games.indexOf(game);
-    games[index] = { ...games[index] };
-    games[index].liked = !games[index].liked;
+  handleLike = (game, version) => {
+    const games = this.state.games.map((g) => {
+      if (g._id === game._id) {
+        const updatedVersions = g.versions.map((v) =>
+          v.code === version.code ? { ...v, liked: !v.liked } : v
+        );
+        return { ...g, versions: updatedVersions };
+      }
+      return g;
+    });
+
     this.setState({ games });
   };
 
@@ -88,75 +107,60 @@ class GamesPage extends Component {
           return platformMatch && voiceLanguageMatch && subtitlesLanguageMatch;
         });
 
-        // Include the game only if it has at least one matching version
         return matchingVersions.length > 0
           ? { ...game, versions: matchingVersions }
           : null;
       })
-      .filter((game) => game !== null); // Remove games without matching versions
+      .filter((game) => game !== null);
   };
 
   render() {
     const { games: allGames, currentPage, pageSize, filter } = this.state;
-    if (this.state.games.length === 0)
+    if (allGames.length === 0)
       return <p>There are no games in the database.</p>;
 
     const filteredGames = this.applyFilters(allGames);
     const games = paginate(filteredGames, currentPage, pageSize);
 
     return (
-      <div className="container-fluid games-page">
-        <div className="row">
-          {/* Sidebar (Filter Panel) */}
-          <div className="col-md-3 col-lg-2 sidebar">
-            <button
-              className="btn btn-info toggle-button mb-3"
-              onClick={this.handleFilterToggle}
-            >
-              {filter.showFilters ? "Hide Filters" : "Show Filters"}
-            </button>
-            {filter.showFilters && (
-              <FilteringPanel
-                filter={filter}
-                onFilterChange={this.handleFilterChange}
-              />
-            )}
-          </div>
-
-          {/* Main Content */}
-          <div className="col-md-9 col-lg-10 main-content">
-            <div className="text-end mb-2">
-              <p>{filteredGames.length} Results</p>
-            </div>
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Platform</th>
-                  <th>Code</th>
-                  <th>Voice Languages</th>
-                  <th>Subtitles Languages</th>
-                  <th />
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                <Games
-                  games={games}
-                  onDelete={this.handleDelete}
-                  onLike={this.handleLike}
-                  LikeComponent={Like}
-                />
-              </tbody>
-            </table>
-
-            <Pagination
-              itemsCount={filteredGames.length}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={this.handlePageChange}
+      <div className="row">
+        <div className="col-md-3 col-lg-2 sidebar">
+          <button
+            className="btn btn-info toggle-button mb-3"
+            onClick={this.handleFilterToggle}
+          >
+            {filter.showFilters ? "Hide Filters" : "Show Filters"}
+          </button>
+          {filter.showFilters && (
+            <FilteringPanel
+              filter={filter}
+              onFilterChange={this.handleFilterChange}
             />
+          )}
+        </div>
+
+        <div className="col-md-9 col-lg-10 main-content">
+          <div className="text-end mb-2">
+            <p>
+              {filteredGames.reduce(
+                (total, game) => total + game.versions.length,
+                0
+              )}{" "}
+              Results
+            </p>
           </div>
+          <GamesTable
+            className="table table-bordered"
+            games={games}
+            onLike={this.handleLike}
+            onDelete={this.handleDelete}
+          />
+          <Pagination
+            itemsCount={filteredGames.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
         </div>
       </div>
     );
