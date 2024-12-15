@@ -1,0 +1,374 @@
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"error","message":"Failed to connect to MongoDB: options usecreateindex, usefindandmodify are not supported","stack":"MongoParseError: options usecreateindex, usefindandmodify are not supported\n    at parseOptions (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\connection_string.js:273:15)\n    at new MongoClient (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\mongo_client.js:52:63)\n    at NativeConnection.createClient (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\connection.js:293:14)\n    at NativeConnection.openUri (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongoose\\lib\\connection.js:801:34)\n    at Mongoose.connect (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongoose\\lib\\mongoose.js:414:15)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\startup\\db.js:7:14)\n    at Object.<anonymous> (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\index.js:7:24)\n    at Module._compile (node:internal/modules/cjs/loader:1369:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1427:10)\n    at Module.load (node:internal/modules/cjs/loader:1206:32)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:72:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:33:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validate is not defined validate is not defined","stack":"ReferenceError: validate is not defined\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"error","message":"validateGame is not a function validateGame is not a function","stack":"TypeError: validateGame is not a function\n    at C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\routes\\games.js:57:23\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\admin.js:8:3)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)\n    at Layer.handle [as handle_request] (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at module.exports (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\middleware\\auth.js:11:5)\n    at newFn (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\express-async-errors\\index.js:16:20)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"code":11000,"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"}},"index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"},"level":"error","message":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" } E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","stack":"MongoServerError: E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }\n    at InsertOneOperation.execute (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:126:16)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"code":11000,"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"}},"index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"},"level":"error","message":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" } E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","stack":"MongoServerError: E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }\n    at InsertOneOperation.execute (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:126:16)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"code":11000,"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"}},"index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"},"level":"error","message":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" } E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","stack":"MongoServerError: E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }\n    at InsertOneOperation.execute (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:126:16)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"code":11000,"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"}},"index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"},"level":"error","message":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" } E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","stack":"MongoServerError: E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }\n    at InsertOneOperation.execute (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:126:16)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to MongoDB..."}
+{"code":11000,"errorResponse":{"code":11000,"errmsg":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"}},"index":0,"keyPattern":{"versions.code":1},"keyValue":{"versions.code":"PPSA_01668"},"level":"error","message":"E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" } E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }","stack":"MongoServerError: E11000 duplicate key error collection: GameLanguageVerify.games index: versions.code_1 dup key: { versions.code: \"PPSA_01668\" }\n    at InsertOneOperation.execute (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\99mic\\Projects\\GameLanguageVerify Site\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:126:16)"}
