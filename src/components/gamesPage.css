@@ -1,0 +1,64 @@
+/* General Styles */
+.games-page {
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  margin: 0;
+}
+
+.sidebar {
+  padding: 0;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto;
+}
+
+.toggle-button {
+  width: 100%;
+  font-weight: bold;
+}
+
+/* Main Content */
+.main-content {
+  padding: 0;
+  overflow-x: auto;
+}
+
+/* Table Styling */
+.table {
+  margin-bottom: 0;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Filtering Panel Styles */
+.filtering-panel {
+  display: inline-block; /* Allow the div to shrink based on content */
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  min-width: 200px; /* Min width for the panel to prevent it from shrinking too much */
+}
+
+.filtering-panel h5 {
+  margin-top: 0;
+}
+
+.filtering-panel h6 {
+  margin-bottom: 5px;
+}
+
+.filtering-panel label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filtering-panel input {
+  margin-right: 5px;
+}
