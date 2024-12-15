@@ -11,7 +11,7 @@ class GamesPage extends Component {
   state = {
     games: [],
     currentPage: 1,
-    pageSize: 6,
+    pageSize: 10,
     filter: {
       showFilters: false,
       platforms: [],
@@ -71,23 +71,29 @@ class GamesPage extends Component {
   applyFilters = (games) => {
     const { platforms, voiceLanguages, subtitlesLanguages } = this.state.filter;
 
-    return games.filter((game) => {
-      const platformMatch =
-        platforms.length === 0 ||
-        game.versions.some((v) => platforms.includes(v.platform));
-      const voiceLanguageMatch =
-        voiceLanguages.length === 0 ||
-        game.versions.some((v) =>
-          v.voiceLanguages.some((lang) => voiceLanguages.includes(lang))
-        );
-      const subtitlesLanguageMatch =
-        subtitlesLanguages.length === 0 ||
-        game.versions.some((v) =>
-          v.subtitlesLanguages.some((lang) => subtitlesLanguages.includes(lang))
-        );
+    return games
+      .map((game) => {
+        const matchingVersions = game.versions.filter((v) => {
+          const platformMatch =
+            platforms.length === 0 || platforms.includes(v.platform);
+          const voiceLanguageMatch =
+            voiceLanguages.length === 0 ||
+            v.voiceLanguages.some((lang) => voiceLanguages.includes(lang));
+          const subtitlesLanguageMatch =
+            subtitlesLanguages.length === 0 ||
+            v.subtitlesLanguages.some((lang) =>
+              subtitlesLanguages.includes(lang)
+            );
 
-      return platformMatch && voiceLanguageMatch && subtitlesLanguageMatch;
-    });
+          return platformMatch && voiceLanguageMatch && subtitlesLanguageMatch;
+        });
+
+        // Include the game only if it has at least one matching version
+        return matchingVersions.length > 0
+          ? { ...game, versions: matchingVersions }
+          : null;
+      })
+      .filter((game) => game !== null); // Remove games without matching versions
   };
 
   render() {
