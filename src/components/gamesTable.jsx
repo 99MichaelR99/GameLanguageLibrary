@@ -1,49 +1,60 @@
-import React from "react";
+import React, { Component } from "react";
+import Table from "./common/table";
 import Like from "./common/like";
 
-const GamesTable = ({ games, onLike, onDelete }) => {
-  return (
-    <table className="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Platform</th>
-          <th>Code</th>
-          <th>Voice Languages</th>
-          <th>Subtitles Languages</th>
-          <th>Like</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {games.map((game) =>
-          game.versions.map((version) => (
-            <tr key={version.code}>
-              <td>{game.name}</td>
-              <td>{version.platform}</td>
-              <td>{version.code}</td>
-              <td>{version.voiceLanguages.join(", ")}</td>
-              <td>{version.subtitlesLanguages.join(", ")}</td>
-              <td>
-                <Like
-                  liked={version.liked}
-                  onClick={() => onLike(game, version)}
-                />
-              </td>
-              <td>
-                <button
-                  onClick={() => onDelete(game, version)}
-                  className="btn btn-danger btn-sm"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))
-        )}
-      </tbody>
-    </table>
-  );
-};
+class GamesTable extends Component {
+  columns = [
+    { path: "name", label: "Name", sortable: true },
+    { path: "platform", label: "Platform", sortable: false },
+    { path: "code", label: "Code", sortable: true },
+    {
+      path: "voiceLanguages",
+      label: "Voice Languages",
+      content: (item) => item.voiceLanguages?.join(", ") || "No data",
+      sortable: false,
+    },
+    {
+      path: "subtitlesLanguages",
+      label: "Subtitles Languages",
+      content: (item) => item.subtitlesLanguages?.join(", ") || "No data",
+      sortable: false,
+    },
+    {
+      key: "like",
+      content: (item) => (
+        <Like
+          liked={item.liked || false}
+          onClick={() => this.props.onLike(item)}
+        />
+      ),
+      sortable: false,
+    },
+    {
+      key: "delete",
+      content: (item) => (
+        <button
+          onClick={() => this.props.onDelete(item)}
+          className="btn btn-danger btn-sm"
+        >
+          Delete
+        </button>
+      ),
+      sortable: false,
+    },
+  ];
+
+  render() {
+    const { games, sortColumn, onSort } = this.props;
+
+    return (
+      <Table
+        data={games}
+        columns={this.columns}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
+    );
+  }
+}
 
 export default GamesTable;

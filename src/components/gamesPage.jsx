@@ -5,12 +5,14 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import { getGames } from "../services/fakeGamesService";
 import "./gamesPage.css";
+import _ from "lodash";
 
 class GamesPage extends Component {
   state = {
     games: [],
     currentPage: 1,
     pageSize: 10,
+    sortColumn: { path: "name", order: "asc" },
     filter: {
       showFilters: false,
       platforms: [],
@@ -20,16 +22,16 @@ class GamesPage extends Component {
   };
 
   componentDidMount() {
-    this.setState({ games: getGames() });
+    const games = getGames();
+    this.setState({ games });
   }
 
-  handleDelete = (game, version) => {
+  handleDelete = (game) => {
     const games = this.state.games
       .map((g) => {
-        if (g._id === game._id) {
-          // Filter out the deleted version
+        if (g._id === game.gameID) {
           const updatedVersions = g.versions.filter(
-            (v) => v.code !== version.code
+            (v) => v.code !== game.code
           );
           return updatedVersions.length > 0
             ? { ...g, versions: updatedVersions }
@@ -37,16 +39,15 @@ class GamesPage extends Component {
         }
         return g;
       })
-      .filter((g) => g !== null); // Remove games with no versions left
-
+      .filter((g) => g !== null);
     this.setState({ games });
   };
 
-  handleLike = (game, version) => {
+  handleLike = (game) => {
     const games = this.state.games.map((g) => {
-      if (g._id === game._id) {
+      if (g._id === game.gameID) {
         const updatedVersions = g.versions.map((v) =>
-          v.code === version.code ? { ...v, liked: !v.liked } : v
+          v.code === game.code ? { ...v, liked: !v.liked } : v
         );
         return { ...g, versions: updatedVersions };
       }
@@ -58,6 +59,10 @@ class GamesPage extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
   };
 
   handleFilterToggle = () => {
@@ -87,40 +92,61 @@ class GamesPage extends Component {
     });
   };
 
-  applyFilters = (games) => {
+  applyFilters = (versions) => {
     const { platforms, voiceLanguages, subtitlesLanguages } = this.state.filter;
 
-    return games
-      .map((game) => {
-        const matchingVersions = game.versions.filter((v) => {
-          const platformMatch =
-            platforms.length === 0 || platforms.includes(v.platform);
-          const voiceLanguageMatch =
-            voiceLanguages.length === 0 ||
-            v.voiceLanguages.some((lang) => voiceLanguages.includes(lang));
-          const subtitlesLanguageMatch =
-            subtitlesLanguages.length === 0 ||
-            v.subtitlesLanguages.some((lang) =>
-              subtitlesLanguages.includes(lang)
-            );
+    return versions.filter((version) => {
+      const platformMatch =
+        platforms.length === 0 || platforms.includes(version.platform);
+      const voiceLanguageMatch =
+        voiceLanguages.length === 0 ||
+        version.voiceLanguages.some((lang) => voiceLanguages.includes(lang));
+      const subtitlesLanguageMatch =
+        subtitlesLanguages.length === 0 ||
+        version.subtitlesLanguages.some((lang) =>
+          subtitlesLanguages.includes(lang)
+        );
 
-          return platformMatch && voiceLanguageMatch && subtitlesLanguageMatch;
-        });
+      return platformMatch && voiceLanguageMatch && subtitlesLanguageMatch;
+    });
+  };
 
-        return matchingVersions.length > 0
-          ? { ...game, versions: matchingVersions }
-          : null;
-      })
-      .filter((game) => game !== null);
+  getPageData = () => {
+    const { games: allGames, currentPage, pageSize, sortColumn } = this.state;
+
+    // Flatten versions first
+    const flattenedVersions = (allGames || []).flatMap((game) => {
+      if (!game.versions) return []; // If no versions, return empty array
+
+      return game.versions.map((version) => ({
+        ...version,
+        name: game.name,
+        gameID: game._id,
+      }));
+    });
+
+    // Now, apply filters to the flattened versions
+    const filteredVersions = this.applyFilters(flattenedVersions);
+
+    // Sort the filtered versions by the selected column and order
+    const sortedVersions = _.orderBy(
+      filteredVersions,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
+
+    // Apply pagination
+    const paginatedVersions = paginate(sortedVersions, currentPage, pageSize);
+
+    return { totalCount: filteredVersions.length, data: paginatedVersions };
   };
 
   render() {
-    const { games: allGames, currentPage, pageSize, filter } = this.state;
-    if (allGames.length === 0)
+    const { currentPage, pageSize, sortColumn, filter } = this.state;
+    if (this.state.games.length === 0)
       return <p>There are no games in the database.</p>;
 
-    const filteredGames = this.applyFilters(allGames);
-    const games = paginate(filteredGames, currentPage, pageSize);
+    const { totalCount, data } = this.getPageData();
 
     return (
       <div className="row">
@@ -141,22 +167,18 @@ class GamesPage extends Component {
 
         <div className="col-md-9 col-lg-10 main-content">
           <div className="text-end mb-2">
-            <p>
-              {filteredGames.reduce(
-                (total, game) => total + game.versions.length,
-                0
-              )}{" "}
-              Results
-            </p>
+            <p> {totalCount} Results</p>
           </div>
           <GamesTable
             className="table table-bordered"
-            games={games}
+            games={data}
+            sortColumn={sortColumn}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
+            onSort={this.handleSort}
           />
           <Pagination
-            itemsCount={filteredGames.length}
+            itemsCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
