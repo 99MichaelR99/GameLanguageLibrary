@@ -6,7 +6,7 @@ import GameForm from "./components/gameForm";
 import Posts from "./components/postsPage";
 import NotFound from "./components/notFoundPage";
 import ContactUs from "./components/contactUsPage";
-import NavBar from "./components/navBar";
+import NavBar from "./components/navbar";
 
 function App() {
   return (
