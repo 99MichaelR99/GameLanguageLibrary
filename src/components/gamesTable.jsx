@@ -1,10 +1,16 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Table from "./common/table";
 import Like from "./common/like";
 
 class GamesTable extends Component {
   columns = [
-    { path: "name", label: "Name", sortable: true },
+    {
+      path: "name",
+      label: "Name",
+      sortable: true,
+      content: (game) => <Link to={`/games/${game.code}`}>{game.name}</Link>,
+    },
     { path: "platform", label: "Platform", sortable: false },
     { path: "code", label: "Code", sortable: true },
     {
