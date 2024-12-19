@@ -1,12 +1,14 @@
 import React from "react";
-import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
 import Games from "./components/gamesPage";
 import GameForm from "./components/gameForm";
 import Posts from "./components/postsPage";
 import NotFound from "./components/notFoundPage";
 import ContactUs from "./components/contactUsPage";
 import NavBar from "./components/navbar";
+import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <NavBar />
       <main className="container">
         <Routes>
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/games/:code" element={<GameForm />} />
           <Route path="/games" element={<Games />} />
           <Route path="/posts" element={<Posts />} />
