@@ -4,12 +4,12 @@ const FilteringPanel = (props) => {
   const platforms = ["PS3", "PS4", "PS5"].sort();
   const languages = [
     "English",
-    "Spanish",
     "French",
     "German",
-    "Russian",
     "Polish",
-  ].sort();
+    "Russian",
+    "Spanish",
+  ];
 
   const { filter, onFilterChange } = props;
 

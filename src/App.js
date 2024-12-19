@@ -9,6 +9,7 @@ import ContactUs from "./components/contactUsPage";
 import NavBar from "./components/navbar";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import PostForm from "./components/postForm";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/games/:code" element={<GameForm />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/posts/:id" element={<PostForm />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/not-found" element={<NotFound />} />
