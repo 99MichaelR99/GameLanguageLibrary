@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import FilteringPanel from "./common/filteringPanel";
 import GamesTable from "./gamesTable";
 import Pagination from "./common/pagination";
+import SearchBox from "./common/searchBox";
 import { paginate } from "../utils/paginate";
-import { getGames } from "../services/fakeGamesService";
+import { getGames, deleteGame } from "../services/fakeGamesService";
 import { Link } from "react-router-dom";
 import "./gamesPage.css";
 import _ from "lodash";
@@ -42,6 +43,8 @@ class GamesPage extends Component {
       })
       .filter((g) => g !== null);
     this.setState({ games });
+
+    //deleteGame(game._id);
   };
 
   handleLike = (game) => {
@@ -60,6 +63,20 @@ class GamesPage extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+
+  handleSearch = (query) => {
+    const { showFilters } = this.state.filter;
+    this.setState({
+      searchQuery: query,
+      currentPage: 1,
+      filter: {
+        showFilters: showFilters,
+        platforms: [],
+        voiceLanguages: [],
+        subtitlesLanguages: [],
+      },
+    });
   };
 
   handleSort = (sortColumn) => {
@@ -89,7 +106,7 @@ class GamesPage extends Component {
         updatedFilters[type] = [...updatedFilters[type], value];
       }
 
-      return { filter: updatedFilters, currentPage: 1 };
+      return { filter: updatedFilters, currentPage: 1, searchQuery: "" };
     });
   };
 
@@ -113,7 +130,13 @@ class GamesPage extends Component {
   };
 
   getPageData = () => {
-    const { games: allGames, currentPage, pageSize, sortColumn } = this.state;
+    const {
+      games: allGames,
+      currentPage,
+      pageSize,
+      sortColumn,
+      searchQuery,
+    } = this.state;
 
     // Flatten versions first
     const flattenedVersions = (allGames || []).flatMap((game) => {
@@ -126,8 +149,13 @@ class GamesPage extends Component {
       }));
     });
 
-    // Now, apply filters to the flattened versions
-    const filteredVersions = this.applyFilters(flattenedVersions);
+    // Now, apply filters selection or search selection to the flattened versions
+    let filteredVersions;
+    if (searchQuery)
+      filteredVersions = flattenedVersions.filter((g) =>
+        g.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else filteredVersions = this.applyFilters(flattenedVersions);
 
     // Sort the filtered versions by the selected column and order
     const sortedVersions = _.orderBy(
@@ -143,7 +171,8 @@ class GamesPage extends Component {
   };
 
   render() {
-    const { currentPage, pageSize, sortColumn, filter } = this.state;
+    const { currentPage, pageSize, sortColumn, searchQuery, filter } =
+      this.state;
     if (this.state.games.length === 0)
       return <p>There are no games in the database.</p>;
 
@@ -176,6 +205,7 @@ class GamesPage extends Component {
           <div className="text-end mb-2">
             <p> {totalCount} Results</p>
           </div>
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <GamesTable
             className="table table-bordered"
             games={data}
