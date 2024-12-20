@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { useNavigate } from "react-router-dom";
 import { getUsers } from "../services/fakeUsersService";
 
 class PostForm extends Form {
@@ -54,4 +55,9 @@ class PostForm extends Form {
   }
 }
 
-export default PostForm;
+function PostFormWithNavigate(props) {
+  const navigate = useNavigate();
+  return <PostForm {...props} navigate={navigate} />;
+}
+
+export default PostFormWithNavigate;

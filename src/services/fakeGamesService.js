@@ -219,81 +219,76 @@ export function getGame(id) {
 }
 
 export function saveGame(game) {
-  // Validate the game data
+  // Validate gameName
   if (
-    !game.name ||
-    typeof game.name !== "string" ||
-    game.name.length < 3 ||
-    game.name.length > 50
+    !game.gameName ||
+    typeof game.gameName !== "string" ||
+    game.gameName.trim().length < 3 ||
+    game.gameName.trim().length > 50
   ) {
     throw new Error(
-      "Invalid game: 'name' must be a string between 3 and 50 characters."
+      "Invalid game: 'gameName' must be a string between 3 and 50 characters."
     );
   }
 
-  // Ensure the game data has a valid structure for versions
-  if (!Array.isArray(game.versions) || game.versions.length === 0) {
-    throw new Error("Invalid game: 'versions' must be a non-empty array.");
+  // Validate platform, code, and languages
+  if (!game.platform || typeof game.platform !== "string") {
+    throw new Error("Invalid game: 'platform' must be a valid string.");
+  }
+  if (!game.code || typeof game.code !== "string") {
+    throw new Error("Invalid game: 'code' must be a valid string.");
+  }
+  if (
+    !Array.isArray(game.voiceLanguages) ||
+    !game.voiceLanguages.every((lang) => typeof lang === "string")
+  ) {
+    throw new Error(
+      "Invalid game: 'voiceLanguages' must be an array of strings."
+    );
+  }
+  if (
+    !Array.isArray(game.subtitlesLanguages) ||
+    !game.subtitlesLanguages.every((lang) => typeof lang === "string")
+  ) {
+    throw new Error(
+      "Invalid game: 'subtitlesLanguages' must be an array of strings."
+    );
   }
 
-  // Prepare the 'versions' array by mapping over the 'data' object
-  const versions = game.versions.map((version) => {
-    if (!version.platform || typeof version.platform !== "string") {
-      throw new Error("Invalid version: 'platform' must be a valid string.");
-    }
+  // Find the game in the database or create a new object
+  let gameInDb = games.find((g) => g.name === game.gameName) || {
+    _id: Date.now().toString(), // Assign a new unique ID
+    name: game.gameName.trim(),
+    versions: [],
+  };
 
-    if (!version.code || typeof version.code !== "string") {
-      throw new Error("Invalid version: 'code' must be a valid string.");
-    }
+  // Create a new version object from the game data
+  const newVersion = {
+    createdBy: "66197c1be429d0dee2322c50", // Admin ID
+    platform: game.platform,
+    code: game.code,
+    voiceLanguages: game.voiceLanguages,
+    subtitlesLanguages: game.subtitlesLanguages,
+    isOfficial: game.isOfficial || false, // Default to false if undefined
+  };
 
-    if (
-      !Array.isArray(version.voiceLanguages) ||
-      !version.voiceLanguages.every((lang) => typeof lang === "string")
-    ) {
-      throw new Error(
-        "Invalid version: 'voiceLanguages' must be an array of strings."
-      );
-    }
+  // Update the game object with the new version
+  const versionExists = gameInDb.versions.some(
+    (v) =>
+      v.platform === newVersion.platform &&
+      v.code === newVersion.code &&
+      JSON.stringify(v.voiceLanguages) ===
+        JSON.stringify(newVersion.voiceLanguages) &&
+      JSON.stringify(v.subtitlesLanguages) ===
+        JSON.stringify(newVersion.subtitlesLanguages)
+  );
 
-    if (
-      !Array.isArray(version.subtitlesLanguages) ||
-      !version.subtitlesLanguages.every((lang) => typeof lang === "string")
-    ) {
-      throw new Error(
-        "Invalid version: 'subtitlesLanguages' must be an array of strings."
-      );
-    }
+  if (!versionExists) {
+    gameInDb.versions.push(newVersion);
+  }
 
-    // Validate isOfficial (if defined)
-    if (
-      version.isOfficial !== undefined &&
-      typeof version.isOfficial !== "boolean"
-    ) {
-      throw new Error(
-        "Invalid version: 'isOfficial' must be a boolean if defined."
-      );
-    }
-
-    // Return the formatted version object
-    return {
-      createdBy: "66197c1be429d0dee2322c50", // Assuming the createdBy is constant, or modify it accordingly
-      platform: version.platform,
-      code: version.code,
-      voiceLanguages: version.voiceLanguages,
-      subtitlesLanguages: version.subtitlesLanguages,
-      isOfficial: version.isOfficial || false, // Default to false if undefined
-    };
-  });
-
-  // Create or update the game in the database
-  let gameInDb = games.find((g) => g._id === game._id) || {};
-
-  gameInDb.name = game.name;
-  gameInDb.versions = versions;
-
-  // If the game doesn't exist in the database, add it
-  if (!gameInDb._id) {
-    gameInDb._id = Date.now().toString(); // Assign a unique ID
+  // If the game is new, add it to the games array
+  if (!games.some((g) => g._id === gameInDb._id)) {
     games.push(gameInDb);
   }
 

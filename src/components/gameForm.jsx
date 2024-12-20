@@ -56,7 +56,6 @@ class GameForm extends Form {
 
   doSubmit = () => {
     const { navigate } = this.props;
-    console.log(this.state.data.gameName);
     saveGame(this.state.data);
     navigate("/games", { replace: true });
   };

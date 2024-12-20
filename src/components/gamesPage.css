@@ -4,12 +4,6 @@
   padding: 0;
 }
 
-.sidebar {
-  padding: 0;
-  height: 100vh; /* Full viewport height */
-  overflow-y: auto;
-}
-
 .toggle-button {
   width: 100%;
   font-weight: bold;
@@ -33,15 +27,48 @@
   white-space: nowrap;
 }
 
+/* Container for the search box and results */
+.search-results-container {
+  display: flex; /* Enable Flexbox */
+  justify-content: space-between; /* Space between elements */
+  align-items: center; /* Align vertically */
+  margin-bottom: 15px; /* Add some spacing below the row */
+}
+
+/* Adjust search input styling */
+.search-results-container input {
+  flex: 1; /* Optional: make the search box flexible */
+  margin-right: 10px; /* Add spacing between the input and other content */
+}
+
+/* Styling for "# Results" */
+.results-count {
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  height: 100vh; /* Full height of viewport */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 250px; /* Fixed width for sidebar */
+  display: flex;
+  flex-direction: column; /* Ensure child elements stack vertically */
+}
+
 /* Filtering Panel Styles */
 .filtering-panel {
-  display: inline-block; /* Allow the div to shrink based on content */
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  min-width: 200px; /* Min width for the panel to prevent it from shrinking too much */
+  width: 100%; /* Full width inside the sidebar */
+  max-width: 100%; /* Ensure no overflow */
+  min-width: 0; /* Prevent unexpected expansion */
+  white-space: normal; /* Allow wrapping of text */
+  overflow: hidden; /* Ensure no horizontal overflow */
 }
 
+/* Header and Label Adjustments */
 .filtering-panel h5 {
   margin-top: 0;
 }
@@ -57,4 +84,12 @@
 
 .filtering-panel input {
   margin-right: 5px;
+}
+
+/* Main Content */
+.main-content {
+  padding: 0;
+  overflow-x: hidden; /* Ensure no horizontal scrolling */
+  flex: 1; /* Allow the main content to expand */
+  width: calc(100% - 250px); /* Adjust for the sidebar width */
 }

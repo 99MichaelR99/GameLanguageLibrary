@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import DropDownBox from "./dropDownBox";
 import "./form.css";
 
 class Form extends Component {
@@ -87,30 +88,17 @@ class Form extends Component {
 
   renderCustomDropdown(name, label, options) {
     const { data, dropdownStates } = this.state;
-    const isOpen = dropdownStates[name];
 
     return (
-      <div className="dropdown-container">
-        <label>{label}</label>
-        <div className="dropdown-box" onClick={() => this.toggleDropdown(name)}>
-          {data[name]?.length > 0
-            ? data[name].join(", ")
-            : `Select ${label.toLowerCase()}`}
-        </div>
-        {isOpen && (
-          <ul className="dropdown-list">
-            {options.map((option) => (
-              <li
-                key={option}
-                className={data[name]?.includes(option) ? "selected" : ""}
-                onClick={() => this.handleDropdownSelect(name, option)}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <DropDownBox
+        data={data}
+        dropdownStates={dropdownStates}
+        name={name}
+        label={label}
+        options={options}
+        toggleDropdown={this.toggleDropdown}
+        handleDropdownSelect={this.handleDropdownSelect}
+      />
     );
   }
 
@@ -151,12 +139,18 @@ class Form extends Component {
       "Spanish",
     ];
 
+    const platforms = [
+      { _id: "ps3", name: "PS3" },
+      { _id: "ps4", name: "PS4" },
+      { _id: "ps5", name: "PS5" },
+    ];
+
     return (
       <form onSubmit={this.handleSubmit} className="form-content">
         {/* Left Column */}
         <div className="form-left">
           {this.renderInput("gameName", "Game Name")}
-          {this.renderInput("platform", "Platform")}
+          {this.renderSelect("platform", "Platform", platforms)}
           {this.renderInput("code", "Code")}
           {this.renderButton("Submit")}
         </div>

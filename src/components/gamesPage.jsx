@@ -4,7 +4,7 @@ import GamesTable from "./gamesTable";
 import Pagination from "./common/pagination";
 import SearchBox from "./common/searchBox";
 import { paginate } from "../utils/paginate";
-import { getGames, deleteGame } from "../services/fakeGamesService";
+import { getGames/*, deleteGame*/ } from "../services/fakeGamesService";
 import { Link } from "react-router-dom";
 import "./gamesPage.css";
 import _ from "lodash";
@@ -202,10 +202,10 @@ class GamesPage extends Component {
           >
             New Game
           </Link>
-          <div className="text-end mb-2">
-            <p> {totalCount} Results</p>
+          <div className="search-results-container">
+            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+            <p className="results-count text-end mb-2"> {totalCount} Results</p>
           </div>
-          <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <GamesTable
             className="table table-bordered"
             games={data}
