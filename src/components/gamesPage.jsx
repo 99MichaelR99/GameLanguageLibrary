@@ -4,6 +4,7 @@ import GamesTable from "./gamesTable";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import { getGames } from "../services/fakeGamesService";
+import { Link } from "react-router-dom";
 import "./gamesPage.css";
 import _ from "lodash";
 
@@ -164,8 +165,14 @@ class GamesPage extends Component {
             />
           )}
         </div>
-
         <div className="col-md-9 col-lg-10 main-content">
+          <Link
+            to="/games/new"
+            className="btn btn-primary"
+            style={{ marginBottom: 20, gap: 40 }}
+          >
+            New Game
+          </Link>
           <div className="text-end mb-2">
             <p> {totalCount} Results</p>
           </div>

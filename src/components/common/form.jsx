@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import Select from "./select";
+import "./form.css";
 
 class Form extends Component {
   state = {
@@ -52,11 +54,20 @@ class Form extends Component {
     const data = { ...this.state.data };
     const currentSelections = data[name] || [];
     if (currentSelections.includes(value)) {
-      data[name] = currentSelections.filter((item) => item !== value); // Remove if already selected
+      data[name] = currentSelections.filter((item) => item !== value);
     } else {
-      data[name] = [...currentSelections, value]; // Add if not selected
+      data[name] = [...currentSelections, value];
     }
     this.setState({ data });
+  };
+
+  toggleDropdown = (name) => {
+    this.setState((prevState) => ({
+      dropdownStates: {
+        ...prevState.dropdownStates,
+        [name]: !prevState.dropdownStates[name],
+      },
+    }));
   };
 
   renderInput(name, label, type = "text") {
@@ -82,7 +93,7 @@ class Form extends Component {
       <div className="dropdown-container">
         <label>{label}</label>
         <div className="dropdown-box" onClick={() => this.toggleDropdown(name)}>
-          {data[name].length > 0
+          {data[name]?.length > 0
             ? data[name].join(", ")
             : `Select ${label.toLowerCase()}`}
         </div>
@@ -91,7 +102,7 @@ class Form extends Component {
             {options.map((option) => (
               <li
                 key={option}
-                className={data[name].includes(option) ? "selected" : ""}
+                className={data[name]?.includes(option) ? "selected" : ""}
                 onClick={() => this.handleDropdownSelect(name, option)}
               >
                 {option}
@@ -103,14 +114,20 @@ class Form extends Component {
     );
   }
 
-  toggleDropdown = (name) => {
-    this.setState((prevState) => ({
-      dropdownStates: {
-        ...prevState.dropdownStates,
-        [name]: !prevState.dropdownStates[name],
-      },
-    }));
-  };
+  renderSelect(name, label, options) {
+    const { data, errors } = this.state;
+
+    return (
+      <Select
+        name={name}
+        value={data[name]}
+        label={label}
+        options={options}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
 
   renderButton(label) {
     return (
@@ -121,6 +138,45 @@ class Form extends Component {
       >
         {label}
       </button>
+    );
+  }
+
+  renderGameFormContent() {
+    const languages = [
+      "English",
+      "French",
+      "German",
+      "Polish",
+      "Russian",
+      "Spanish",
+    ];
+
+    return (
+      <form onSubmit={this.handleSubmit} className="form-content">
+        {/* Left Column */}
+        <div className="form-left">
+          {this.renderInput("gameName", "Game Name")}
+          {this.renderInput("platform", "Platform")}
+          {this.renderInput("code", "Code")}
+          {this.renderButton("Submit")}
+        </div>
+        {/* Middle Column */}
+        <div className="form-middle">
+          {this.renderCustomDropdown(
+            "voiceLanguages",
+            "Voice Languages",
+            languages
+          )}
+        </div>
+        {/* Right Column */}
+        <div className="form-right">
+          {this.renderCustomDropdown(
+            "subtitlesLanguages",
+            "Subtitles Languages",
+            languages
+          )}
+        </div>
+      </form>
     );
   }
 }

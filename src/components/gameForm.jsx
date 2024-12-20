@@ -1,21 +1,83 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import Joi from "joi-browser";
+import Form from "./common/form";
+import { getGame, saveGame } from "../services/fakeGamesService";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const GameForm = () => {
-  const { code } = useParams();
-  const navigate = useNavigate();
+class GameForm extends Form {
+  state = {
+    data: {
+      gameName: "",
+      platform: "",
+      code: "",
+      voiceLanguages: [],
+      subtitlesLanguages: [],
+    },
+    errors: {},
+    dropdownStates: {},
+  };
 
-  return (
-    <div>
-      <h1>Game Form {code}</h1>
-      <button
-        className="btn btn-primary"
-        onClick={() => navigate("/games")}
-      >
-        Save
-      </button>
-    </div>
-  );
-};
+  componentDidMount() {
+    const { location, navigate } = this.props;
+    const searchParams = new URLSearchParams(location.search);
+    const gameId = searchParams.get("id");
 
-export default GameForm;
+    if (!gameId || gameId === "new") return;
+
+    const game = getGame(gameId);
+    if (!game) {
+      navigate("/not-found");
+      return;
+    }
+
+    this.setState({ data: this.mapViewModel(game) });
+  }
+
+  mapViewModel(game) {
+    return {
+      _id: game._id,
+      gameName: game.name,
+      platform: game.platform,
+      code: game.code,
+      voiceLanguages: game.voiceLanguages || [],
+      subtitlesLanguages: game.subtitlesLanguages || [],
+    };
+  }
+
+  schema = {
+    gameName: Joi.string().required().label("Game Name"),
+    platform: Joi.string().required().label("Platform"),
+    code: Joi.string().required().label("Code"),
+    voiceLanguages: Joi.array().items(Joi.string()).label("Voice Languages"),
+    subtitlesLanguages: Joi.array()
+      .items(Joi.string())
+      .label("Subtitles Languages"),
+  };
+
+  doSubmit = () => {
+    const { navigate } = this.props;
+    console.log(this.state.data.gameName);
+    saveGame(this.state.data);
+    navigate("/games", { replace: true });
+  };
+
+  render() {
+    return (
+      <div className="form-container">
+        <h1>Create a New Game</h1>
+        {this.renderGameFormContent()}
+      </div>
+    );
+  }
+}
+
+// Helper function to pass router hooks to class components
+function withRouter(Component) {
+  return function (props) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    return <Component {...props} location={location} navigate={navigate} />;
+  };
+}
+
+export default withRouter(GameForm);
