@@ -2,28 +2,10 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const languagesEnum = [
-    "Arabic",
-    "Chinese (Simplified)",
-    "Chinese (Traditional)",
-    "Croatian",
-    "Czech",
-    "Dutch",
-    "English",
-    "French (France)",
-    "German",
-    "Greek",
-    "Hungarian",
-    "Italian",
-    "Japanese",
-    "Korean",
-    "Polish",
-    "Portuguese (Brazil)",
-    "Portuguese (Portugal)",
-    "Russian",
-    "Spanish",
-    "Thai",
-    "Turkish",
-    "Other"
+    "Arabic", "Chinese (Simplified)", "Chinese (Traditional)", "Croatian", "Czech", 
+    "Dutch", "English", "French (France)", "German", "Greek", "Hungarian", "Italian", 
+    "Japanese", "Korean", "Polish", "Portuguese (Brazil)", "Portuguese (Portugal)", 
+    "Russian", "Spanish", "Thai", "Turkish", "Other"
 ];
 
 const versionSchema = new mongoose.Schema({
@@ -75,7 +57,7 @@ const Game = mongoose.model('Game', new mongoose.Schema({
 ];*/
 
 function validateGame(game) {
-    const schema = {
+    const schema = Joi.object({
         name: Joi.string().min(3).max(50).required(),
         versions: Joi.array().items(Joi.object({
             createdBy: Joi.objectId().required(),
@@ -85,22 +67,22 @@ function validateGame(game) {
             subtitlesLanguages: Joi.array().items(Joi.string()).required(),
             isOfficial: Joi.boolean()
         })).required()
-    };
-      
-    return Joi.validate(game, schema);
+    });
+
+    return schema.validate(game);
 }
 
 function validateVersion(version) {
-    const schema = {
+    const schema = Joi.object({
         createdBy: Joi.objectId().required(),
         platform: Joi.string().required(),
         code: Joi.string().required(),
         voiceLanguages: Joi.array().items(Joi.string()).required(),
         subtitlesLanguages: Joi.array().items(Joi.string()).required(),
         isOfficial: Joi.boolean()
-    };
+    });
 
-    return Joi.validate(version, schema);
+    return schema.validate(version);
 }
 
 /*function hashCodeToID(code, platform) {

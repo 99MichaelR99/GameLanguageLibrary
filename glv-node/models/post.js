@@ -21,13 +21,13 @@ const Post = mongoose.model('Post', new mongoose.Schema({
     }, //versionID maybe not enough, need full version in the future.
     date: {
         type: Date,
-        require: true,
+        required: true,
         default: Date.now
     }
 }));
 
 function validatePost(post) {
-    const schema = {
+    const schema = Joi.object({
         userID: Joi.objectId().required(),
         gameName: Joi.string().min(3).max(50).required(),
         version: Joi.object({
@@ -36,9 +36,9 @@ function validatePost(post) {
             voiceLanguages: Joi.array().items(Joi.string()).required(),
             subtitlesLanguages: Joi.array().items(Joi.string()).required()
         }).required()
-    };
-      
-    return Joi.validate(post, schema);
+    });
+
+    return schema.validate(post);
 }
 
 exports.Post = Post;
