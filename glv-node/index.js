@@ -1,12 +1,16 @@
-const winston = require('winston');
-const express = require('express');
+const winston = require("winston");
+const express = require("express");
+const config = require("config");
 const app = express();
 
-require('./startup/logging')(app);
-require('./startup/routes')(app);
-require('./startup/db')();
-require('./startup/config')();
-require('./startup/validation')();
+require("./startup/logging")(app);
+require("./startup/cors")(app);
+require("./startup/routes")(app);
+require("./startup/db")();
+require("./startup/config")();
+require("./startup/validation")();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || config.get("port");
 app.listen(port, () => winston.info(`Listening on port ${port}...`));
+
+//module.exports = server;
