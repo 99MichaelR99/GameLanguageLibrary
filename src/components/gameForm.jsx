@@ -21,12 +21,13 @@ class GameForm extends Form {
     const { /*location,*/ params, navigate } = this.props;
     //const searchParams = new URLSearchParams(location.search);
     //const gameId = searchParams.get("id");
-    const gameCode = params.code;
+    const gameID = params.gameID;
+    const versionID = params.versionId;
 
     try {
-      if (!gameCode || gameCode === "new") return;
-      const { data: game } = await getGame(gameCode);
-      this.setState({ data: this.mapViewModel(game) });
+      if (!gameID || gameID === "new") return;
+      const { data } = await getGame(gameID);
+      this.setState({ data: this.mapViewModel(data, versionID) });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         navigate("/not-found");
@@ -34,14 +35,32 @@ class GameForm extends Form {
     }
   }
 
-  mapViewModel(game) {
+  mapViewModel(game, versionID) {
+    const selectedVersion = game.versions.find(
+      (version) => version._id === versionID
+    );
+
+    console.log("platform", selectedVersion.platform);
+
+    if (!selectedVersion) {
+      console.warn("Version not found, returning default data");
+      return {
+        _id: versionID,
+        gameName: game.name || "",
+        platform: "",
+        code: "",
+        voiceLanguages: [],
+        subtitlesLanguages: [],
+      };
+    }
+
     return {
-      //_id: game._id,
-      gameName: game.name,
-      platform: game.platform,
-      code: game.code,
-      voiceLanguages: game.voiceLanguages || [],
-      subtitlesLanguages: game.subtitlesLanguages || [],
+      _id: versionID,
+      gameName: game.name || "",
+      platform: selectedVersion.platform || "",
+      code: selectedVersion.code || "",
+      voiceLanguages: selectedVersion.voiceLanguages || [],
+      subtitlesLanguages: selectedVersion.subtitlesLanguages || [],
     };
   }
 
@@ -56,8 +75,14 @@ class GameForm extends Form {
   };
 
   doSubmit = () => {
-    const { navigate } = this.props;
-    saveGame(this.state.data);
+    const { params, navigate } = this.props;
+    const { gameID, _id } = params;
+    const data = this.state.data.map((version) => ({
+      gameID,
+      _id,
+      ...version,
+    }));
+    saveGame(data);
     navigate("/games", { replace: true });
   };
 

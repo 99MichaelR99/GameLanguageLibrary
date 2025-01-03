@@ -12,7 +12,16 @@ class GamesTable extends Component {
       content: (game) => <Link to={`/games/${game.gameID}`}>{game.name}</Link>,
     },
     { path: "platform", label: "Platform", sortable: false },
-    { path: "code", label: "Code", sortable: true, content: (game) => <Link to={`/games/${game._id}/versions/${game.code}`}>{game.code}</Link>},
+    {
+      path: "code",
+      label: "Code",
+      sortable: true,
+      content: (game) => (
+        <Link to={`/games/${game.gameID}/${game._id}`}>
+          {game.code}
+        </Link>
+      ),
+    },
     {
       path: "voiceLanguages",
       label: "Voice Languages",
@@ -30,9 +39,9 @@ class GamesTable extends Component {
   // Conditionally add 'like' and 'delete' columns based on the presence of props
   componentDidMount() {
     const { onLike, onDelete } = this.props;
-  
+
     // Conditionally add 'like' column if onLike is provided and not already in columns
-    if (onLike && !this.columns.find(column => column.key === "like")) {
+    if (onLike && !this.columns.find((column) => column.key === "like")) {
       this.columns.push({
         key: "like",
         content: (item) => (
@@ -44,9 +53,9 @@ class GamesTable extends Component {
         sortable: false,
       });
     }
-  
+
     // Conditionally add 'delete' column if onDelete is provided and not already in columns
-    if (onDelete && !this.columns.find(column => column.key === "delete")) {
+    if (onDelete && !this.columns.find((column) => column.key === "delete")) {
       this.columns.push({
         key: "delete",
         content: (item) => (
@@ -61,7 +70,6 @@ class GamesTable extends Component {
       });
     }
   }
-  
 
   render() {
     const { games, sortColumn, onSort } = this.props;

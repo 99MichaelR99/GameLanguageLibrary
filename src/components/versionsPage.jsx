@@ -5,6 +5,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 class VersionsPage extends Component {
   state = {
+    gameID: "",
     gameName: "",
     sortColumn: { path: "name", order: "asc" },
     versions: [],
@@ -12,10 +13,10 @@ class VersionsPage extends Component {
 
   async componentDidMount() {
     const { params } = this.props;
-    const { id: gameId } = params; // Access the game name from URL params
-    const { data: game } = await getGame(gameId);
+    const { gameID } = params; // Access the game name from URL params
+    const { data: game } = await getGame(gameID);
 
-    this.setState({ gameName: game.name, versions: game.versions });
+    this.setState({ gameID, gameName: game.name, versions: game.versions });
   }
 
   handleSort = (sortColumn) => {
@@ -23,9 +24,13 @@ class VersionsPage extends Component {
   };
 
   render() {
-    const { gameName, sortColumn, versions } = this.state; // Get filtered versions from state
+    const { gameID, gameName, sortColumn, versions } = this.state; // Get filtered versions from state
 
-    const data = versions.map((version) => ({ name: gameName, ...version }));
+    const data = versions.map((version) => ({
+      gameID,
+      name: gameName,
+      ...version,
+    }));
 
     return (
       <div>

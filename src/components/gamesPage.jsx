@@ -152,9 +152,9 @@ class GamesPage extends Component {
     // Flatten versions first
     const flattenedVersions = (allGames || []).flatMap((game) => {
       return game.versions.map((version) => ({
-        ...version,
         name: game.name,
         gameID: game._id,
+        ...version,
         like: game.liked || false,
         isOfficial: version.isOfficial || false,
       }));
