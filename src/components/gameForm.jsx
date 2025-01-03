@@ -40,34 +40,23 @@ class GameForm extends Form {
       (version) => version._id === versionID
     );
 
-    console.log("platform", selectedVersion.platform);
-
-    if (!selectedVersion) {
-      console.warn("Version not found, returning default data");
-      return {
-        _id: versionID,
-        gameName: game.name || "",
-        platform: "",
-        code: "",
-        voiceLanguages: [],
-        subtitlesLanguages: [],
-      };
-    }
-
     return {
       _id: versionID,
       gameName: game.name || "",
-      platform: selectedVersion.platform || "",
-      code: selectedVersion.code || "",
-      voiceLanguages: selectedVersion.voiceLanguages || [],
-      subtitlesLanguages: selectedVersion.subtitlesLanguages || [],
+      platform: selectedVersion?.platform || "",
+      code: selectedVersion?.code || "",
+      voiceLanguages: selectedVersion?.voiceLanguages || [],
+      subtitlesLanguages: selectedVersion?.subtitlesLanguages || [],
     };
   }
 
   schema = {
     gameName: Joi.string().required().label("Game Name"),
     platform: Joi.string().required().label("Platform"),
-    code: Joi.string().required().label("Code"),
+    code: Joi.string()
+      .required()
+      .label("Code")
+      .regex(/^(?:\d{7}|[A-Za-z]{4}[_ ]\d{5})$/),
     voiceLanguages: Joi.array().items(Joi.string()).label("Voice Languages"),
     subtitlesLanguages: Joi.array()
       .items(Joi.string())
@@ -76,12 +65,12 @@ class GameForm extends Form {
 
   doSubmit = () => {
     const { params, navigate } = this.props;
-    const { gameID, _id } = params;
-    const data = this.state.data.map((version) => ({
+    const { gameID, _id: versionID } = params;
+    const data = {
       gameID,
-      _id,
-      ...version,
-    }));
+      versionID,
+      ...this.state.data,
+    };
     saveGame(data);
     navigate("/games", { replace: true });
   };

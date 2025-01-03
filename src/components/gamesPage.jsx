@@ -34,9 +34,7 @@ class GamesPage extends Component {
     const games = originalGames
       .map((g) => {
         if (g._id === game.gameID) {
-          const updatedVersions = g.versions.filter(
-            (v) => v.code !== game.code
-          );
+          const updatedVersions = g.versions.filter((v) => v._id !== game._id);
           return updatedVersions.length > 0
             ? { ...g, versions: updatedVersions }
             : null;
@@ -47,13 +45,10 @@ class GamesPage extends Component {
     this.setState({ games });
 
     try {
-      console.log(game.gameID, game._id);
-      const result = await deleteGame(game.gameID, game._id);
-      console.log(result.data);
+      await deleteGame(game.gameID, game._id);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This game has already beem deleted.");
-
       this.setState({ games: originalGames });
     }
   };

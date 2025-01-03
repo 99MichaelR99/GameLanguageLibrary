@@ -17,13 +17,28 @@ export function getGame(gameID) {
 }
 
 export function saveGame(game) {
-  const { gameID, _id, ...body } = game;
+  const { gameID, versionID, ...body } = game;
+  const dbGame = {
+    name: body.gameName,
+    versions: [
+      {
+        createdBy: "66197c1be429d0dee2322c50",
+        isOfficial: false,
+        platform: body.platform.toUpperCase(),
+        code: body.code,
+        voiceLanguages: body.voiceLanguages,
+        subtitlesLanguages: body.subtitlesLanguages,
+      },
+    ],
+  };
 
   if (gameID) {
-    const url = _id ? `${gameUrl(gameID)}/${_id}` : `${gameUrl(gameID)}`;
-    return http.put(url, body);
+    const url = versionID
+      ? `${gameUrl(gameID)}/${versionID}`
+      : `${gameUrl(gameID)}`;
+    return http.put(url, dbGame);
   }
-  return http.post(apiEndpoint, body);
+  return http.post(apiEndpoint, dbGame);
 }
 
 export function deleteGame(gameID, versionID) {

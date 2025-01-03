@@ -131,18 +131,38 @@ class Form extends Component {
 
   renderGameFormContent() {
     const languages = [
+      "Arabic",
+      "Chinese (Simplified)",
+      "Chinese (Traditional)",
+      "Croatian",
+      "Czech",
+      "Dutch",
       "English",
-      "French",
+      "French (France)",
       "German",
+      "Greek",
+      "Hungarian",
+      "Italian",
+      "Japanese",
+      "Korean",
       "Polish",
+      "Portuguese (Brazil)",
+      "Portuguese (Portugal)",
       "Russian",
       "Spanish",
+      "Thai",
+      "Turkish",
+      "Other",
     ];
 
     const platforms = [
-      { _id: "ps3", name: "PS3" },
-      { _id: "ps4", name: "PS4" },
-      { _id: "ps5", name: "PS5" },
+      { _id: "PSP", name: "PSP" },
+      { _id: "PSVita", name: "PSVita" },
+      { _id: "PS1", name: "PS1" },
+      { _id: "PS2", name: "PS2" },
+      { _id: "PS3", name: "PS3" },
+      { _id: "PS4", name: "PS4" },
+      { _id: "PS5", name: "PS5" },
     ];
 
     return (

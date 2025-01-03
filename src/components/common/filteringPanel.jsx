@@ -1,14 +1,30 @@
 import React from "react";
 
 const FilteringPanel = (props) => {
-  const platforms = ["PS3", "PS4", "PS5"].sort();
+  const platforms = ["PSP", "PSVita", "PS1", "PS2", "PS3", "PS4", "PS5"].sort();
   const languages = [
+    "Arabic",
+    "Chinese (Simplified)",
+    "Chinese (Traditional)",
+    "Croatian",
+    "Czech",
+    "Dutch",
     "English",
-    "French",
+    "French (France)",
     "German",
+    "Greek",
+    "Hungarian",
+    "Italian",
+    "Japanese",
+    "Korean",
     "Polish",
+    "Portuguese (Brazil)",
+    "Portuguese (Portugal)",
     "Russian",
     "Spanish",
+    "Thai",
+    "Turkish",
+    "Other",
   ];
 
   const { filter, onFilterChange } = props;
