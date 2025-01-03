@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { toast } from "react-toastify";
 import FilteringPanel from "./common/filteringPanel";
 import GamesTable from "./gamesTable";
 import Pagination from "./common/pagination";
 import SearchBox from "./common/searchBox";
 import { paginate } from "../utils/paginate";
-import { getGames/*, deleteGame*/ } from "../services/fakeGamesService";
+import { getGames, deleteGame } from "../services/gameService";
 import { Link } from "react-router-dom";
 import "./gamesPage.css";
 import _ from "lodash";
@@ -23,13 +24,14 @@ class GamesPage extends Component {
     },
   };
 
-  componentDidMount() {
-    const games = getGames();
+  async componentDidMount() {
+    const { data: games } = await getGames();
     this.setState({ games });
   }
 
-  handleDelete = (game) => {
-    const games = this.state.games
+  handleDelete = async (game) => {
+    const originalGames = this.state.games;
+    const games = originalGames
       .map((g) => {
         if (g._id === game.gameID) {
           const updatedVersions = g.versions.filter(
@@ -44,7 +46,16 @@ class GamesPage extends Component {
       .filter((g) => g !== null);
     this.setState({ games });
 
-    //deleteGame(game._id);
+    try {
+      console.log(game.gameID, game._id);
+      const result = await deleteGame(game.gameID, game._id);
+      console.log(result.data);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("This game has already beem deleted.");
+
+      this.setState({ games: originalGames });
+    }
   };
 
   handleLike = (game) => {
@@ -140,12 +151,12 @@ class GamesPage extends Component {
 
     // Flatten versions first
     const flattenedVersions = (allGames || []).flatMap((game) => {
-      if (!game.versions) return []; // If no versions, return empty array
-
       return game.versions.map((version) => ({
         ...version,
         name: game.name,
         gameID: game._id,
+        like: game.liked || false,
+        isOfficial: version.isOfficial || false,
       }));
     });
 

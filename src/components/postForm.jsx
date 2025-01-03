@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { useNavigate } from "react-router-dom";
-import { getUsers } from "../services/fakeUsersService";
+import { getUsers } from "../services/fakeUserService";
 
 class PostForm extends Form {
   state = {

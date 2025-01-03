@@ -1,8 +1,8 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { getGame, saveGame } from "../services/fakeGamesService";
-import { useLocation, useNavigate } from "react-router-dom";
+import { getGame, saveGame } from "../services/gameService";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 class GameForm extends Form {
   state = {
@@ -17,25 +17,26 @@ class GameForm extends Form {
     dropdownStates: {},
   };
 
-  componentDidMount() {
-    const { location, navigate } = this.props;
-    const searchParams = new URLSearchParams(location.search);
-    const gameId = searchParams.get("id");
+  async componentDidMount() {
+    const { /*location,*/ params, navigate } = this.props;
+    //const searchParams = new URLSearchParams(location.search);
+    //const gameId = searchParams.get("id");
+    const gameCode = params.code;
 
-    if (!gameId || gameId === "new") return;
-
-    const game = getGame(gameId);
-    if (!game) {
-      navigate("/not-found");
-      return;
+    try {
+      if (!gameCode || gameCode === "new") return;
+      const { data: game } = await getGame(gameCode);
+      this.setState({ data: this.mapViewModel(game) });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        navigate("/not-found");
+      }
     }
-
-    this.setState({ data: this.mapViewModel(game) });
   }
 
   mapViewModel(game) {
     return {
-      _id: game._id,
+      //_id: game._id,
       gameName: game.name,
       platform: game.platform,
       code: game.code,
@@ -75,7 +76,15 @@ function withRouter(Component) {
   return function (props) {
     const location = useLocation();
     const navigate = useNavigate();
-    return <Component {...props} location={location} navigate={navigate} />;
+    const params = useParams();
+    return (
+      <Component
+        {...props}
+        location={location}
+        navigate={navigate}
+        params={params}
+      />
+    );
   };
 }
 
