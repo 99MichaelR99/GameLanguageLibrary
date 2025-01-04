@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { renderGameFormContent } from "./gameFormContent";
 import { useNavigate } from "react-router-dom";
 import { getUsers } from "../services/fakeUserService";
 
@@ -49,7 +50,7 @@ class PostForm extends Form {
     return (
       <div className="form-container">
         <h1>Create a New Post</h1>
-        {this.renderGameFormContent()}
+        {renderGameFormContent(this)}
       </div>
     );
   }

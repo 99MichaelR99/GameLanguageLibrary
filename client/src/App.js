@@ -24,8 +24,9 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/games/:gameID/:versionId" element={<GameForm />} />
-          <Route path="/games/new" element={<GameForm />} />
+          <Route path="/games/:gameID/new" element={<GameForm />} />
           <Route path="/games/:gameID" element={<Versions />} />
+          <Route path="/games/new" element={<GameForm />} />
           <Route path="/games" element={<Games />} />
           <Route path="/posts/:id" element={<PostForm />} />
           <Route path="/posts" element={<Posts />} />

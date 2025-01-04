@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GamesTable from "./gamesTable";
 import { getGame } from "../services/gameService";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class VersionsPage extends Component {
@@ -39,7 +40,12 @@ class VersionsPage extends Component {
 
     return (
       <div>
-        <h1>Versions for {gameName}</h1>
+        <h1 className="text-center">Versions for {gameName}</h1>
+        <div className="d-flex">
+          <Link to={`/games/${gameID}/new`} className="btn btn-primary mb-3">
+            New Version
+          </Link>
+        </div>
         <GamesTable
           className="table table-bordered w-100"
           games={data}

@@ -38,22 +38,27 @@ export async function saveGame(game) {
 
   if (gameID && versionID)
     return http.put(`${gameUrl(gameID)}/${versionID}`, dbGame);
-  else if (gameID) return http.post(`${gameUrl(gameID)}`, newVersion); //I think that case never executed
-
+  else if (gameID) return http.post(`${gameUrl(gameID)}`, newVersion);
+  
+  let existingGame;
   try {
-    // Use await to get the existing game by name
-    const existingGame = await getGameByName(body.gameName);
-
-    // If the game exists, use its gameID to update, otherwise create a new game
-    gameID = existingGame.data._id;
-    if (gameID) return http.post(`${gameUrl(gameID)}`, newVersion);
-    else return http.post(apiEndpoint, dbGame);
+    existingGame = await getGameByName(body.gameName);
   } catch (error) {
-    console.error("Error during save game:", error);
-    throw error; // Rethrow or handle the error as needed
+    // If the error is not a 404, rethrow it
+    if (!error.response || error.response.status !== 404) {
+      console.error("Error during game lookup:", error);
+      throw error;
+    }
   }
 
-  //return http.post(apiEndpoint, dbGame);
+  if (existingGame?.data) {
+    // If the game exists, update it
+    gameID = existingGame.data._id;
+    return http.post(`${gameUrl(gameID)}`, newVersion);
+  }
+
+  // If the game doesn't exist (caught error or no data), create a new one
+  return http.post(apiEndpoint, dbGame);
 }
 
 export function deleteGame(gameID, versionID) {

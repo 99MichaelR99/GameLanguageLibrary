@@ -13,6 +13,7 @@ import _ from "lodash";
 class GamesPage extends Component {
   state = {
     games: [],
+    searchQuery: "",
     currentPage: 1,
     pageSize: 10,
     sortColumn: { path: "name", order: "asc" },
