@@ -1,7 +1,7 @@
 import React from "react";
-import Form from "./common/form";
+//import Form from "./common/form";
 
-export const renderGameFormContent = () => {
+export const renderGameFormContent = (formInstance) => {
   const languages = [
     "Arabic",
     "Chinese (Simplified)",
@@ -26,6 +26,7 @@ export const renderGameFormContent = () => {
     "Turkish",
     "Other",
   ];
+
   const platforms = [
     { _id: "PSP", name: "PSP" },
     { _id: "PSVita", name: "PSVita" },
@@ -35,8 +36,6 @@ export const renderGameFormContent = () => {
     { _id: "PS4", name: "PS4" },
     { _id: "PS5", name: "PS5" },
   ];
-
-  const formInstance = new Form();
 
   return (
     <form onSubmit={formInstance.handleSubmit} className="form-content">

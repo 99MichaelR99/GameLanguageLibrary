@@ -14,7 +14,7 @@ class GamesPage extends Component {
   state = {
     games: [],
     currentPage: 1,
-    pageSize: 2,
+    pageSize: 10,
     sortColumn: { path: "name", order: "asc" },
     filter: {
       showFilters: false,

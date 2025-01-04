@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { renderGameFormContent } from "./gameFormContent";
 import { getGame, saveGame } from "../services/gameService";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
@@ -79,7 +80,7 @@ class GameForm extends Form {
     return (
       <div className="form-container">
         <h1>Create a New Game</h1>
-        {this.renderGameFormContent()}
+        {renderGameFormContent(this)}
       </div>
     );
   }
