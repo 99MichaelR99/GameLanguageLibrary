@@ -1,6 +1,8 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { renderGameFormContent } from "./gameFormContent";
 import { getGame, saveGame } from "../services/gameService";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
@@ -64,7 +66,7 @@ class GameForm extends Form {
       .label("Subtitles Languages"),
   };
 
-  doSubmit = () => {
+  doSubmit = async () => {
     const { params, navigate } = this.props;
     const { gameID, _id: versionID } = params;
     const data = {
@@ -72,8 +74,20 @@ class GameForm extends Form {
       versionID,
       ...this.state.data,
     };
-    saveGame(data);
-    navigate("/games", { replace: true });
+    try {
+      await saveGame(data);
+      toast.success("Game saved successfully!");
+      navigate("/games", { replace: true });
+    } catch (error) {
+      // Check if the error is due to a duplicate game code
+      if (error.response && error.response.status === 400) {
+        const errorMessage =
+          error.response.data || "A game with this code already exists.";
+        toast.error(errorMessage);
+      } else {
+        toast.error("An error occurred while saving the game.");
+      }
+    }
   };
 
   render() {

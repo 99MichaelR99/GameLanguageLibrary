@@ -1,32 +1,7 @@
 import React from "react";
+import { languages, platforms } from "../gameData";
 
 const FilteringPanel = (props) => {
-  const platforms = ["PSP", "PSVita", "PS1", "PS2", "PS3", "PS4", "PS5"].sort();
-  const languages = [
-    "Arabic",
-    "Chinese (Simplified)",
-    "Chinese (Traditional)",
-    "Croatian",
-    "Czech",
-    "Dutch",
-    "English",
-    "French (France)",
-    "German",
-    "Greek",
-    "Hungarian",
-    "Italian",
-    "Japanese",
-    "Korean",
-    "Polish",
-    "Portuguese (Brazil)",
-    "Portuguese (Portugal)",
-    "Russian",
-    "Spanish",
-    "Thai",
-    "Turkish",
-    "Other",
-  ];
-
   const { filter, onFilterChange } = props;
 
   if (!filter.showFilters) return null;

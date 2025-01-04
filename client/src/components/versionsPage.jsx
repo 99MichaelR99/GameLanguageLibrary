@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GamesTable from "./gamesTable";
 import { getGame } from "../services/gameService";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 class VersionsPage extends Component {
   state = {
@@ -26,17 +27,21 @@ class VersionsPage extends Component {
   render() {
     const { gameID, gameName, sortColumn, versions } = this.state; // Get filtered versions from state
 
-    const data = versions.map((version) => ({
-      gameID,
-      name: gameName,
-      ...version,
-    }));
+    const data = _.orderBy(
+      versions.map((version) => ({
+        gameID,
+        name: gameName,
+        ...version,
+      })),
+      [sortColumn.path],
+      [sortColumn.order]
+    );
 
     return (
       <div>
         <h1>Versions for {gameName}</h1>
         <GamesTable
-          className="table table-bordered"
+          className="table table-bordered w-100"
           games={data}
           sortColumn={sortColumn}
           onSort={this.handleSort}

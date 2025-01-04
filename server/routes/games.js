@@ -10,6 +10,21 @@ router.get("/", async (req, res) => {
   res.send(games);
 });
 
+router.get("/name", async (req, res) => {
+  const { name } = req.query; // Get the game name from the query parameter
+  if (!name) {
+    return res.status(400).send("Game name is required.");
+  }
+
+  // Perform case-insensitive search for the game by name
+  const game = await Game.findOne({ name: { $regex: new RegExp(name, "i") } });
+  if (!game) {
+    return res.status(404).send("No game found with that name.");
+  }
+
+  res.send(game); // Send the game details if found
+});
+
 router.get("/:id", async (req, res) => {
   const game = await Game.findById(req.params.id);
 

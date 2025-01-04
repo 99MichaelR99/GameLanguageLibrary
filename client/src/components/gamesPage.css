@@ -55,6 +55,9 @@
   display: flex;
   flex-direction: column; /* Ensure child elements stack vertically */
 }
+.sidebar {
+  margin-right: 10px; /* Create a gap below sidebar elements */
+}
 
 /* Filtering Panel Styles */
 .filtering-panel {
