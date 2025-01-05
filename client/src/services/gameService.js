@@ -27,7 +27,7 @@ export async function saveGame(game) {
     createdBy: "66197c1be429d0dee2322c50",
     isOfficial: false,
     platform: body.platform.toUpperCase(),
-    code: body.code,
+    code: body.code.replace(/\s+/g, '_').toUpperCase(),
     voiceLanguages: body.voiceLanguages,
     subtitlesLanguages: body.subtitlesLanguages,
   };

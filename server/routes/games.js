@@ -7,6 +7,10 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const games = await Game.find().sort("name");
+  // Sort versions by code alphabetically for each game
+  games.forEach((game) => {
+    game.versions.sort((a, b) => a.code.localeCompare(b.code));
+  });
   res.send(games);
 });
 
@@ -21,7 +25,7 @@ router.get("/name", async (req, res) => {
   if (!game) {
     return res.status(404).send("No game found with that name.");
   }
-
+  game.versions.sort((a, b) => a.code.localeCompare(b.code));
   res.send(game); // Send the game details if found
 });
 
@@ -31,42 +35,9 @@ router.get("/:id", async (req, res) => {
   if (!game)
     return res.status(404).send("The game with the given ID was not found.");
 
+  game.versions.sort((a, b) => a.code.localeCompare(b.code));
   res.send(game);
 });
-
-// GET /games/:id/versions - Get all versions of a game
-/*router.get('/:id/versions', async (req, res) => {
-    // Find the game by ID
-    const game = await Game.findById(req.params.id).populate('versions');
-    if (!game) return res.status(404).send('The game with the given ID was not found.');
-
-    // Send the versions of the game as the response
-    res.send(game.versions);
-});*/
-
-/*router.post('/', [auth, admin], async (req, res) => {
-    const { error } = validateGame(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
-
-    // Check if the game already exists by name
-    let game = await Game.findOne({ name: req.body.name });
-    // If the game does not exist, create a new one
-    if (!game) game = new Game({
-            name: req.body.name,
-            versions: []
-        });
-
-    // Check for duplicated versions by code id
-    const existingCodes = game.versions.map(version => version.code);
-    const newVersions = req.body.versions.filter(version => !existingCodes.includes(version.code));
-
-    // Add the new version to the game
-    game.versions.push(...newVersions);
-
-    const savedGame = await game.save();
-    res.send(savedGame);
-
-});*/
 
 router.post("/", [auth, admin], async (req, res) => {
   const { error } = validateGame(req.body);
@@ -95,6 +66,7 @@ router.post("/", [auth, admin], async (req, res) => {
 
   // Add the new version to the game
   game.versions.push(...uniqueVersions);
+  game.versions.sort((a, b) => a.code.localeCompare(b.code));
 
   const savedGame = await game.save();
   res.send(savedGame);
@@ -118,6 +90,7 @@ router.post("/:id", [auth], async (req, res) => {
 
   // Add the new version to the game
   game.versions.push(req.body);
+  game.versions.sort((a, b) => a.code.localeCompare(b.code));
 
   // Save the updated game
   const savedGame = await game.save();
@@ -132,21 +105,10 @@ router.put("/:id", [auth, admin], async (req, res) => {
     req.params.id,
     {
       name: req.body.name,
-      versions: req.body.versions,
+      versions: req.body.versions.sort((a, b) => a.code.localeCompare(b.code)),
     },
     { new: true }
   );
-
-  /*const game = await Game.findByIdAndUpdate(req.params.id, {
-        name: req.body.name,
-        versions: req.body.versions.map(version => ({
-            createdBy: version.createdBy,
-            platform: version.platform,
-            code: version.code,
-            voiceLanguages: version.voiceLanguages,
-            subtitlesLanguages: version.subtitlesLanguages
-        }))
-    }, { new: true });*/
 
   if (!game)
     return res.status(404).send("The game with the given ID was not found.");
@@ -166,6 +128,7 @@ router.put("/:id/:versionID", [auth, admin], async (req, res) => {
   if (!updatedVersion)
     return res.status(404).send("The version with the given ID was not found.");
 
+  updatedVersion.versions.sort((a, b) => a.code.localeCompare(b.code));
   res.send(updatedVersion);
 });
 
@@ -195,6 +158,7 @@ router.delete("/:id/:versionID", [auth, admin], async (req, res) => {
 
   // Remove the version from the array
   game.versions.splice(versionIndex, 1);
+  game.versions.sort((a, b) => a.code.localeCompare(b.code));
 
   // If no versions remain, delete the entire game
   if (game.versions.length === 0) {

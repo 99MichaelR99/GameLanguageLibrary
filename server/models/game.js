@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
 const languagesEnum = [
   "Arabic",
@@ -19,21 +20,25 @@ const languagesEnum = [
   "Other",
 ];
 
+const platformsEnum = ["PSP", "PSVITA", "PS1", "PS2", "PS3", "PS4", "PS5"];
+
 const versionSchema = new mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   platform: {
     type: String,
     required: true,
-    enum: ["PSP", "PSVITA", "PS1", "PS2", "PS3", "PS4", "PS5"],
+    enum: platformsEnum,
   },
   code: {
     type: String,
     required: true,
     unique: true,
     uppercase: true,
+    set: (value) => value.replace(/\s+/g, "_"), // Normalize spaces to underscores
     match: /^(?:\d{7}|[A-Za-z]{4}[_ ]\d{5})$/,
   },
   voiceLanguages: {
@@ -46,28 +51,27 @@ const versionSchema = new mongoose.Schema({
     required: true,
     enum: languagesEnum,
   },
-  isOfficial: Boolean,
+  isOfficial: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const Game = mongoose.model(
-  "Game",
-  new mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: 3,
-      maxlength: 50,
-    },
-    versions: [versionSchema],
-  })
-);
+// Create a unique index for version code across all games
+versionSchema.index({ code: 1 }, { unique: true });
 
-/*const games = [
-    { id: 418535, code: "CUSA_18535", name: 'AC Valhalla'    , platform: 'PS4', language: 'RUS'},  
-    { id: 503846, code: "PPSA_03846", name: 'Dead Space'     , platform: 'PS5', language: 'ENG'},  
-    { id: 301585, code: "BCES_01585", name: 'The last of us' , platform: 'PS3', language: 'RUS'},  
-];*/
+const gameSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 3,
+    maxlength: 50,
+  },
+  versions: [versionSchema],
+});
+
+const Game = mongoose.model("Game", gameSchema);
 
 function validateGame(game) {
   const schema = Joi.object({
@@ -76,10 +80,19 @@ function validateGame(game) {
       .items(
         Joi.object({
           createdBy: Joi.objectId().required(),
-          platform: Joi.string().required(),
-          code: Joi.string().required(),
-          voiceLanguages: Joi.array().items(Joi.string()).required(),
-          subtitlesLanguages: Joi.array().items(Joi.string()).required(),
+          platform: Joi.string()
+            .valid(...platformsEnum)
+            .required(),
+          code: Joi.string()
+            .required()
+            .uppercase()
+            .pattern(/^(?:\d{7}|[A-Za-z]{4}[_ ]\d{5})$/),
+          voiceLanguages: Joi.array()
+            .items(Joi.string().valid(...languagesEnum))
+            .required(),
+          subtitlesLanguages: Joi.array()
+            .items(Joi.string().valid(...languagesEnum))
+            .required(),
           isOfficial: Joi.boolean(),
         })
       )
@@ -92,22 +105,27 @@ function validateGame(game) {
 function validateVersion(version) {
   const schema = Joi.object({
     createdBy: Joi.objectId().required(),
-    platform: Joi.string().required(),
-    code: Joi.string().required(),
-    voiceLanguages: Joi.array().items(Joi.string()).required(),
-    subtitlesLanguages: Joi.array().items(Joi.string()).required(),
+    platform: Joi.string()
+      .valid(...platformsEnum)
+      .required(),
+    code: Joi.string()
+      .required()
+      .uppercase()
+      .pattern(/^(?:\d{7}|[A-Za-z]{4}[_ ]\d{5})$/),
+    voiceLanguages: Joi.array()
+      .items(Joi.string().valid(...languagesEnum))
+      .required(),
+    subtitlesLanguages: Joi.array()
+      .items(Joi.string().valid(...languagesEnum))
+      .required(),
     isOfficial: Joi.boolean(),
   });
 
   return schema.validate(version);
 }
 
-/*function hashCodeToID(code, platform) {
-    if(platform === "PSVita" || platform === "PSP")
-        platform = "PS99";
-    return parseInt(platform.sice(2) + code.slice(5));
-}*/
-
-exports.Game = Game;
-exports.validateGame = validateGame;
-exports.validateVersion = validateVersion;
+module.exports = {
+  Game,
+  validateGame,
+  validateVersion,
+};
