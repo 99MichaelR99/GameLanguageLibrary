@@ -28,8 +28,8 @@ export async function saveGame(game) {
     isOfficial: false,
     platform: body.platform.toUpperCase(),
     code: body.code.replace(/\s+/g, '_').toUpperCase(),
-    voiceLanguages: body.voiceLanguages,
-    subtitlesLanguages: body.subtitlesLanguages,
+    voiceLanguages: body.voiceLanguages.sort(),
+    subtitlesLanguages: body.subtitlesLanguages.sort(),
   };
   const dbGame = {
     name: body.gameName,

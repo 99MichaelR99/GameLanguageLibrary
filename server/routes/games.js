@@ -64,6 +64,12 @@ router.post("/", [auth, admin], async (req, res) => {
   if (uniqueCodes.size !== req.body.versions.length)
     res.send("Duplicated Version Was Removed");
 
+  // Sort voiceLanguages and subtitlesLanguages before saving to the db
+  uniqueVersions.forEach((version) => {
+    if (version.voiceLanguages) version.voiceLanguages.sort();
+    if (version.subtitlesLanguages) version.subtitlesLanguages.sort();
+  });
+
   // Add the new version to the game
   game.versions.push(...uniqueVersions);
   game.versions.sort((a, b) => a.code.localeCompare(b.code));
@@ -88,6 +94,10 @@ router.post("/:id", [auth], async (req, res) => {
   if (existingVersion)
     return res.status(400).send("The version already exists in the game.");
 
+  // Sort voiceLanguages and subtitlesLanguages before saving to the db
+  if (req.body.voiceLanguages) req.body.voiceLanguages.sort();
+  if (req.body.subtitlesLanguages) req.body.subtitlesLanguages.sort();
+
   // Add the new version to the game
   game.versions.push(req.body);
   game.versions.sort((a, b) => a.code.localeCompare(b.code));
@@ -100,6 +110,12 @@ router.post("/:id", [auth], async (req, res) => {
 router.put("/:id", [auth, admin], async (req, res) => {
   const { error } = validateGame(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
+  // Sort voiceLanguages and subtitlesLanguages before saving to the db
+  req.body.versions.forEach((version) => {
+    if (version.voiceLanguages) version.voiceLanguages.sort();
+    if (version.subtitlesLanguages) version.subtitlesLanguages.sort();
+  });
 
   const game = await Game.findByIdAndUpdate(
     req.params.id,
@@ -116,14 +132,19 @@ router.put("/:id", [auth, admin], async (req, res) => {
   res.send(game);
 });
 
-// Route to update a specific version of a game
+/// Route to update a specific version of a game
 router.put("/:id/:versionID", [auth, admin], async (req, res) => {
+  // Ensure voiceLanguages and subtitlesLanguages are sorted if updated
+  if (req.body.voiceLanguages) req.body.voiceLanguages.sort();
+  if (req.body.subtitlesLanguages) req.body.subtitlesLanguages.sort();
+
   // Update the version with new data
   const updatedVersion = await Game.findOneAndUpdate(
     { _id: req.params.id, "versions._id": req.params.versionID },
     { $set: { "versions.$": req.body } },
     { new: true }
   );
+
   // Check if the version was found and updated
   if (!updatedVersion)
     return res.status(404).send("The version with the given ID was not found.");
