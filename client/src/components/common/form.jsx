@@ -23,12 +23,6 @@ class Form extends Component {
     }, {});
   };
 
-  validateProperty = ({ name, value }) => {
-    const subSchema = { [name]: this.schema[name] };
-    const { error } = Joi.validate({ [name]: value }, subSchema);
-    return error ? error.details[0].message : null;
-  };
-
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -37,6 +31,13 @@ class Form extends Component {
     if (errors) return;
 
     this.doSubmit();
+  };
+
+  validateProperty = ({ name, value }) => {
+    const obj = { [name]: value };
+    const subSchema = { [name]: this.schema[name] };
+    const { error } = Joi.validate(obj, subSchema);
+    return error ? error.details[0].message : null;
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -120,7 +121,7 @@ class Form extends Component {
   renderButton(label) {
     return (
       <button
-        disabled={this.validate()}
+        //disabled={this.validate()}
         type="submit"
         className="btn btn-primary"
       >
@@ -128,7 +129,6 @@ class Form extends Component {
       </button>
     );
   }
-
 }
 
 export default Form;

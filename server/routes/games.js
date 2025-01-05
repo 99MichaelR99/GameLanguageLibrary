@@ -155,10 +155,10 @@ router.put("/:id", [auth, admin], async (req, res) => {
 });
 
 // Route to update a specific version of a game
-router.put("/:id/:versionId", [auth, admin], async (req, res) => {
+router.put("/:id/:versionID", [auth, admin], async (req, res) => {
   // Update the version with new data
   const updatedVersion = await Game.findOneAndUpdate(
-    { _id: req.params.id, "versions._id": req.params.versionId },
+    { _id: req.params.id, "versions._id": req.params.versionID },
     { $set: { "versions.$": req.body } },
     { new: true }
   );
@@ -180,7 +180,7 @@ router.delete("/:id", [auth, admin], async (req, res) => {
 });
 
 // Route to delete a specific version of a game
-router.delete("/:id/:versionId", [auth, admin], async (req, res) => {
+router.delete("/:id/:versionID", [auth, admin], async (req, res) => {
   // Find the game by ID
   const game = await Game.findById(req.params.id);
   if (!game)
@@ -188,7 +188,7 @@ router.delete("/:id/:versionId", [auth, admin], async (req, res) => {
 
   // Find the index of the version to delete
   const versionIndex = game.versions.findIndex(
-    (version) => version.id === req.params.versionId
+    (version) => version.id === req.params.versionID
   );
   if (versionIndex === -1)
     return res.status(404).send("The version with the given ID was not found.");

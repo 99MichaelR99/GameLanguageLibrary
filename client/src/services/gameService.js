@@ -36,10 +36,11 @@ export async function saveGame(game) {
     versions: [newVersion],
   };
 
-  if (gameID && versionID)
-    return http.put(`${gameUrl(gameID)}/${versionID}`, dbGame);
-  else if (gameID) return http.post(`${gameUrl(gameID)}`, newVersion);
-  
+  if (gameID && versionID) {
+    console.log(`${gameUrl(gameID)}/${versionID}`);
+    return http.put(`${gameUrl(gameID)}/${versionID}`, newVersion);
+  } else if (gameID) return http.post(`${gameUrl(gameID)}`, newVersion);
+
   let existingGame;
   try {
     existingGame = await getGameByName(body.gameName);

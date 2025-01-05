@@ -25,7 +25,7 @@ class GameForm extends Form {
     //const searchParams = new URLSearchParams(location.search);
     //const gameId = searchParams.get("id");
     const gameID = params.gameID;
-    const versionID = params.versionId;
+    const versionID = params.versionID;
 
     try {
       if (!gameID || gameID === "new") return;
@@ -54,6 +54,7 @@ class GameForm extends Form {
   }
 
   schema = {
+    _id: Joi.string(),
     gameName: Joi.string().required().label("Game Name"),
     platform: Joi.string().required().label("Platform"),
     code: Joi.string()
@@ -68,7 +69,7 @@ class GameForm extends Form {
 
   doSubmit = async () => {
     const { params, navigate } = this.props;
-    const { gameID, _id: versionID } = params;
+    const { gameID, versionID } = params;
     const data = {
       gameID,
       versionID,
