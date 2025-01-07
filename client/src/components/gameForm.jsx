@@ -92,10 +92,11 @@ class GameForm extends Form {
   };
 
   render() {
+    const { user } = this.props;
     return (
       <div className="form-container">
-        <h1>Create a New Game</h1>
-        {renderGameFormContent(this)}
+        <h1>Create / Update a Game</h1>
+        {renderGameFormContent(this, user)}
       </div>
     );
   }

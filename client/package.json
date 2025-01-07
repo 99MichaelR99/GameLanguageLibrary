@@ -10,6 +10,7 @@
     "bootstrap": "^5.3.3",
     "font-awesome": "^4.7.0",
     "joi-browser": "^13.4.0",
+    "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
@@ -42,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

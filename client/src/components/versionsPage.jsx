@@ -27,6 +27,7 @@ class VersionsPage extends Component {
 
   render() {
     const { gameID, gameName, sortColumn, versions } = this.state; // Get filtered versions from state
+    const { user } = this.props;
 
     const data = _.orderBy(
       versions.map((version) => ({
@@ -42,9 +43,11 @@ class VersionsPage extends Component {
       <div>
         <h1 className="text-center">Versions for {gameName}</h1>
         <div className="d-flex">
-          <Link to={`/games/${gameID}/new`} className="btn btn-primary mb-3">
-            New Version
-          </Link>
+          {user && (
+            <Link to={`/games/${gameID}/new`} className="btn btn-primary mb-3">
+              New Version
+            </Link>
+          )}
         </div>
         <GamesTable
           className="table table-bordered w-100"

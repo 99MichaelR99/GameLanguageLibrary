@@ -118,10 +118,10 @@ class Form extends Component {
     );
   }
 
-  renderButton(label) {
+  renderButton(label, disabled = false) {
     return (
       <button
-        //disabled={this.validate()}
+        disabled={this.validate() || disabled}
         type="submit"
         className="btn btn-primary"
       >

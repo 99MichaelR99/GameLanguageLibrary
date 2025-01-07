@@ -178,6 +178,7 @@ class GamesPage extends Component {
   };
 
   render() {
+    const { user } = this.props;
     const { currentPage, pageSize, sortColumn, searchQuery, filter } =
       this.state;
     if (this.state.games.length === 0)
@@ -188,9 +189,9 @@ class GamesPage extends Component {
     return (
       <div className="games-page-container d-flex flex-wrap justify-content-center">
         <div className="col-md-3 col-lg-2 sidebar">
-          <Link to="/games/new" className="btn btn-primary mb-3">
+          {user && <Link to="/games/new" className="btn btn-primary mb-3">
             New Game
-          </Link>
+          </Link>}
           <button
             className="btn btn-info toggle-button mb-3"
             onClick={this.handleFilterToggle}

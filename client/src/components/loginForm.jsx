@@ -1,29 +1,42 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import auth from "../services/authService";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 class LoginForm extends Form {
   state = {
-    data: { username: "", password: "" },
+    data: { email: "", password: "" },
     errors: {},
   };
 
   schema = {
-    username: Joi.string().required().label("Username"),
+    email: Joi.string().required().label("Email"),
     password: Joi.string().required().label("Password"),
   };
 
-  doSubmit = () => {
-    // Call the server to implement
-    console.log("Submitted");
+  doSubmit = async () => {
+    try {
+      const { data } = this.state;
+      await auth.login(data.email, data.password);
+      const { from } = this.props.location.state || { from: { pathname: "/" } };
+      this.props.navigate(from); // Redirect to the original path
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
+    if (auth.getCurrentUser()) return <Navigate to="/" replace />;
     return (
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
+          {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}
         </form>
@@ -32,4 +45,12 @@ class LoginForm extends Form {
   }
 }
 
-export default LoginForm;
+// Use hooks to access location and navigate in the functional component
+function LoginFormWrapper(props) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  return <LoginForm {...props} location={location} navigate={navigate} />;
+}
+
+export default LoginFormWrapper;

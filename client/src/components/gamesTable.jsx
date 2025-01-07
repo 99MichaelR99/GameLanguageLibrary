@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import auth from "../services/authService";
 import { Link } from "react-router-dom";
 import Table from "./common/table";
 import Like from "./common/like";
@@ -6,6 +7,8 @@ import Like from "./common/like";
 class GamesTable extends Component {
   constructor(props) {
     super(props);
+
+    const user = auth.getCurrentUser();
 
     this.columns = [
       {
@@ -52,7 +55,7 @@ class GamesTable extends Component {
       });
     }
 
-    if (props.onDelete) {
+    if (user && user.isAdmin && props.onDelete) {
       this.columns.push({
         key: "delete",
         content: (item) => (

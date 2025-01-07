@@ -9,24 +9,30 @@ const Dropdown = ({
   options,
   toggleDropdown,
   handleDropdownSelect,
+  disabled,
 }) => {
   const isOpen = dropdownStates[name];
 
   return (
     <div className="dropdown-container">
       <label>{label}</label>
-      <div className="dropdown-box" onClick={() => toggleDropdown(name)}>
+      <div
+        className={`dropdown-box ${disabled ? "disabled" : ""}`}
+        onClick={disabled ? undefined : () => toggleDropdown(name)}
+      >
         {data[name]?.length > 0
           ? data[name].join(", ")
           : `Select ${label.toLowerCase()}`}
       </div>
-      {isOpen && (
+      {isOpen && !disabled && (
         <ul className="dropdown-list">
           {options.map((option) => (
             <li
               key={option}
               className={data[name]?.includes(option) ? "selected" : ""}
-              onClick={() => handleDropdownSelect(name, option)}
+              onClick={
+                disabled ? undefined : () => handleDropdownSelect(name, option)
+              }
             >
               {option}
             </li>

@@ -3,7 +3,7 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import { renderGameFormContent } from "./gameFormContent";
 import { useNavigate } from "react-router-dom";
-import { getUsers } from "../services/fakeUserService";
+import { getUsers } from "../services/fakeServices/fakeUserService";
 
 class PostForm extends Form {
   state = {
