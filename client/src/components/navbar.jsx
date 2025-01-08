@@ -22,6 +22,8 @@ const NavBar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
+        {/* Main navigation links */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
@@ -39,34 +41,34 @@ const NavBar = () => {
                 Contact Us
               </NavLink>
             </li>
-            {!user && (
-              <React.Fragment>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/login">
-                    Login
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/register">
-                    Registration
-                  </NavLink>
-                </li>
-              </React.Fragment>
-            )}
-            {user && (
-              <React.Fragment>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/me">
-                    {user.name}
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/logout">
-                    Logout
-                  </NavLink>
-                </li>
-              </React.Fragment>
-            )}
+          </ul>
+
+          {/* User links aligned to the right */}
+          <ul className="navbar-nav ms-auto">
+            {!user && [
+              <li className="nav-item" key="login">
+                <NavLink className="nav-link" to="/login">
+                  Login
+                </NavLink>
+              </li>,
+              <li className="nav-item" key="register">
+                <NavLink className="nav-link" to="/register">
+                  Registration
+                </NavLink>
+              </li>,
+            ]}
+            {user && [
+              <li className="nav-item" key="me">
+                <NavLink className="nav-link" to="/me">
+                  {user.name}
+                </NavLink>
+              </li>,
+              <li className="nav-item" key="logout">
+                <NavLink className="nav-link" to="/logout">
+                  Logout
+                </NavLink>
+              </li>,
+            ]}
           </ul>
         </div>
       </div>

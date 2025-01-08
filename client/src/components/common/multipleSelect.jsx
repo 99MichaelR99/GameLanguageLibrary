@@ -9,7 +9,6 @@ const MultipleSelect = ({
   options,
   toggleMultiSelect,
   handleMultiSelect,
-  disabled,
 }) => {
   const isOpen = multiSelectState[name];
 
@@ -17,22 +16,20 @@ const MultipleSelect = ({
     <div className="multiple-select-container">
       <label>{label}</label>
       <div
-        className={`multiple-select-box ${disabled ? "disabled" : ""}`}
-        onClick={disabled ? undefined : () => toggleMultiSelect(name)}
+        className={`multiple-select-box`}
+        onClick={() => toggleMultiSelect(name)}
       >
         {data[name]?.length > 0
           ? data[name].join(", ")
           : `Select ${label.toLowerCase()}`}
       </div>
-      {isOpen && !disabled && (
+      {isOpen && (
         <ul className="multiple-select-list">
           {options.map((option) => (
             <li
               key={option}
               className={data[name]?.includes(option) ? "selected" : ""}
-              onClick={
-                disabled ? undefined : () => handleMultiSelect(name, option)
-              }
+              onClick={() => handleMultiSelect(name, option)}
             >
               {option}
             </li>

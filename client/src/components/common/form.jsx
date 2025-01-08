@@ -87,22 +87,6 @@ class Form extends Component {
     );
   }
 
-  renderMultiSelect(name, label, options) {
-    const { data, multiSelectState } = this.state; 
-
-    return (
-      <MultiSelect 
-        data={data}
-        multiSelectState={multiSelectState}
-        name={name}
-        label={label}
-        options={options}
-        toggleMultiSelect={this.toggleMultiSelect}
-        handleMultiSelect={this.handleMultiSelect}
-      />
-    );
-  }
-
   renderSelect(name, label, options) {
     const { data, errors } = this.state;
 
@@ -118,10 +102,26 @@ class Form extends Component {
     );
   }
 
-  renderButton(label, disabled = false) {
+  renderMultiSelect(name, label, options) {
+    const { data, multiSelectState } = this.state;
+
+    return (
+      <MultiSelect
+        data={data}
+        multiSelectState={multiSelectState}
+        name={name}
+        label={label}
+        options={options}
+        toggleMultiSelect={this.toggleMultiSelect}
+        handleMultiSelect={this.handleMultiSelect}
+      />
+    );
+  }
+
+  renderButton(label) {
     return (
       <button
-        disabled={this.validate() || disabled}
+        disabled={this.validate()}
         type="submit"
         className="btn btn-primary"
       >
