@@ -1,5 +1,6 @@
 import http from "./httpService";
 import config from "../config.json";
+import auth from "../services/authService";
 
 const apiEndpoint = config.apiUrl + "/games";
 
@@ -23,17 +24,18 @@ export function getGameByName(gameName) {
 
 export async function saveGame(game) {
   let { gameID, versionID, ...body } = game;
+
+  const currentUser = auth.getCurrentUser();
+  if (!currentUser || !currentUser.isAdmin || !currentUser._id) {
+    throw new Error("User must be an Admin to save a game.");
+  }
   const newVersion = {
-    createdBy: "66197c1be429d0dee2322c50",
-    isOfficial: false,
+    createdBy: currentUser._id,
+    isOfficial: game.isOfficial || false,
     platform: body.platform.toUpperCase(),
-    code: body.code.replace(/\s+/g, '_').toUpperCase(),
+    code: body.code.replace(/\s+/g, "_").toUpperCase(),
     voiceLanguages: body.voiceLanguages.sort(),
     subtitlesLanguages: body.subtitlesLanguages.sort(),
-  };
-  const dbGame = {
-    name: body.gameName,
-    versions: [newVersion],
   };
 
   if (gameID && versionID) {
@@ -56,6 +58,11 @@ export async function saveGame(game) {
     gameID = existingGame.data._id;
     return http.post(`${gameUrl(gameID)}`, newVersion);
   }
+
+  const dbGame = {
+    name: body.gameName,
+    versions: [newVersion],
+  };
 
   // If the game doesn't exist (caught error or no data), create a new one
   return http.post(apiEndpoint, dbGame);

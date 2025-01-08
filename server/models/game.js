@@ -62,7 +62,7 @@ const gameSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    minlength: 3,
+    minlength: 2,
     maxlength: 50,
   },
   versions: [versionSchema],
@@ -72,7 +72,7 @@ const Game = mongoose.model("Game", gameSchema);
 
 function validateGame(game) {
   const schema = Joi.object({
-    name: Joi.string().min(3).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
     versions: Joi.array()
       .items(
         Joi.object({

@@ -219,10 +219,11 @@ class GamesPage extends Component {
           <GamesTable
             className="table table-bordered w-100"
             games={data}
+            user={user}
             sortColumn={sortColumn}
-            onLike={this.handleLike}
-            onDelete={this.handleDelete}
             onSort={this.handleSort}
+            //onLike={this.handleLike}
+            onDelete={this.handleDelete}
           />
           <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
             <p className="results-count m-0"> {totalCount} Results</p>

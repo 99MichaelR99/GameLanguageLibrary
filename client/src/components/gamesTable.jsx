@@ -1,98 +1,84 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/authContext";
-import Table from "./common/table";
+import DataTable from "./common/dataTable";
 import Like from "./common/like";
 
-class GamesTable extends Component {
-  constructor(props) {
-    super(props);
+const gameColumnsConfig = [
+  {
+    path: "name",
+    label: "Name",
+    sortable: true,
+    content: (game) => <Link to={`/games/${game.gameID}`}>{game.name}</Link>,
+  },
+  { path: "platform", label: "Platform", sortable: false },
+  {
+    path: "code",
+    label: "Code",
+    sortable: true,
+    content: (game) => <span>{game.code}</span>, // Remove user logic here
+  },
+  {
+    path: "voiceLanguages",
+    label: "Voice Languages",
+    content: (item) => item.voiceLanguages?.join(", ") || "No data",
+    sortable: false,
+  },
+  {
+    path: "subtitlesLanguages",
+    label: "Subtitles Languages",
+    content: (item) => item.subtitlesLanguages?.join(", ") || "No data",
+    sortable: false,
+  },
+];
 
-    const { user } = this.props;
+const GamesTable = ({ games, user, sortColumn, onSort, onLike, onDelete }) => {
+  // Create a new array for columnsConfig to avoid mutating the original one
+  const columnsConfig = [...gameColumnsConfig];
 
-    this.columns = [
-      {
-        path: "name",
-        label: "Name",
-        sortable: true,
-        content: (game) => (
-          <Link to={`/games/${game.gameID}`}>{game.name}</Link>
-        ),
-      },
-      { path: "platform", label: "Platform", sortable: false },
-      {
-        path: "code",
-        label: "Code",
-        sortable: true,
-        content: (game) =>
-          user && user.isAdmin ? (
-            <Link to={`/games/${game.gameID}/${game._id}`}>{game.code}</Link>
-          ) : (
-            <span>{game.code}</span>
-          ),
-      },
-      {
-        path: "voiceLanguages",
-        label: "Voice Languages",
-        content: (item) => item.voiceLanguages?.join(", ") || "No data",
-        sortable: false,
-      },
-      {
-        path: "subtitlesLanguages",
-        label: "Subtitles Languages",
-        content: (item) => item.subtitlesLanguages?.join(", ") || "No data",
-        sortable: false,
-      },
-    ];
-
-    if (props.onLike) {
-      this.columns.push({
-        key: "like",
-        content: (item) => (
-          <Like
-            liked={item.liked || false}
-            onClick={() => props.onLike(item)}
-          />
-        ),
-        sortable: false,
-      });
-    }
-
-    if (user && user.isAdmin && props.onDelete) {
-      this.columns.push({
-        key: "delete",
-        content: (item) => (
-          <button
-            onClick={() => props.onDelete(item)}
-            className="btn btn-danger btn-sm"
-          >
-            Delete
-          </button>
-        ),
-        sortable: false,
-      });
-    }
-  }
-
-  render() {
-    const { games, sortColumn, onSort } = this.props;
-
-    return (
-      <Table
-        data={games}
-        columns={this.columns}
-        sortColumn={sortColumn}
-        onSort={onSort}
-      />
+  // Modify the 'code' column based on user logic
+  columnsConfig[2].content = (game) =>
+    user && user.isAdmin ? (
+      <Link to={`/games/${game.gameID}/${game._id}`}>{game.code}</Link>
+    ) : (
+      <span>{game.code}</span>
     );
+
+  // Conditionally add 'like' column if onLike is provided
+  if (onLike) {
+    columnsConfig.push({
+      key: "like",
+      content: (game) => (
+        <Like liked={game.liked || false} onClick={() => onLike(game)} />
+      ),
+      sortable: false,
+    });
   }
-}
 
-// Functional wrapper for GamesTable to access auth context
-const GamesTableWrapper = (props) => {
-  const { user } = useAuth(); // Access user from context
+  // Conditionally add 'delete' column if user is an admin and onDelete is provided
+  if (user && user.isAdmin && onDelete) {
+    columnsConfig.push({
+      key: "delete",
+      content: (game) => (
+        <button
+          onClick={() => onDelete(game)}
+          className="btn btn-danger btn-sm"
+        >
+          Delete
+        </button>
+      ),
+      sortable: false,
+    });
+  }
 
-  return <GamesTable {...props} user={user} />; // Pass user as prop to GamesTable
+  return (
+    <DataTable
+      entityType="games"
+      columnsConfig={columnsConfig}
+      data={games}
+      onSort={onSort}
+      sortColumn={sortColumn}
+    />
+  );
 };
 
-export default GamesTableWrapper;
+export default GamesTable;
