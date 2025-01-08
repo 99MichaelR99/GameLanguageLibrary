@@ -1,7 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
-const NavBar = ({ user }) => {
+const NavBar = () => {
+  const { user } = useAuth();
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -45,7 +48,7 @@ const NavBar = ({ user }) => {
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/register">
-                    Registretion
+                    Registration
                   </NavLink>
                 </li>
               </React.Fragment>

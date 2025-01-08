@@ -50,6 +50,11 @@ class GamesPage extends Component {
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This game has already been deleted.");
+      else if (ex.response && ex.response.status === 401) {
+        toast.error("You are not authorized to delete this game.");
+      } else if (ex.response && ex.response.status === 403) {
+        toast.error("You do not have permission to delete this game.");
+      }
       this.setState({ games: originalGames });
     }
   };
@@ -189,9 +194,11 @@ class GamesPage extends Component {
     return (
       <div className="games-page-container d-flex flex-wrap justify-content-center">
         <div className="col-md-3 col-lg-2 sidebar">
-          {user && <Link to="/games/new" className="btn btn-primary mb-3">
-            New Game
-          </Link>}
+          {user && user.isAdmin && (
+            <Link to="/games/new" className="btn btn-primary mb-3">
+              New Game
+            </Link>
+          )}
           <button
             className="btn btn-info toggle-button mb-3"
             onClick={this.handleFilterToggle}

@@ -37,7 +37,6 @@ export async function saveGame(game) {
   };
 
   if (gameID && versionID) {
-    console.log(`${gameUrl(gameID)}/${versionID}`);
     return http.put(`${gameUrl(gameID)}/${versionID}`, newVersion);
   } else if (gameID) return http.post(`${gameUrl(gameID)}`, newVersion);
 

@@ -17,7 +17,7 @@ class GameForm extends Form {
       subtitlesLanguages: [],
     },
     errors: {},
-    dropdownStates: {},
+    multiSelectState: {},
   };
 
   async componentDidMount() {

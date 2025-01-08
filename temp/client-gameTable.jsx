@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import auth from "../services/authService";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/authContext";
 import Table from "./common/table";
 import Like from "./common/like";
 
@@ -8,7 +8,7 @@ class GamesTable extends Component {
   constructor(props) {
     super(props);
 
-    const { user } = this.props;
+    const user = auth.getCurrentUser();
 
     this.columns = [
       {
@@ -88,11 +88,4 @@ class GamesTable extends Component {
   }
 }
 
-// Functional wrapper for GamesTable to access auth context
-const GamesTableWrapper = (props) => {
-  const { user } = useAuth(); // Access user from context
-
-  return <GamesTable {...props} user={user} />; // Pass user as prop to GamesTable
-};
-
-export default GamesTableWrapper;
+export default GamesTable;

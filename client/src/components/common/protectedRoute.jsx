@@ -1,10 +1,10 @@
 // protectedRoute.jsx
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import auth from "../../services/authService";
+import { useAuth } from "../../context/authContext";
 
 const ProtectedRoute = ({ element }) => {
-  const user = auth.getCurrentUser();
+  const { user } = useAuth();
   const location = useLocation(); // Get current location
   if (!user) {
     // Store the current location in the `state` property for the redirect

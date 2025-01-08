@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
-import DropDownBox from "./dropDownBox";
+import MultiSelect from "./multipleSelect";
 import "./form.css";
 
 class Form extends Component {
   state = {
     data: {},
     errors: {},
-    dropdownStates: {}, // To track dropdown open/close states
+    multiSelectState: {},
   };
 
   validate = () => {
@@ -52,7 +52,7 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  handleDropdownSelect = (name, value) => {
+  handleMultiSelect = (name, value) => {
     const data = { ...this.state.data };
     const currentSelections = data[name] || [];
     if (currentSelections.includes(value)) {
@@ -63,11 +63,11 @@ class Form extends Component {
     this.setState({ data });
   };
 
-  toggleDropdown = (name) => {
+  toggleMultiSelect = (name) => {
     this.setState((prevState) => ({
-      dropdownStates: {
-        ...prevState.dropdownStates,
-        [name]: !prevState.dropdownStates[name],
+      multiSelectState: {
+        ...prevState.multiSelectState,
+        [name]: !prevState.multiSelectState[name],
       },
     }));
   };
@@ -87,18 +87,18 @@ class Form extends Component {
     );
   }
 
-  renderCustomDropdown(name, label, options) {
-    const { data, dropdownStates } = this.state;
+  renderMultiSelect(name, label, options) {
+    const { data, multiSelectState } = this.state; 
 
     return (
-      <DropDownBox
+      <MultiSelect 
         data={data}
-        dropdownStates={dropdownStates}
+        multiSelectState={multiSelectState}
         name={name}
         label={label}
         options={options}
-        toggleDropdown={this.toggleDropdown}
-        handleDropdownSelect={this.handleDropdownSelect}
+        toggleMultiSelect={this.toggleMultiSelect}
+        handleMultiSelect={this.handleMultiSelect}
       />
     );
   }

@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import * as userService from "../services/userService";
-import { useAuth } from "../context/authContext";
+import auth from "../services/authService";
 
 class RegisterForm extends Form {
   state = {
@@ -19,7 +19,7 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     try {
       const response = await userService.register(this.state.data);
-      this.props.loginWithJwt(response.headers["x-auth-token"]); // Use loginWithJwt from props
+      auth.loginWithJwt(response.headers["x-auth-token"]);
       window.location.href = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -45,11 +45,4 @@ class RegisterForm extends Form {
   }
 }
 
-// Functional wrapper for RegisterForm to access auth context
-const RegisterFormWrapper = (props) => {
-  const { loginWithJwt } = useAuth(); // Access loginWithJwt from context
-
-  return <RegisterForm {...props} loginWithJwt={loginWithJwt} />;
-};
-
-export default RegisterFormWrapper;
+export default RegisterForm;

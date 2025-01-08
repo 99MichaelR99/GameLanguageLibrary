@@ -17,7 +17,7 @@ class PostForm extends Form {
     },
     users: [],
     errors: {},
-    dropdownStates: {},
+    multiSelectState: {},
   };
 
   componentDidMount() {

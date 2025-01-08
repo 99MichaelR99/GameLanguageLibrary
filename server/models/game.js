@@ -57,9 +57,6 @@ const versionSchema = new mongoose.Schema({
   },
 });
 
-// Create a unique index for version code across all games
-versionSchema.index({ code: 1 }, { unique: true });
-
 const gameSchema = new mongoose.Schema({
   name: {
     type: String,

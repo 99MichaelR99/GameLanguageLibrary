@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { toast } from "react-toastify";
 import GamesTable from "./gamesTable";
-import { getGame } from "../services/gameService";
+import { getGame, deleteGame } from "../services/gameService";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import _ from "lodash";
@@ -9,8 +10,8 @@ class VersionsPage extends Component {
   state = {
     gameID: "",
     gameName: "",
-    sortColumn: { path: "name", order: "asc" },
     versions: [],
+    sortColumn: { path: "name", order: "asc" },
   };
 
   async componentDidMount() {
@@ -23,6 +24,33 @@ class VersionsPage extends Component {
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
+  };
+
+  handleDelete = async (game) => {
+    let { gameID, versions } = this.state;
+    const versionID = game._id;
+
+    if (game.gameID !== gameID) {
+      throw new Error("Game ID mismatch");
+    }
+
+    const originalVersions = versions;
+    const updatedVersions = versions.filter((v) => v._id !== versionID);
+    this.setState({ versions: updatedVersions });
+
+    try {
+      await deleteGame(gameID, versionID);
+      console.log(gameID, versionID);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("This game has already been deleted.");
+      else if (ex.response && ex.response.status === 401) {
+        toast.error("You are not authorized to delete this game.");
+      } else if (ex.response && ex.response.status === 403) {
+        toast.error("You do not have permission to delete this game.");
+      }
+      this.setState({ versions: originalVersions });
+    }
   };
 
   render() {
@@ -43,7 +71,7 @@ class VersionsPage extends Component {
       <div>
         <h1 className="text-center">Versions for {gameName}</h1>
         <div className="d-flex">
-          {user && (
+          {user && user.isAdmin && (
             <Link to={`/games/${gameID}/new`} className="btn btn-primary mb-3">
               New Version
             </Link>
@@ -54,6 +82,7 @@ class VersionsPage extends Component {
           games={data}
           sortColumn={sortColumn}
           onSort={this.handleSort}
+          onDelete={this.handleDelete}
         />
       </div>
     );

@@ -13,7 +13,7 @@ export const renderGameFormContent = (formInstance) => {
       </div>
       {/* Middle Column */}
       <div className="form-middle">
-        {formInstance.renderCustomDropdown(
+        {formInstance.renderMultiSelect(
           "voiceLanguages",
           "Voice Languages",
           languages
@@ -21,7 +21,7 @@ export const renderGameFormContent = (formInstance) => {
       </div>
       {/* Right Column */}
       <div className="form-right">
-        {formInstance.renderCustomDropdown(
+        {formInstance.renderMultiSelect(
           "subtitlesLanguages",
           "Subtitles Languages",
           languages
