@@ -24,15 +24,15 @@ export async function savePost(post) {
     throw new Error("User must be authenticated to save a post.");
   }
 
+  console.log(currentUser);
+
   const newPost = {
     createdBy: currentUser._id,
     gameName: body.gameName,
-    version: {
-      platform: body.version.platform.toUpperCase(),
-      code: body.version.code.replace(/\s+/g, "_").toUpperCase(),
-      voiceLanguages: body.version.voiceLanguages.sort(),
-      subtitlesLanguages: body.version.subtitlesLanguages.sort(),
-    },
+    platform: body.platform.toUpperCase(),
+    code: body.code.replace(/\s+/g, "_").toUpperCase(),
+    voiceLanguages: body.voiceLanguages.sort(),
+    subtitlesLanguages: body.subtitlesLanguages.sort(),
   };
 
   if (postID) {

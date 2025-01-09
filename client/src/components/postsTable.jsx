@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 import DataTable from "./common/dataTable";
 import Like from "./common/like";
 
@@ -8,40 +9,40 @@ const postColumnsConfig = [
     path: "gameName",
     label: "Game Name",
     sortable: true,
-    content: (post) => <Link to={`/posts/${post._id}`}>{post.gameName}</Link>,
+    content: (post) => post.gameName || "No Name",
   },
   {
     path: "platform",
     label: "Platform",
     sortable: false,
-    content: (post) => post.version.platform || "No platform",
+    content: (post) => post.platform || "No platform",
   },
   {
     path: "code",
-    label: "Version Code",
+    label: "Code",
     sortable: true,
-    content: (post) => <span>{post.version.code}</span>, // This will be updated later
+    content: (post) => post.code || "No Code",
   },
   {
     path: "voiceLanguages",
     label: "Voice Languages",
     content: (post) =>
-      post.version.voiceLanguages?.join(", ") || "No voice languages",
+      post.voiceLanguages?.join(", ") || "No languages",
     sortable: false,
   },
   {
     path: "subtitlesLanguages",
     label: "Subtitles Languages",
     content: (post) =>
-      post.version.subtitlesLanguages?.join(", ") || "No subtitles languages",
+      post.subtitlesLanguages?.join(", ") || "No languages",
     sortable: false,
   },
-  {
+  /*{
     path: "createdBy",
     label: "Created By",
     sortable: false,
     content: (post) => post.createdBy || "No creator",
-  },
+  },*/
   {
     path: "date",
     label: "Date",
@@ -50,17 +51,19 @@ const postColumnsConfig = [
   },
 ];
 
-const PostTable = ({ posts, user, sortColumn, onSort, onLike, onDelete }) => {
+const PostTable = ({ posts, sortColumn, onSort, onLike, onDelete }) => {
+  const { user } = useAuth();
   // Create a new array for columnsConfig to avoid mutating the original one
   const columnsConfig = [...postColumnsConfig];
 
   // Modify the 'code' column based on user logic
-  columnsConfig[2].content = (post) =>
-    user && (user._id === post.createdBy || user.isAdmin) ? (
-      <Link to={`/posts/${post._id}/edit`}>{post.version.code}</Link>
+  columnsConfig[2].content = (post) => {
+    return user && (user._id === post.createdBy || user.isAdmin) ? (
+      <Link to={`/posts/${post._id}`}>{post.code}</Link>
     ) : (
-      <span>{post.version.code}</span>
+      <span>{post.code}</span>
     );
+  };
 
   // Conditionally add 'like' column if onLike is provided
   if (onLike) {
@@ -96,7 +99,6 @@ const PostTable = ({ posts, user, sortColumn, onSort, onLike, onDelete }) => {
       data={posts}
       onSort={onSort}
       sortColumn={sortColumn}
-      user={user} // Pass the user to DataTable so that it's available to each column's content
     />
   );
 };

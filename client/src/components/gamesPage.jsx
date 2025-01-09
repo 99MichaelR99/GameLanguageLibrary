@@ -219,7 +219,6 @@ class GamesPage extends Component {
           <GamesTable
             className="table table-bordered w-100"
             games={data}
-            user={user}
             sortColumn={sortColumn}
             onSort={this.handleSort}
             //onLike={this.handleLike}

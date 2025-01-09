@@ -1,13 +1,12 @@
-/*import React, { Component } from "react";
+import React, { Component } from "react";
 import { toast } from "react-toastify";
 import FilteringPanel from "./common/filteringPanel";
-import PostsTable from "./postsTable";
+import PostTable from "./postsTable";
 import Pagination from "./common/pagination";
 import SearchBox from "./common/searchBox";
 import { paginate } from "../utils/paginate";
-import { getPost, deletePost } from "../services/postService";
+import { getPosts, deletePost } from "../services/postService";
 import { Link } from "react-router-dom";
-import "./gamesPage.css";
 import _ from "lodash";
 
 class PostPage extends Component {
@@ -16,7 +15,7 @@ class PostPage extends Component {
     searchQuery: "",
     currentPage: 1,
     pageSize: 10,
-    sortColumn: { path: "name", order: "asc" },
+    sortColumn: { path: "gameName", order: "asc" },
     filter: {
       showFilters: false,
       platforms: [],
@@ -26,51 +25,28 @@ class PostPage extends Component {
   };
 
   async componentDidMount() {
-    const { data: games } = await getGames();
-    this.setState({ games });
+    const { data: posts } = await getPosts();
+    this.setState({ posts });
   }
 
-  handleDelete = async (game) => {
-    const originalGames = this.state.games;
-    const games = originalGames
-      .map((g) => {
-        if (g._id === game.gameID) {
-          const updatedVersions = g.versions.filter((v) => v._id !== game._id);
-          return updatedVersions.length > 0
-            ? { ...g, versions: updatedVersions }
-            : null;
-        }
-        return g;
-      })
-      .filter((g) => g !== null);
-    this.setState({ games });
+  handleDelete = async (post) => {
+    const originalPosts = this.state.posts;
+    const posts = originalPosts.filter((p) => p._id !== post._id);
+    this.setState({ posts });
 
     try {
-      await deleteGame(game.gameID, game._id);
+      await deletePost(post._id);
     } catch (ex) {
-      if (ex.response && ex.response.status === 404)
-        toast.error("This game has already been deleted.");
-      else if (ex.response && ex.response.status === 401) {
-        toast.error("You are not authorized to delete this game.");
-      } else if (ex.response && ex.response.status === 403) {
-        toast.error("You do not have permission to delete this game.");
-      }
-      this.setState({ games: originalGames });
+      toast.error("Could not delete the post.");
+      this.setState({ posts: originalPosts });
     }
   };
 
-  handleLike = (game) => {
-    const games = this.state.games.map((g) => {
-      if (g._id === game.gameID) {
-        const updatedVersions = g.versions.map((v) =>
-          v.code === game.code ? { ...v, liked: !v.liked } : v
-        );
-        return { ...g, versions: updatedVersions };
-      }
-      return g;
-    });
-
-    this.setState({ games });
+  handleLike = (post) => {
+    const posts = [...this.state.posts];
+    const index = posts.findIndex((p) => p._id === post._id);
+    posts[index] = { ...posts[index], liked: !posts[index].liked };
+    this.setState({ posts });
   };
 
   handlePageChange = (page) => {
@@ -78,17 +54,7 @@ class PostPage extends Component {
   };
 
   handleSearch = (query) => {
-    const { showFilters } = this.state.filter;
-    this.setState({
-      searchQuery: query,
-      currentPage: 1,
-      filter: {
-        showFilters: showFilters,
-        platforms: [],
-        voiceLanguages: [],
-        subtitlesLanguages: [],
-      },
-    });
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
 
   handleSort = (sortColumn) => {
@@ -108,8 +74,6 @@ class PostPage extends Component {
     this.setState((prevState) => {
       const updatedFilters = { ...prevState.filter };
 
-      if (!updatedFilters[type]) return;
-
       if (updatedFilters[type].includes(value)) {
         updatedFilters[type] = updatedFilters[type].filter(
           (item) => item !== value
@@ -122,81 +86,46 @@ class PostPage extends Component {
     });
   };
 
-  applyFilters = (versions) => {
-    const { platforms, voiceLanguages, subtitlesLanguages } = this.state.filter;
-
-    return versions.filter((version) => {
-      const platformMatch =
-        platforms.length === 0 || platforms.includes(version.platform);
-      const voiceLanguageMatch =
-        voiceLanguages.length === 0 ||
-        version.voiceLanguages.some((lang) => voiceLanguages.includes(lang));
-      const subtitlesLanguageMatch =
-        subtitlesLanguages.length === 0 ||
-        version.subtitlesLanguages.some((lang) =>
-          subtitlesLanguages.includes(lang)
-        );
-
-      return platformMatch && voiceLanguageMatch && subtitlesLanguageMatch;
-    });
-  };
-
   getPageData = () => {
     const {
-      games: allGames,
+      posts: allPosts,
       currentPage,
       pageSize,
       sortColumn,
       searchQuery,
     } = this.state;
 
-    // Flatten versions first
-    const flattenedVersions = (allGames || []).flatMap((game) => {
-      return game.versions.map((version) => ({
-        name: game.name,
-        gameID: game._id,
-        ...version,
-        like: game.liked || false,
-        isOfficial: version.isOfficial || false,
-      }));
-    });
+    let filteredPosts = allPosts;
 
-    // Now, apply filters selection or search selection to the flattened versions
-    let filteredVersions;
     if (searchQuery)
-      filteredVersions = flattenedVersions.filter((g) =>
-        g.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filteredPosts = allPosts.filter((p) =>
+        p.gameName.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    else filteredVersions = this.applyFilters(flattenedVersions);
 
-    // Sort the filtered versions by the selected column and order
-    const sortedVersions = _.orderBy(
-      filteredVersions,
+    const sortedPosts = _.orderBy(
+      filteredPosts,
       [sortColumn.path],
       [sortColumn.order]
     );
 
-    // Apply pagination
-    const paginatedVersions = paginate(sortedVersions, currentPage, pageSize);
+    const paginatedPosts = paginate(sortedPosts, currentPage, pageSize);
 
-    return { totalCount: filteredVersions.length, data: paginatedVersions };
+    return { totalCount: filteredPosts.length, data: paginatedPosts };
   };
 
   render() {
     const { user } = this.props;
     const { currentPage, pageSize, sortColumn, searchQuery, filter } =
       this.state;
-    if (this.state.games.length === 0)
-      return <p>There are no games in the database.</p>;
 
     const { totalCount, data } = this.getPageData();
 
     return (
-      <div className="games-page-container d-flex flex-wrap justify-content-center">
+      <div className="post-page-container d-flex flex-wrap justify-content-center">
         <div className="col-md-3 col-lg-2 sidebar">
-          {user && user.isAdmin && (
-            <Link to="/games/new" className="btn btn-primary mb-3">
-              New Game
+          {user && (
+            <Link to="/posts/new" className="btn btn-primary mb-3">
+              New Post
             </Link>
           )}
           <button
@@ -216,13 +145,12 @@ class PostPage extends Component {
           <div className="d-flex justify-content-between align-items-center">
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
           </div>
-          <GamesTable
-            className="table table-bordered w-100"
-            games={data}
+          <PostTable
+            posts={data}
             sortColumn={sortColumn}
+            onSort={this.handleSort}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
-            onSort={this.handleSort}
           />
           <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
             <p className="results-count m-0"> {totalCount} Results</p>
@@ -239,20 +167,9 @@ class PostPage extends Component {
   }
 }
 
-export default PostPage;*/
+export default PostPage;
 
-
-
-
-
-
-
-
-
-
-
-
-import React from "react";
+/*import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Posts = () => {
@@ -271,4 +188,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Posts;*/

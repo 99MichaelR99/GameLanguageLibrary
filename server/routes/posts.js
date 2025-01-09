@@ -23,21 +23,19 @@ router.get("/:id", async (req, res) => {
 // Create a new post
 router.post("/", auth, async (req, res) => {
   // Validate the request body
+  console.log("req:", req.body);
   const { error } = validate(req.body);
+  console.log("error:", error);
   if (error) return res.status(400).send(error.details[0].message);
 
-  // Extract game name and version details from the request body
-  const { createdBy, gameName, version } = req.body;
-
   // Create a new post document
-  const post = new Post({
-    createdBy: createdBy,
-    gameName: gameName,
-    version: version,
-  });
+  const post = new Post(req.body);
+
+  console.log("post:", post);
 
   // Save the post
   const savedPost = await post.save();
+  console.log("savedPost:", savedPost);
   res.send(savedPost);
 });
 
@@ -52,7 +50,10 @@ router.put("/:id", auth, async (req, res) => {
     req.params.id,
     {
       gameName: req.body.gameName,
-      version: req.body.version,
+      platform: req.body.platform,
+      code: req.body.code,
+      voiceLanguages: req.body.voiceLanguages,
+      subtitlesLanguages: req.body.subtitlesLanguages,
     },
     { new: true } // Return the updated post
   );
@@ -66,7 +67,7 @@ router.put("/:id", auth, async (req, res) => {
 // Delete a post
 router.delete("/:id", auth, async (req, res) => {
   // Find the post by ID and delete it
-  const post = await Post.findByIdAndRemove(req.params.id);
+  const post = await Post.findByIdAndDelete(req.params.id);
 
   if (!post)
     return res.status(404).send("The post with the given ID was not found.");

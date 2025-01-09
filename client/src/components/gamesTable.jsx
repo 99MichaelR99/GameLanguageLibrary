@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 import DataTable from "./common/dataTable";
 import Like from "./common/like";
 
@@ -31,7 +32,9 @@ const gameColumnsConfig = [
   },
 ];
 
-const GamesTable = ({ games, user, sortColumn, onSort, onLike, onDelete }) => {
+const GamesTable = ({ games, sortColumn, onSort, onLike, onDelete }) => {
+  const { user } = useAuth();
+
   // Create a new array for columnsConfig to avoid mutating the original one
   const columnsConfig = [...gameColumnsConfig];
 

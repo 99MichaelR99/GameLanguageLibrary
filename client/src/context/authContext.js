@@ -8,8 +8,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const currentUser = auth.getCurrentUser();
-    setUser(currentUser);
-  }, []);
+    if (currentUser) {
+      setUser(currentUser); // Set user if it's available
+    }
+  }, []); // This effect runs only once on mount (initial load or after refresh)
 
   const login = async (email, password) => {
     await auth.login(email, password);

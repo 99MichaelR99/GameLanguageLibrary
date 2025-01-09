@@ -20,8 +20,6 @@ import "./App.css";
 const App = () => {
   const { user } = useAuth();
 
-  console.log(user);
-
   return (
     <React.Fragment>
       <ToastContainer />
@@ -46,8 +44,14 @@ const App = () => {
             element={<ProtectedRoute element={<GameForm user={user} />} />}
           />
           <Route path="/games" element={<GamesPage user={user} />} />
-          <Route path="/posts/:id" element={<PostForm />} />
-          <Route path="/posts" element={<Posts />} />
+          <Route
+            path="/posts/:id"
+            element={<ProtectedRoute element={<PostForm user={user} />} />}
+          />
+          <Route
+            path="/posts"
+            element={<ProtectedRoute element={<Posts user={user} />} />}
+          />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="/" exact element={<Navigate to="/games" replace />} />
           <Route path="*" element={<Navigate to="/not-found" replace />} />
