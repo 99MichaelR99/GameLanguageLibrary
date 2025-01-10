@@ -6,10 +6,10 @@ import Like from "./common/like";
 
 const postColumnsConfig = [
   {
-    path: "gameName",
+    path: "name",
     label: "Game Name",
     sortable: true,
-    content: (post) => post.gameName || "No Name",
+    content: (post) => post.gameName || post.name || "No Name",
   },
   {
     path: "platform",
@@ -26,15 +26,13 @@ const postColumnsConfig = [
   {
     path: "voiceLanguages",
     label: "Voice Languages",
-    content: (post) =>
-      post.voiceLanguages?.join(", ") || "No languages",
+    content: (post) => post.voiceLanguages?.join(", ") || "No languages",
     sortable: false,
   },
   {
     path: "subtitlesLanguages",
     label: "Subtitles Languages",
-    content: (post) =>
-      post.subtitlesLanguages?.join(", ") || "No languages",
+    content: (post) => post.subtitlesLanguages?.join(", ") || "No languages",
     sortable: false,
   },
   /*{
