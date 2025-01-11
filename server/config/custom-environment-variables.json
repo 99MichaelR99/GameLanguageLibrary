@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": "gameLanguageVerify_jwtPrivateKey"
+  "jwtPrivateKey": "gameLanguageVerify_jwtPrivateKey",
+  "db": "glv_db"
 }
