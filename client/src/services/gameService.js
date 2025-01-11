@@ -1,8 +1,7 @@
 import http from "./httpService";
-import config from "../config.json";
 import auth from "../services/authService";
 
-const apiEndpoint = config.apiUrl + "/games";
+const apiEndpoint = "/games";
 
 function gameUrl(id) {
   return `${apiEndpoint}/${id}`;
