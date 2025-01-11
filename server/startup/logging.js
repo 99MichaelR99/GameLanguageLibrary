@@ -1,6 +1,7 @@
 const winston = require("winston");
 const debug = require("debug")("app:startup");
 const morgan = require("morgan");
+const config = require("config");
 require("winston-mongodb");
 require("express-async-errors");
 
@@ -28,7 +29,7 @@ module.exports = function (app) {
   winston.add(new winston.transports.File({ filename: "log" }));
   winston.add(
     new winston.transports.MongoDB({
-      db: "mongodb://127.0.0.1/GameLanguageVerify",
+      db: config.get("db"), //mongodb://127.0.0.1/GameLanguageVerify
       level: "info",
     })
   );

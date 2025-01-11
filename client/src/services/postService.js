@@ -23,8 +23,6 @@ export async function savePost(post) {
     throw new Error("User must be authenticated to save a post.");
   }
 
-  console.log(currentUser);
-
   const newPost = {
     createdBy: currentUser._id,
     gameName: body.gameName,

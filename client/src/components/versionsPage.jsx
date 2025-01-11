@@ -40,7 +40,6 @@ class VersionsPage extends Component {
 
     try {
       await deleteGame(gameID, versionID);
-      console.log(gameID, versionID);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This game has already been deleted.");

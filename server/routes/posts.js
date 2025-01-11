@@ -23,19 +23,14 @@ router.get("/:id", async (req, res) => {
 // Create a new post
 router.post("/", auth, async (req, res) => {
   // Validate the request body
-  console.log("req:", req.body);
   const { error } = validate(req.body);
-  console.log("error:", error);
   if (error) return res.status(400).send(error.details[0].message);
 
   // Create a new post document
   const post = new Post(req.body);
 
-  console.log("post:", post);
-
   // Save the post
   const savedPost = await post.save();
-  console.log("savedPost:", savedPost);
   res.send(savedPost);
 });
 
