@@ -4,11 +4,13 @@ import DataPage from "./common/dataPage";
 import GamesTable from "./gamesTable";
 import { getGames, deleteGame } from "../services/gameService";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
-const GamesPage = ({ user }) => {
+const GamesPage = () => {
+  const { user } = useAuth(); // Use useAuth to access the user context
+
   const renderHeader = () =>
-    user &&
-    user.isAdmin && (
+    user?.isAdmin && (
       <Link to="/games/new" className="btn btn-primary mb-3">
         New Game
       </Link>
@@ -25,13 +27,13 @@ const GamesPage = ({ user }) => {
   );
 
   const transformData = (allGames) => {
-    return (allGames || []).flatMap((game) => {
-      return game.versions.map((version) => ({
+    return (allGames || []).flatMap((game) =>
+      game.versions.map((version) => ({
         name: game.name,
         gameID: game._id,
         ...version,
-      }));
-    });
+      }))
+    );
   };
 
   const handleDeleteGame = async (game) => {
@@ -40,7 +42,7 @@ const GamesPage = ({ user }) => {
       await deleteGame(gameID, _id); // Call the delete service with both IDs
       toast.success("Game deleted successfully!");
     } catch (ex) {
-      if (ex.response && ex.response.status === 404)
+      if (ex.response?.status === 404)
         toast.error("This game has already been deleted.");
       throw ex; // Re-throw error for the DataPage to catch
     }

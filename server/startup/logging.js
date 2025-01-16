@@ -29,7 +29,8 @@ module.exports = function (app) {
   winston.add(new winston.transports.File({ filename: "log" }));
   winston.add(
     new winston.transports.MongoDB({
-      db: config.get("db"), //mongodb://127.0.0.1/GameLanguageVerify
+      //db: config.get("db"),
+      db: "mongodb://127.0.0.1/GameLanguageVerify",
       level: "info",
     })
   );

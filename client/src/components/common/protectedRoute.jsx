@@ -1,16 +1,18 @@
-// protectedRoute.jsx
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuth } from "../../context/authContext";
+import withRouter from "../../hoc/withRouter";
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = ({ element, location, navigate }) => {
   const { user } = useAuth();
-  const location = useLocation(); // Get current location
-  if (!user) {
-    // Store the current location in the `state` property for the redirect
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { replace: true, state: { from: location } });
+    }
+  }, [user, navigate, location]);
+
+  if (!user) return null;
   return element;
 };
 
-export default ProtectedRoute;
+export default withRouter(ProtectedRoute);

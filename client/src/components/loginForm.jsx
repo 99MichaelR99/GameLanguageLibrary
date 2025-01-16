@@ -1,13 +1,16 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { useAuth } from "../context/authContext";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import AuthContext from "../context/authContext";
+import withRouter from "../hoc/withRouter";
 
 class LoginForm extends Form {
+  static contextType = AuthContext;
+
   state = {
     data: { email: "", password: "" },
     errors: {},
+    redirectTo: null,
   };
 
   schema = {
@@ -15,13 +18,29 @@ class LoginForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
+  componentDidMount() {
+    // Redirect if already logged in
+    if (this.context.user) {
+      this.setState({ redirectTo: "/" });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Redirect if state has been updated and shouldRedirect is true
+    if (
+      this.state.redirectTo &&
+      this.state.redirectTo !== prevState.redirectTo
+    ) {
+      this.props.navigate(this.state.redirectTo, { replace: true });
+    }
+  }
+
   doSubmit = async () => {
     const { data } = this.state;
-    const { login } = this.props; // Get login from props
     try {
-      await login(data.email, data.password); // Call login from context
+      await this.context.login(data.email, data.password);
       const { from } = this.props.location.state || { from: { pathname: "/" } };
-      this.props.navigate(from); // Redirect to the original path
+      this.setState({ redirectTo: from }); // Update state with redirect destination
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -32,8 +51,6 @@ class LoginForm extends Form {
   };
 
   render() {
-    if (this.props.user) return <Navigate to="/" replace />; // If user is logged in, redirect
-
     return (
       <div>
         <h1>Login</h1>
@@ -47,21 +64,4 @@ class LoginForm extends Form {
   }
 }
 
-// Use hooks to access location, navigate, and user in the functional component
-function LoginFormWrapper(props) {
-  const { login, user } = useAuth(); // Access login and user from context
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  return (
-    <LoginForm
-      {...props}
-      login={login} // Pass login function to class component
-      user={user} // Pass user to check if already logged in
-      location={location}
-      navigate={navigate}
-    />
-  );
-}
-
-export default LoginFormWrapper;
+export default withRouter(LoginForm);

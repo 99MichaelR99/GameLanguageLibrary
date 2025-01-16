@@ -4,7 +4,7 @@ import Form from "./common/form";
 import { toast } from "react-toastify";
 import { renderGameFormContent } from "./gameFormContent";
 import { getPost, savePost } from "../services/postService";
-import { useParams, useNavigate } from "react-router-dom";
+import withRouter from "../hoc/withRouter";
 
 class PostForm extends Form {
   state = {
@@ -89,15 +89,6 @@ class PostForm extends Form {
       </div>
     );
   }
-}
-
-// Helper function to pass router hooks to class components
-function withRouter(Component) {
-  return function (props) {
-    const navigate = useNavigate();
-    const params = useParams();
-    return <Component {...props} navigate={navigate} params={params} />;
-  };
 }
 
 export default withRouter(PostForm);

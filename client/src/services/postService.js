@@ -1,7 +1,8 @@
 import http from "./httpService";
 import auth from "../services/authService";
+import config from "../config.json";
 
-const apiEndpoint = "/posts";
+const apiEndpoint = config.apiUrl + "/posts";
 
 function postUrl(id) {
   return `${apiEndpoint}/${id}`;

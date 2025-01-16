@@ -1,4 +1,4 @@
-const winston = require("winston");
+/*const winston = require("winston");
 const mongoose = require("mongoose");
 const config = require("config");
 
@@ -10,8 +10,8 @@ module.exports = function () {
     .catch((err) =>
       winston.error("Failed to connect to MongoDB:", err.message)
     );
-};
-/*const winston = require("winston");
+};*/
+const winston = require("winston");
 const mongoose = require("mongoose");
 
 module.exports = function () {
@@ -21,4 +21,4 @@ module.exports = function () {
     .connect(url)
     .then(() => winston.info("Connected to MongoDB..."))
     .catch((err) => winston.error("Failed to connect to MongoDB:", err));
-};*/
+};

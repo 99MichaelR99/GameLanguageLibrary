@@ -1,11 +1,10 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useAuth } from "./context/authContext";
 import GamesPage from "./components/gamesPage";
 import Versions from "./components/versionsPage";
 import GameForm from "./components/gameForm";
-import Posts from "./components/postsPage";
+import PostsPage from "./components/postsPage";
 import NotFound from "./components/notFoundPage";
 import ContactUs from "./components/contactUsPage";
 import NavBar from "./components/navbar";
@@ -18,8 +17,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 const App = () => {
-  const { user } = useAuth();
-
   return (
     <React.Fragment>
       <ToastContainer />
@@ -32,25 +29,25 @@ const App = () => {
           <Route path="/logout" element={<Logout />} />
           <Route
             path="/games/:gameID/:versionID"
-            element={<ProtectedRoute element={<GameForm user={user} />} />}
+            element={<ProtectedRoute element={<GameForm />} />}
           />
           <Route
             path="/games/:gameID/new"
-            element={<ProtectedRoute element={<GameForm user={user} />} />}
+            element={<ProtectedRoute element={<GameForm />} />}
           />
-          <Route path="/games/:gameID" element={<Versions user={user} />} />
+          <Route path="/games/:gameID" element={<Versions />} />
           <Route
             path="/games/new"
-            element={<ProtectedRoute element={<GameForm user={user} />} />}
+            element={<ProtectedRoute element={<GameForm />} />}
           />
-          <Route path="/games" element={<GamesPage user={user} />} />
+          <Route path="/games" element={<GamesPage />} />
           <Route
             path="/posts/:id"
-            element={<ProtectedRoute element={<PostForm user={user} />} />}
+            element={<ProtectedRoute element={<PostForm />} />}
           />
           <Route
             path="/posts"
-            element={<ProtectedRoute element={<Posts user={user} />} />}
+            element={<ProtectedRoute element={<PostsPage />} />}
           />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="/" exact element={<Navigate to="/games" replace />} />

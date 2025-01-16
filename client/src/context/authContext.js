@@ -1,17 +1,21 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import auth from "../services/authService";
 
 const AuthContext = createContext();
+AuthContext.displayName = "AuthContext";
+
+export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Initialize user directly from localStorage instead of delaying it
+  const [user, setUser] = useState(auth.getCurrentUser());
 
-  useEffect(() => {
+  /*useEffect(() => {
     const currentUser = auth.getCurrentUser();
     if (currentUser) {
       setUser(currentUser); // Set user if it's available
     }
-  }, []); // This effect runs only once on mount (initial load or after refresh)
+  }, []); // This effect runs only once on mount (initial load or after refresh)*/
 
   const login = async (email, password) => {
     await auth.login(email, password);
@@ -28,9 +32,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const getJwt = () => {
-    return auth.getJwt();
-  };
+  const getJwt = () => auth.getJwt();
 
   return (
     <AuthContext.Provider

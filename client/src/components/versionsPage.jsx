@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { toast } from "react-toastify";
 import GamesTable from "./gamesTable";
 import { getGame, deleteGame } from "../services/gameService";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import withRouter from "../hoc/withRouter";
+import AuthContext from "../context/authContext";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 
@@ -54,7 +55,6 @@ class VersionsPage extends Component {
 
   render() {
     const { gameID, gameName, sortColumn, versions } = this.state; // Get filtered versions from state
-    const { user } = this.props;
 
     const data = _.orderBy(
       versions.map((version) => ({
@@ -67,42 +67,35 @@ class VersionsPage extends Component {
     );
 
     return (
-      <div>
-        <h1 className="text-center">Versions for {gameName}</h1>
-        <div className="d-flex">
-          {user && user.isAdmin && (
-            <Link to={`/games/${gameID}/new`} className="btn btn-primary mb-3">
-              New Version
-            </Link>
-          )}
-        </div>
-        <GamesTable
-          className="table table-bordered w-100"
-          games={data}
-          sortColumn={sortColumn}
-          onSort={this.handleSort}
-          onDelete={this.handleDelete}
-        />
-      </div>
+      <AuthContext.Consumer>
+        {(authContext) => {
+          const { user } = authContext;
+          return (
+            <div>
+              <h1 className="text-center">Versions for {gameName}</h1>
+              <div className="d-flex">
+                {user?.isAdmin && (
+                  <Link
+                    to={`/games/${gameID}/new`}
+                    className="btn btn-primary mb-3"
+                  >
+                    New Version
+                  </Link>
+                )}
+              </div>
+              <GamesTable
+                className="table table-bordered w-100"
+                games={data}
+                sortColumn={sortColumn}
+                onSort={this.handleSort}
+                onDelete={this.handleDelete}
+              />
+            </div>
+          );
+        }}
+      </AuthContext.Consumer>
     );
   }
-}
-
-// Helper function to pass router hooks to class components
-function withRouter(Component) {
-  return function (props) {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const params = useParams();
-    return (
-      <Component
-        {...props}
-        location={location}
-        navigate={navigate}
-        params={params}
-      />
-    );
-  };
 }
 
 export default withRouter(VersionsPage);

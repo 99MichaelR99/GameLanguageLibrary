@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { renderGameFormContent } from "./gameFormContent";
 import { getGame, saveGame } from "../services/gameService";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import AuthContext from "../context/authContext";
+import withRouter from "../hoc/withRouter";
 
 class GameForm extends Form {
   state = {
@@ -92,31 +93,17 @@ class GameForm extends Form {
   };
 
   render() {
-    const { user } = this.props;
     return (
-      <div className="form-container">
-        <h1>Create / Update a Game</h1>
-        {renderGameFormContent(this, user)}
-      </div>
+      <AuthContext.Consumer>
+        {(authContext) => (
+          <div className="form-container">
+            <h1>Create / Update a Game</h1>
+            {renderGameFormContent(this, authContext.user)}
+          </div>
+        )}
+      </AuthContext.Consumer>
     );
   }
-}
-
-// Helper function to pass router hooks to class components
-function withRouter(Component) {
-  return function (props) {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const params = useParams();
-    return (
-      <Component
-        {...props}
-        location={location}
-        navigate={navigate}
-        params={params}
-      />
-    );
-  };
 }
 
 export default withRouter(GameForm);
