@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import "./navbar.css";
 
 const NavBar = () => {
   const { user } = useAuth();
+  const [theme, setTheme] = useState("light"); // Default theme
+
+  // Initialize theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  // Update theme dynamically and persist in localStorage
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           Game Language Verify
@@ -23,7 +40,6 @@ const NavBar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Main navigation links */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
@@ -43,8 +59,24 @@ const NavBar = () => {
             </li>
           </ul>
 
-          {/* User links aligned to the right */}
           <ul className="navbar-nav ms-auto">
+            {/* Dark/Light Theme Toggle Switch */}
+            <li className="nav-item">
+              <div className="d-flex align-items-center">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={theme === "dark"}
+                    onChange={toggleTheme}
+                  />
+                  <span className="slider">
+                    <span className="icon icon-left">🌞</span>
+                    <span className="icon icon-right">🌙</span>
+                  </span>
+                </label>
+              </div>
+            </li>
+
             {!user && [
               <li className="nav-item" key="login">
                 <NavLink className="nav-link" to="/login">

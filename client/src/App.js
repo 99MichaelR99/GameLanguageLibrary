@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import HomePage from "./components/homePage";
 import GamesPage from "./components/gamesPage";
 import Versions from "./components/versionsPage";
 import GameForm from "./components/gameForm";
@@ -8,7 +9,7 @@ import PostsPage from "./components/postsPage";
 import NotFound from "./components/notFoundPage";
 import ContactUs from "./components/contactUsPage";
 import NavBar from "./components/navbar";
-import Logout from "./components/logout.";
+import Logout from "./components/logout";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import PostForm from "./components/postForm";
@@ -23,6 +24,7 @@ const App = () => {
       <NavBar />
       <main className="container">
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
@@ -50,7 +52,6 @@ const App = () => {
             element={<ProtectedRoute element={<PostsPage />} />}
           />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="/" exact element={<Navigate to="/games" replace />} />
           <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Routes>
       </main>

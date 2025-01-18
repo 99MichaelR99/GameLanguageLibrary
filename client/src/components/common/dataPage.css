@@ -13,6 +13,8 @@
 .main-content {
   padding: 0;
   overflow-x: auto;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 /* Table Styling */
@@ -25,6 +27,8 @@
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 /* Container for the search box and results */
@@ -33,17 +37,29 @@
   justify-content: space-between; /* Space between elements */
   align-items: center; /* Align vertically */
   margin-bottom: 5px; /* Add some spacing below the row */
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 /* Adjust search input styling */
 .search-results-container input {
   flex: 1; /* Optional: make the search box flexible */
   margin-right: 10px; /* Add spacing between the input and other content */
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
+  border: 1px solid var(--toggle-bg); /* Use theme variable */
+}
+
+.search-results-container input:focus {
+  outline: none;
+  border-color: var(--link-hover-color); /* Use theme variable */
+  box-shadow: 0 0 5px var(--link-hover-color);
 }
 
 /* Styling for "# Results" */
 .results-count {
   white-space: nowrap; /* Prevent wrapping */
+  color: var(--text-color); /* Use theme variable */
 }
 
 /* Sidebar Styles */
@@ -54,6 +70,9 @@
   width: 250px; /* Fixed width for sidebar */
   display: flex;
   flex-direction: column; /* Ensure child elements stack vertically */
+  background-color: var(--navbar-bg); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
+  border-right: 1px solid var(--toggle-bg); /* Use theme variable */
 }
 .sidebar {
   margin-right: 10px; /* Create a gap below sidebar elements */
@@ -62,16 +81,26 @@
 /* Filtering Panel Styles */
 .filtering-panel {
   padding: 5px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: var(--background-color); /* Use theme variable */
+  border: 1px solid var(--toggle-bg); /* Use theme variable */
   width: 100%; /* Full width inside the sidebar */
   max-width: 100%; /* Ensure no overflow */
   min-width: 0; /* Prevent unexpected expansion */
   white-space: normal; /* Allow wrapping of text */
+  color: var(--text-color); /* Use theme variable */
 }
 
 .filtering-panel input {
   margin-right: 5px;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
+  border: 1px solid var(--toggle-bg); /* Use theme variable */
+}
+
+.filtering-panel input:focus {
+  outline: none;
+  border-color: var(--link-hover-color); /* Use theme variable */
+  box-shadow: 0 0 5px var(--link-hover-color);
 }
 
 /* Main Content */
@@ -80,4 +109,6 @@
   overflow-x: hidden; /* Ensure no horizontal scrolling */
   flex: 1; /* Allow the main content to expand */
   width: calc(100% - 250px); /* Adjust for the sidebar width */
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }

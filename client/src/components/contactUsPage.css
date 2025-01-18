@@ -1,0 +1,67 @@
+.contact-us-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid var(--toggle-bg); /* Use theme variable for border */
+  border-radius: 10px;
+  background-color: var(--background-color); /* Use theme variable */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contact-us-container .character-counter {
+  font-size: 12px;
+  color: var(--text-color); /* Use theme variable */
+  text-align: right;
+  margin-top: 5px;
+}
+
+.contact-us-container .form-group textarea,
+.contact-us-container .form-group input {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--toggle-bg); /* Use theme variable */
+  background-color: var(--navbar-bg); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
+}
+
+.contact-us-container .form-group textarea:focus,
+.contact-us-container .form-group input:focus {
+  border-color: var(--link-hover-color); /* Use theme variable */
+  outline: none;
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); /* Use hover color for focus effect */
+}
+
+.contact-us-container h1 {
+  font-size: 32px;
+  color: var(--text-color); /* Use theme variable */
+  text-align: center;
+}
+
+.contact-us-container p {
+  font-size: 16px;
+  color: var(--text-color); /* Use theme variable */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form .form-group {
+  margin-bottom: 15px;
+}
+
+form .btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: var(--link-hover-color); /* Use theme variable */
+  color: var(--background-color); /* Use theme variable */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form .btn:hover {
+  background-color: var(--toggle-bg); /* Use theme variable */
+}

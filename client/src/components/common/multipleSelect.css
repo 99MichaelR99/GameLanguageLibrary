@@ -4,10 +4,11 @@
 
 .multiple-select-box {
   padding: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--toggle-bg); /* Use theme variable for border */
   cursor: pointer;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
   min-width: 200px;
   font-size: 16px;
 }
@@ -17,26 +18,30 @@
   top: calc(100% + 5px);
   left: 0;
   width: 100%;
-  border: 1px solid #ccc;
-  background: white;
+  border: 1px solid var(--toggle-bg); /* Use theme variable */
+  background: var(--navbar-bg); /* Use theme variable */
   z-index: 10;
   max-height: 200px;
   overflow-y: auto;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--text-color); /* Use theme variable */
 }
 
 .multiple-select-list li {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 16px;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 .multiple-select-list li.selected {
-  background-color: #d4edda;
+  background-color: var(--link-hover-color); /* Use theme variable */
+  color: var(--background-color); /* Ensure contrast */
   font-weight: bold;
 }
 
 .multiple-select-list li:hover {
-  background-color: #f1f1f1;
+  background-color: var(--toggle-bg); /* Use theme variable */
 }

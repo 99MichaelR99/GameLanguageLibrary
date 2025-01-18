@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 .form-content {
@@ -12,6 +14,8 @@
   width: 100%;
   margin: 0 auto;
   gap: 30px;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 .column {
@@ -23,20 +27,23 @@
 
 .form-group {
   margin-bottom: 20px;
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
 
 button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--link-hover-color); /* Use theme variable */
+  color: var(--toggle-switch-color); /* Use theme variable */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--navbar-bg); /* Use theme variable */
 }
 
 .form-left,
@@ -44,5 +51,6 @@ button:hover {
 .form-right {
   flex: 1;
   width: 33.33%; /* Ensure equal widths */
+  background-color: var(--background-color); /* Use theme variable */
+  color: var(--text-color); /* Use theme variable */
 }
-
