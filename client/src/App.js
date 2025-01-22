@@ -12,6 +12,7 @@ import NavBar from "./components/navbar";
 import Logout from "./components/logout";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import ProfilePage from "./components/profile";
 import PostForm from "./components/postForm";
 import ProtectedRoute from "./components/common/protectedRoute";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,6 +30,10 @@ const App = () => {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/logout" element={<Logout />} />
+          <Route
+            path="/me"
+            element={<ProtectedRoute element={<ProfilePage />} />}
+          />
           <Route
             path="/games/:gameID/:versionID"
             element={<ProtectedRoute element={<GameForm />} />}

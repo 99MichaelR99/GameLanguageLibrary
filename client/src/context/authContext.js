@@ -10,16 +10,15 @@ export const AuthProvider = ({ children }) => {
   // Initialize user directly from localStorage instead of delaying it
   const [user, setUser] = useState(auth.getCurrentUser());
 
-  /*useEffect(() => {
-    const currentUser = auth.getCurrentUser();
-    if (currentUser) {
-      setUser(currentUser); // Set user if it's available
-    }
-  }, []); // This effect runs only once on mount (initial load or after refresh)*/
-
   const login = async (email, password) => {
-    await auth.login(email, password);
-    setUser(auth.getCurrentUser());
+    try {
+      await auth.login(email, password);
+      const currentUser = auth.getCurrentUser();
+      setUser(currentUser); // Update user after successful login
+    } catch (error) {
+      // Handle error (e.g., invalid credentials)
+      console.error("Login error", error);
+    }
   };
 
   const loginWithJwt = (jwt) => {
@@ -34,6 +33,8 @@ export const AuthProvider = ({ children }) => {
 
   const getJwt = () => auth.getJwt();
 
+  const updateUser = (updatedUser) => setUser(updatedUser);
+
   return (
     <AuthContext.Provider
       value={{
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         loginWithJwt,
         logout,
         getJwt,
+        updateUser,
       }}
     >
       {children}

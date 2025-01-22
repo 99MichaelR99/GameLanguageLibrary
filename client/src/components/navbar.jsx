@@ -5,7 +5,7 @@ import "./navbar.css";
 
 const NavBar = () => {
   const { user } = useAuth();
-  const [theme, setTheme] = useState("light"); // Default theme
+  const [theme, setTheme] = useState("light");
 
   // Initialize theme from localStorage
   useEffect(() => {

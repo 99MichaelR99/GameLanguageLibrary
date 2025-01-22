@@ -10,3 +10,12 @@ export function register(user) {
     password: user.password,
   });
 }
+
+export function updateProfile(user) {
+  return http.put(apiEndpoint + "/me", {
+    name: user.name,
+    email: user.email,
+    oldPassword: user.oldPassword,
+    newPassword: user.newPassword,
+  });
+}
