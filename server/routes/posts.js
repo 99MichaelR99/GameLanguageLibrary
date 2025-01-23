@@ -4,9 +4,16 @@ const { Game } = require("../models/game");
 const express = require("express");
 const router = express.Router();
 
-// Get all posts
+// Get all posts or posts by a specific user
 router.get("/", async (req, res) => {
-  const posts = await Post.find().sort("-date");
+  const { createdBy } = req.query;
+
+  let filter = {};
+  if (createdBy) {
+    filter.createdBy = createdBy;
+  }
+
+  const posts = await Post.find(filter).sort("-date");
   res.send(posts);
 });
 

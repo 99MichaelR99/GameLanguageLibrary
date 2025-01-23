@@ -14,17 +14,27 @@ class DataTable extends Component {
         ? col.content
         : (item) => item[col.path] || "No data",
     }));
+
+    // Default sortColumn state
+    this.state = {
+      sortColumn: this.props.sortColumn || { path: "name", order: "asc" },
+    };
   }
 
+  handleSort = (column) => {
+    this.setState({ sortColumn: column });
+  };
+
   render() {
-    const { data, sortColumn, onSort } = this.props;
+    const { data } = this.props;
+    const { sortColumn } = this.state;
 
     return (
       <Table
         data={data}
         columns={this.columns}
         sortColumn={sortColumn}
-        onSort={onSort}
+        onSort={this.props.onSort || this.handleSort}
       />
     );
   }

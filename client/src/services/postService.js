@@ -16,6 +16,10 @@ export function getPost(postID) {
   return http.get(postUrl(postID));
 }
 
+export function getPostsByUser(userId) {
+  return http.get(`${apiEndpoint}?createdBy=${userId}`);
+}
+
 export async function savePost(post) {
   let { _id: postID, ...body } = post;
 
