@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FilteringPanel from "./filteringPanel";
 import SearchBox from "./searchBox";
-import Pagination from "./pagination";
+import PaginationController from "./paginationController";
 import { paginate } from "../../utils/paginate";
 import _ from "lodash";
 import "./dataPage.css";
@@ -63,6 +63,12 @@ class DataPage extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+
+  handlePageSizeChange = (pageSize) => {
+    if (pageSize >= 1 && pageSize <= 100) {
+      this.setState({ pageSize, currentPage: 1 });
+    }
   };
 
   handleSearch = (query) => {
@@ -164,32 +170,32 @@ class DataPage extends Component {
       <div className="data-page-container d-flex flex-wrap justify-content-center">
         <div className="col-md-3 col-lg-2 sidebar">
           {renderHeader && renderHeader()}
-          <button
-            className="btn btn-info toggle-button mb-3"
-            onClick={this.handleFilterToggle}
-          >
-            {filter.showFilters ? "Hide Filters" : "Show Filters"}
-          </button>
-          {filter.showFilters && (
-            <FilteringPanel
-              filter={filter}
-              onFilterChange={this.handleFilterChange}
-            />
-          )}
+          <FilteringPanel
+            filter={filter}
+            onFilterToggle={this.handleFilterToggle}
+            onFilterChange={this.handleFilterChange}
+          />
         </div>
 
         <div className="col main-content flex-grow-1">
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           {renderTable &&
-            renderTable(data, sortColumn, this.handleSort, this.handleLike, this.handleDelete)}
+            renderTable(
+              data,
+              sortColumn,
+              this.handleSort,
+              this.handleLike,
+              this.handleDelete
+            )}
           <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
-            <p className="results-count m-0">{totalCount} Results</p>
-            <Pagination
-              itemsCount={totalCount}
+            <PaginationController
+              totalCount={totalCount}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={this.handlePageChange}
+              onPageSizeChange={this.handlePageSizeChange}
             />
+            <p className="results-count m-0">{totalCount} Results</p>
           </div>
         </div>
       </div>

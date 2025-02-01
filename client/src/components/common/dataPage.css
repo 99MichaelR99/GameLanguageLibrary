@@ -70,7 +70,6 @@
   width: 250px; /* Fixed width for sidebar */
   display: flex;
   flex-direction: column; /* Ensure child elements stack vertically */
-  background-color: var(--navbar-bg); /* Use theme variable */
   color: var(--text-color); /* Use theme variable */
   border-right: 1px solid var(--toggle-bg); /* Use theme variable */
 }
@@ -80,9 +79,7 @@
 
 /* Filtering Panel Styles */
 .filtering-panel {
-  padding: 5px;
   background-color: var(--background-color); /* Use theme variable */
-  border: 1px solid var(--toggle-bg); /* Use theme variable */
   width: 100%; /* Full width inside the sidebar */
   max-width: 100%; /* Ensure no overflow */
   min-width: 0; /* Prevent unexpected expansion */
