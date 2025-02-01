@@ -30,7 +30,7 @@ export async function saveGame(game) {
     throw new Error("User must be an Admin to save a game.");
   }
   const newVersion = {
-    createdBy: currentUser._id,
+    createdBy: currentUser._id, // currently only admin id is saved even if a user created a post and admin relesed it
     isOfficial: game.isOfficial || false,
     platform: body.platform.toUpperCase(),
     code: body.code.replace(/\s+/g, "_").toUpperCase(),

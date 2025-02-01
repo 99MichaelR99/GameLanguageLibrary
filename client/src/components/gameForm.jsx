@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { renderGameFormContent } from "./gameFormContent";
 import { getGame, saveGame } from "../services/gameService";
+import { deletePost } from "../services/postService";
 import AuthContext from "../context/authContext";
 import withRouter from "../hoc/withRouter";
 
@@ -19,12 +20,43 @@ class GameForm extends Form {
     },
     errors: {},
     multiSelectState: {},
+    blueprintPostId: null,
   };
 
   async componentDidMount() {
-    const { /*location,*/ params, navigate } = this.props;
-    //const searchParams = new URLSearchParams(location.search);
-    //const gameId = searchParams.get("id");
+    const { location, params, navigate } = this.props;
+    const searchParams = new URLSearchParams(location.search);
+
+    // Read query parameters
+    const gameName = searchParams.get("gameName") || "";
+    const platform = searchParams.get("platform") || "";
+    const code = searchParams.get("code") || "";
+    const voiceLanguages =
+      searchParams
+        .get("voiceLanguages")
+        ?.split(",")
+        .filter((lang) => lang.trim() !== "") || [];
+    const subtitlesLanguages =
+      searchParams
+        .get("subtitlesLanguages")
+        ?.split(",")
+        .filter((lang) => lang.trim() !== "") || [];
+    const blueprintPostId = searchParams.get("postId");
+
+    // Populate form state with query parameters if present
+    if (gameName || platform || code) {
+      this.setState({
+        data: {
+          gameName,
+          platform,
+          code,
+          voiceLanguages,
+          subtitlesLanguages,
+        },
+        blueprintPostId,
+      });
+    }
+
     const gameID = params.gameID;
     const versionID = params.versionID;
 
@@ -71,6 +103,7 @@ class GameForm extends Form {
   doSubmit = async () => {
     const { params, navigate } = this.props;
     const { gameID, versionID } = params;
+    const { blueprintPostId } = this.state;
     const data = {
       gameID,
       versionID,
@@ -79,6 +112,12 @@ class GameForm extends Form {
     try {
       await saveGame(data);
       toast.success("Game saved successfully!");
+
+      // Delete the original blueprint post if its ID is available
+      if (blueprintPostId) {
+        await deletePost(blueprintPostId);
+        toast.info("Original blueprint post deleted.");
+      }
       navigate("/games", { replace: true });
     } catch (error) {
       // Check if the error is due to a duplicate game code

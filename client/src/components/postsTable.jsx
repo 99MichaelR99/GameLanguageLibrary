@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import DataTable from "./common/dataTable";
-import SocialReaction from './common/reaction';
+import SocialReaction from "./common/reaction";
+import withRouter from "../hoc/withRouter";
 
 const postColumnsConfig = [
   {
@@ -49,7 +50,14 @@ const postColumnsConfig = [
   },
 ];
 
-const PostTable = ({ posts, sortColumn, onSort, onLike, onDelete }) => {
+const PostTable = ({
+  posts,
+  sortColumn,
+  onSort,
+  onLike,
+  onDelete,
+  navigate,
+}) => {
   const { user } = useAuth();
   // Create a new array for columnsConfig to avoid mutating the original one
   const columnsConfig = [...postColumnsConfig];
@@ -97,6 +105,34 @@ const PostTable = ({ posts, sortColumn, onSort, onLike, onDelete }) => {
     });
   }
 
+  const handleReleaseGame = (post) => {
+    const queryParams = new URLSearchParams({
+      gameName: post.name || post.gameName || "",
+      platform: post.platform || "",
+      code: post.code || "",
+      voiceLanguages: post.voiceLanguages?.join(",") || "",
+      subtitlesLanguages: post.subtitlesLanguages?.join(",") || "",
+      postId: post._id,
+    }).toString();
+
+    navigate(`/games/new?${queryParams}`);
+  };
+
+  if (user && user.isAdmin) {
+    columnsConfig.push({
+      key: "releaseGame",
+      content: (post) => (
+        <button
+          onClick={() => handleReleaseGame(post)}
+          className="btn btn-primary btn-sm"
+        >
+          Release Game
+        </button>
+      ),
+      sortable: false,
+    });
+  }
+
   return (
     <DataTable
       entityType="posts"
@@ -108,4 +144,4 @@ const PostTable = ({ posts, sortColumn, onSort, onLike, onDelete }) => {
   );
 };
 
-export default PostTable;
+export default withRouter(PostTable);
