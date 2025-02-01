@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import { getPostsByUser, deletePost } from "../services/postService";
 import PostTable from "./postsTable";
@@ -6,30 +6,34 @@ import { useAuth } from "../context/authContext";
 
 const UserPosts = () => {
   const [posts, setPosts] = useState([]);
-  const { user } = useAuth(); // Fetch user from context
+  const { user } = useAuth();
 
-  useEffect(() => {
+  const fetchPosts = useCallback(async () => {
     if (!user?._id) return;
 
-    const fetchPosts = async () => {
-      try {
-        const { data: fetchedPosts } = await getPostsByUser(user._id);
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-        toast.error("Could not load user posts.");
-      }
-    };
-
-    fetchPosts();
+    try {
+      const { data: fetchedPosts } = await getPostsByUser(user._id);
+      setPosts(fetchedPosts);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      toast.error("Could not load user posts.");
+    }
   }, [user]);
 
-  const handleDeletePost = async (postId) => {
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
+  const handleDeletePost = async (post) => {
+    const originalPosts = [...posts];
+
     try {
-      await deletePost(postId);
+      setPosts(posts.filter((p) => p._id !== post._id));
+      await deletePost(post._id);
       toast.success("Post deleted successfully!");
-      setPosts(posts.filter((post) => post._id !== postId));
-    } catch (error) {
+      await fetchPosts();
+    } catch (ex) {
+      setPosts(originalPosts);
       toast.error("Could not delete the post.");
     }
   };

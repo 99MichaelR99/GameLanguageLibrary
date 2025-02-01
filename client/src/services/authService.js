@@ -34,6 +34,11 @@ export function getJwt() {
   return localStorage.getItem(tokenKey);
 }
 
+// Add event listener to log out user when window is closed
+/*window.addEventListener("beforeunload", function (event) {
+  logout();
+});*/
+
 const authService = {
   login,
   loginWithJwt,

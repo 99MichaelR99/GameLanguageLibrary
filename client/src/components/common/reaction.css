@@ -1,0 +1,28 @@
+.social-reaction {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.reaction-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.reaction-button:hover {
+  background-color: #f0f0f0;
+}
+
+.reaction-count {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.active {
+  color: #1a73e8;
+}

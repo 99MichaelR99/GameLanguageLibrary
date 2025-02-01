@@ -66,7 +66,6 @@ class ProfileForm extends Form {
 
   componentDidMount() {
     const { user } = this.context; // Get user from AuthContext
-    console.log("user:", user);
     if (user) {
       const data = { ...this.state.data };
       data.name = user.name || "";
@@ -79,7 +78,6 @@ class ProfileForm extends Form {
     const { name, email, oldPassword, newPassword } = this.state.data;
 
     const userData = { name, email };
-
     if (this.state.isPasswordChange) {
       userData.oldPassword = oldPassword;
       userData.newPassword = newPassword;
@@ -89,17 +87,15 @@ class ProfileForm extends Form {
       await updateProfile(userData);
       toast.success("Profile updated successfully!");
 
-      const updatedUser = { ...this.state.data };
-      this.setState({ data: updatedUser });
-
-      // Update the user in the context
+      // Update user in AuthContext
+      const updatedUser = { ...this.context.user, name, email };
       this.context.updateUser(updatedUser);
 
       // Reset form
       this.setState({
         data: {
-          name,
-          email,
+          name: updatedUser.name,
+          email: updatedUser.email,
           oldPassword: "",
           newPassword: "",
           confirmNewPassword: "",
@@ -108,9 +104,9 @@ class ProfileForm extends Form {
         errors: {},
       });
 
-      this.props.navigate("/"); // Redirect to the home page
+      this.props.navigate("/");
     } catch (error) {
-      console.log("error:", error);
+      console.error("Error during profile update:", error);
       if (error.response && error.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.email = error.response.data;

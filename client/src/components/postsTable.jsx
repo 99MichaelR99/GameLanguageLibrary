@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import DataTable from "./common/dataTable";
-import Like from "./common/like";
+import SocialReaction from './common/reaction';
 
 const postColumnsConfig = [
   {
@@ -64,7 +64,7 @@ const PostTable = ({ posts, sortColumn, onSort, onLike, onDelete }) => {
   };
 
   // Conditionally add 'like' column if onLike is provided
-  if (onLike) {
+  /*if (onLike) {
     columnsConfig.push({
       key: "like",
       content: (post) => (
@@ -72,7 +72,14 @@ const PostTable = ({ posts, sortColumn, onSort, onLike, onDelete }) => {
       ),
       sortable: false,
     });
-  }
+  }*/
+
+  // Conditionally add 'reaction' column for SocialReaction component
+  columnsConfig.push({
+    key: "reaction",
+    content: (post) => <SocialReaction postId={post._id} />,
+    sortable: false,
+  });
 
   // Conditionally add 'delete' column if user is an admin and onDelete is provided
   if (user && user.isAdmin && onDelete) {

@@ -3,6 +3,7 @@ import auth from "../services/authService";
 import config from "../config.json";
 
 const apiEndpoint = config.apiUrl + "/posts";
+const reactionApiEndpoint = config.apiUrl + "/reactions";
 
 function postUrl(id) {
   return `${apiEndpoint}/${id}`;
@@ -44,6 +45,9 @@ export async function savePost(post) {
   }
 }
 
-export function deletePost(postID) {
-  return http.delete(postUrl(postID));
+export async function deletePost(postID) {
+  // Delete the post first
+  await http.delete(postUrl(postID));
+  // Delete all reactions associated with that post
+  await http.delete(`${reactionApiEndpoint}/post/${postID}`);
 }

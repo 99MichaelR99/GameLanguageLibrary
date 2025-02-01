@@ -4,6 +4,7 @@ const users = require("../routes/users");
 const posts = require("../routes/posts");
 const auth = require("../routes/auth");
 const messages = require("../routes/messages");
+const reactions = require("../routes/reactions");
 const error = require("../middleware/error");
 
 module.exports = function (app) {
@@ -14,5 +15,6 @@ module.exports = function (app) {
   app.use("/api/users", users);
   app.use("/api/auth", auth);
   app.use("/api/messages", messages);
+  app.use("/api/reactions", reactions);
   app.use(error);
 };
