@@ -110,7 +110,7 @@ const PostTable = ({
           onClick={() => handleReleaseGame(post)}
           className="btn btn-primary btn-sm"
         >
-          Release Game
+          Release
         </button>
       ),
       sortable: false,

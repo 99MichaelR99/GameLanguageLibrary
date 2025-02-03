@@ -33,7 +33,12 @@ class DataPage extends Component {
     const transformedData = this.props.transformData
       ? this.props.transformData(newData)
       : newData;
-    this.setState({ data: transformedData });
+
+    // Retrieve pageSize from localStorage, default to 10 if not found
+    const storedPageSize = localStorage.getItem("pageSize");
+    const pageSize = storedPageSize ? parseInt(storedPageSize, 10) : 10;
+
+    this.setState({ data: transformedData, pageSize });
   }
 
   handleDelete = async (item) => {
@@ -68,6 +73,9 @@ class DataPage extends Component {
   handlePageSizeChange = (pageSize) => {
     if (pageSize >= 1 && pageSize <= 100) {
       this.setState({ pageSize, currentPage: 1 });
+
+      // Store the selected page size in localStorage
+      localStorage.setItem("pageSize", pageSize);
     }
   };
 

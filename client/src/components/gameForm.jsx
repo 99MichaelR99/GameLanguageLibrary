@@ -115,8 +115,15 @@ class GameForm extends Form {
 
       // Delete the original blueprint post if its ID is available
       if (blueprintPostId) {
-        await deletePost(blueprintPostId);
-        toast.info("Original blueprint post deleted.");
+        try {
+          await deletePost(blueprintPostId);
+          toast.info("Original blueprint post deleted.");
+        } catch (error) {
+          if (error.response && error.response.status !== 404) {
+            toast.error("An error occurred while deleting the blueprint post.");
+          }
+          // Ignore 404 error as the post may already be deleted
+        }
       }
       navigate("/games", { replace: true });
     } catch (error) {

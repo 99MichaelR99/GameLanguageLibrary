@@ -19,6 +19,7 @@ const SocialReaction = ({ postId }) => {
     userReaction: null,
   });
   const { user } = useAuth();
+  const [reactionChannel, setReactionChannel] = useState(null); // use state to manage the channel
 
   useEffect(() => {
     const loadReactions = async () => {
@@ -35,6 +36,22 @@ const SocialReaction = ({ postId }) => {
     };
 
     loadReactions();
+
+    // Initialize the BroadcastChannel inside useEffect
+    const channel = new BroadcastChannel("reactionChannel");
+    setReactionChannel(channel); // store the channel in state
+
+    // Set up message listener
+    channel.onmessage = (event) => {
+      if (event.data.postId === postId) {
+        setReactions(event.data.reactions);
+      }
+    };
+
+    // Cleanup: Close the channel when the component is unmounted
+    return () => {
+      channel.close();
+    };
   }, [postId]); // Reacts to postId changes
 
   const handleReaction = async (reactionType) => {
@@ -63,7 +80,17 @@ const SocialReaction = ({ postId }) => {
     });
 
     try {
-      await updatePostReaction(postId, reactionType);
+      const { data } = await updatePostReaction(postId, reactionType);
+      setReactions({
+        likes: data.likes ?? 0,
+        dislikes: data.dislikes ?? 0,
+        userReaction: data.userReaction ?? null,
+      });
+
+      // Ensure the reactionChannel is open before posting a message
+      if (reactionChannel) {
+        reactionChannel.postMessage({ postId, reactions: data });
+      }
     } catch (error) {
       setReactions(originalReactions);
       console.error("Error updating reaction:", error);
@@ -77,7 +104,9 @@ const SocialReaction = ({ postId }) => {
           icon={reactions.userReaction === "like" ? faThumbsUp : farThumbsUp}
           className={reactions.userReaction === "like" ? "active" : ""}
         />
-        <span className="reaction-count">{reactions.likes}</span>
+        <span className="reaction-count">
+          {isNaN(reactions.likes) ? 0 : reactions.likes}
+        </span>
       </div>
 
       <div
@@ -90,7 +119,9 @@ const SocialReaction = ({ postId }) => {
           }
           className={reactions.userReaction === "dislike" ? "active" : ""}
         />
-        <span className="reaction-count">{reactions.dislikes}</span>
+        <span className="reaction-count">
+          {isNaN(reactions.dislikes) ? 0 : reactions.dislikes}
+        </span>
       </div>
     </div>
   );
