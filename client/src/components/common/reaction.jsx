@@ -5,11 +5,15 @@ import {
   faThumbsUp as farThumbsUp,
   faThumbsDown as farThumbsDown,
 } from "@fortawesome/free-regular-svg-icons";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   updatePostReaction,
   getPostReactions,
 } from "../../services/reactionService";
+import { checkIfPostExists } from "../../services/postService";
 import { useAuth } from "../../context/authContext";
+
 import "./reaction.css";
 
 const SocialReaction = ({ postId }) => {
@@ -56,6 +60,13 @@ const SocialReaction = ({ postId }) => {
 
   const handleReaction = async (reactionType) => {
     if (!user) return; // Handle unauthenticated users
+
+    // Check if the post exists before proceeding
+    const postExists = await checkIfPostExists(postId);
+    if (!postExists) {
+      toast.error("This post has been deleted.");
+      return; // Prevent reacting to deleted post
+    }
 
     const originalReactions = { ...reactions };
 

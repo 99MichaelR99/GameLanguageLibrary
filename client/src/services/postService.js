@@ -17,6 +17,19 @@ export function getPost(postID) {
   return http.get(postUrl(postID));
 }
 
+export async function checkIfPostExists(postID) {
+  try {
+    const response = await getPost(postID);
+    return response.status === 200; // Post exists
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return false; // Post doesn't exist, return false
+    }
+    console.error("Error checking if post exists:", error);
+    return false; // In case of any other error, return false
+  }
+}
+
 export function getPostsByUser(userId) {
   return http.get(`${apiEndpoint}?createdBy=${userId}`);
 }
