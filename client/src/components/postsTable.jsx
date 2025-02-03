@@ -36,12 +36,6 @@ const postColumnsConfig = [
     content: (post) => post.subtitlesLanguages?.join(", ") || "No languages",
     sortable: false,
   },
-  /*{
-    path: "createdBy",
-    label: "Created By",
-    sortable: false,
-    content: (post) => post.createdBy || "No creator",
-  },*/
   {
     path: "date",
     label: "Date",
@@ -71,17 +65,6 @@ const PostTable = ({
     );
   };
 
-  // Conditionally add 'like' column if onLike is provided
-  /*if (onLike) {
-    columnsConfig.push({
-      key: "like",
-      content: (post) => (
-        <Like liked={post.liked || false} onClick={() => onLike(post)} />
-      ),
-      sortable: false,
-    });
-  }*/
-
   // Conditionally add 'reaction' column for SocialReaction component
   columnsConfig.push({
     key: "reaction",
@@ -90,17 +73,18 @@ const PostTable = ({
   });
 
   // Conditionally add 'delete' column if user is an admin and onDelete is provided
-  if (user && user.isAdmin && onDelete) {
+  if (user && onDelete) {
     columnsConfig.push({
       key: "delete",
-      content: (post) => (
-        <button
-          onClick={() => onDelete(post)}
-          className="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
-      ),
+      content: (post) =>
+        user._id === post.createdBy || user.isAdmin ? (
+          <button
+            onClick={() => onDelete(post)}
+            className="btn btn-danger btn-sm"
+          >
+            Delete
+          </button>
+        ) : null,
       sortable: false,
     });
   }
