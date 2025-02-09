@@ -15,7 +15,7 @@ const postColumnsConfig = [
   {
     path: "platform",
     label: "Platform",
-    sortable: false,
+    sortable: true,
     content: (post) => post.platform || "No platform",
   },
   {

@@ -156,11 +156,8 @@ class DataPage extends Component {
       );
     else filteredItems = this.applyFilters(allItems);
 
-    const sortedItems = _.orderBy(
-      filteredItems,
-      [sortColumn.path],
-      [sortColumn.order]
-    );
+    // Apply sorting before sending data to DataTable
+    const sortedItems = _.orderBy(filteredItems, [sortColumn.path], [sortColumn.order]);
 
     const paginatedItems = paginate(sortedItems, currentPage, pageSize);
 
@@ -169,8 +166,7 @@ class DataPage extends Component {
 
   render() {
     const { renderHeader, renderTable } = this.props;
-    const { currentPage, pageSize, sortColumn, searchQuery, filter } =
-      this.state;
+    const { currentPage, pageSize, sortColumn, searchQuery, filter } = this.state;
 
     const { totalCount, data } = this.getPageData();
 
