@@ -22,10 +22,15 @@ export function logout() {
 
 export function getCurrentUser() {
   try {
-    const jwt = localStorage.getItem(tokenKey);
+    const jwt = getJwt();
+    if (!jwt) {
+      logout();
+      throw new Error("Token is not available");
+    }
     return jwtDecode(jwt);
   } catch (ex) {
     console.error("Error decoding JWT:", ex);
+    logout();
     return null;
   }
 }

@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
 import MultiSelect from "./multipleSelect";
+import SearchableSelect from "./searchableSelect";
 import "./form.css";
 
 class Form extends Component {
@@ -114,6 +115,21 @@ class Form extends Component {
         options={options}
         toggleMultiSelect={this.toggleMultiSelect}
         handleMultiSelect={this.handleMultiSelect}
+      />
+    );
+  }
+
+  renderSearchableSelect(name, label, options) {
+    const { data, errors } = this.state;
+
+    return (
+      <SearchableSelect
+        name={name}
+        label={label}
+        options={options}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
       />
     );
   }

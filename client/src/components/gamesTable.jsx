@@ -47,7 +47,9 @@ const GamesTable = ({ games, sortColumn, onSort, onLike, onDelete }) => {
   if (onLike) {
     columnsConfig.push({
       key: "like",
-      content: (game) => <Like liked={game.liked || false} onClick={() => onLike(game)} />,
+      content: (game) => (
+        <Like liked={game.liked || false} onClick={() => onLike(game)} />
+      ),
       sortable: false,
     });
   }
@@ -56,7 +58,10 @@ const GamesTable = ({ games, sortColumn, onSort, onLike, onDelete }) => {
     columnsConfig.push({
       key: "delete",
       content: (game) => (
-        <button onClick={() => onDelete(game)} className="btn btn-danger btn-sm">
+        <button
+          onClick={() => onDelete(game)}
+          className="btn btn-danger btn-sm"
+        >
           Delete
         </button>
       ),
@@ -64,7 +69,30 @@ const GamesTable = ({ games, sortColumn, onSort, onLike, onDelete }) => {
     });
   }
 
-  return <DataTable entityType="games" columnsConfig={columnsConfig} data={games} onSort={onSort} sortColumn={sortColumn} />;
+  columnsConfig.push({
+    key: "report",
+    content: (game) => (
+      <Link
+        to={`/contact-us?name=${encodeURIComponent(game.name)}&code=${
+          game.code
+        }`}
+        className="btn btn-warning btn-sm"
+      >
+        Report
+      </Link>
+    ),
+    sortable: false,
+  });
+
+  return (
+    <DataTable
+      entityType="games"
+      columnsConfig={columnsConfig}
+      data={games}
+      onSort={onSort}
+      sortColumn={sortColumn}
+    />
+  );
 };
 
 export default GamesTable;

@@ -21,7 +21,7 @@ import "./App.css";
 const App = () => {
   return (
     <React.Fragment>
-      <ToastContainer />
+      <ToastContainer position="bottom-left" />
       <NavBar />
       <main className="container">
         <Routes>
