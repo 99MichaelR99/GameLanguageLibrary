@@ -7,6 +7,7 @@
 .toggle-button {
   width: 100%;
   font-weight: bold;
+  color: var(--text-color) !important;
 }
 
 /* Main Content */
@@ -29,6 +30,23 @@
   white-space: nowrap;
   background-color: var(--background-color); /* Use theme variable */
   color: var(--text-color); /* Use theme variable */
+}
+
+/* Reduce row borders visibility */
+.table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Adjust transparency */
+}
+
+/* Optional: Make row hover effect more subtle */
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05); /* Slight hover effect */
+}
+
+/* Reduce the separation lines between columns */
+.table td,
+.table th {
+  border: none; /* Remove borders */
+  padding: 8px; /* Adjust padding */
 }
 
 /* Container for the search box and results */

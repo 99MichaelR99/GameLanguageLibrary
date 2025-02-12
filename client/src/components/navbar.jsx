@@ -1,26 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { useTheme } from "../context/themeContext";
 import "./navbar.css";
 
 const NavBar = () => {
   const { user } = useAuth();
-  const [theme, setTheme] = useState("light");
-
-  // Initialize theme from localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  }, []);
-
-  // Update theme dynamically and persist in localStorage
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="navbar navbar-expand-lg">

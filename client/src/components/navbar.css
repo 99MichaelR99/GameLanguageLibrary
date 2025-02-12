@@ -18,16 +18,21 @@
   margin: 0;
 }
 
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+  color: rgb(0, 125, 145) !important;
+}
+
 .navbar-nav .nav-link,
 .navbar-brand {
   color: var(--text-color);
+  transition: color 0.3s;
 }
 
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
-  transition: color 0.3s;
+  color: var(--navbar-brand-color) !important;
 }
 
 .navbar-nav .nav-link:hover {
@@ -77,7 +82,7 @@
 }
 
 input:checked + .slider {
-  background-color: #555;
+  background-color: var(--toggle-bg);
 }
 
 input:checked + .slider:before {

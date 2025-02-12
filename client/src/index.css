@@ -1,3 +1,61 @@
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --link-hover-color: #1e90ff;
+  --navbar-bg: #f8f9fa;
+  --toggle-bg: #ccc;
+  --toggle-switch-color: #ffffff;
+  --navbar-brand-color: #000;
+}
+
+[data-theme="dark"] {
+  --background-color: #1f2122;
+  --text-color: #e0dcd4;
+  --navbar-bg: #17191a;
+  --link-hover-color: #004e9d;
+  --toggle-bg: #464c4f;
+  --toggle-switch-color: #f1f1f1;
+  --navbar-brand-color: #fffdfa;
+}
+
+
+.form-control {
+  background-color: var(--bs-dark-bg) !important;
+  color: var(--bs-light-text-color) !important;
+  border-color: var(--bs-dark-bg) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.table {
+  background-color: var(--background-color) !important;
+  color: var(--text-color);
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.5rem 0.5rem;
+  color: var(
+    --bs-table-color-state,
+    var(--bs-table-color-type, var(--bs-table-color))
+  );
+  background-color: var(--bs-table-bg);
+  border-bottom-width: var(--bs-border-width);
+  box-shadow: inset 0 0 0 9999px
+    var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Apply Theme Variables */
 body {
   margin: 0;
   padding: 0 0 0 0;
@@ -6,6 +64,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 code {

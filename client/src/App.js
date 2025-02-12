@@ -20,47 +20,47 @@ import "./App.css";
 
 const App = () => {
   return (
-    <React.Fragment>
-      <ToastContainer position="bottom-left" />
-      <NavBar />
-      <main className="container">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route
-            path="/me"
-            element={<ProtectedRoute element={<ProfilePage />} />}
-          />
-          <Route
-            path="/games/:gameID/:versionID"
-            element={<ProtectedRoute element={<GameForm />} />}
-          />
-          <Route
-            path="/games/:gameID/new"
-            element={<ProtectedRoute element={<GameForm />} />}
-          />
-          <Route path="/games/:gameID" element={<Versions />} />
-          <Route
-            path="/games/new"
-            element={<ProtectedRoute element={<GameForm />} />}
-          />
-          <Route path="/games" element={<GamesPage />} />
-          <Route
-            path="/posts/:id"
-            element={<ProtectedRoute element={<PostForm />} />}
-          />
-          <Route
-            path="/posts"
-            element={<ProtectedRoute element={<PostsPage />} />}
-          />
-          <Route path="/not-found" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/not-found" replace />} />
-        </Routes>
-      </main>
-    </React.Fragment>
+      <React.Fragment>
+        <ToastContainer position="bottom-left" />
+        <NavBar />
+        <main className="container">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route
+              path="/me"
+              element={<ProtectedRoute element={<ProfilePage />} />}
+            />
+            <Route
+              path="/games/:gameID/:versionID"
+              element={<ProtectedRoute element={<GameForm />} />}
+            />
+            <Route
+              path="/games/:gameID/new"
+              element={<ProtectedRoute element={<GameForm />} />}
+            />
+            <Route path="/games/:gameID" element={<Versions />} />
+            <Route
+              path="/games/new"
+              element={<ProtectedRoute element={<GameForm />} />}
+            />
+            <Route path="/games" element={<GamesPage />} />
+            <Route
+              path="/posts/:id"
+              element={<ProtectedRoute element={<PostForm />} />}
+            />
+            <Route
+              path="/posts"
+              element={<ProtectedRoute element={<PostsPage />} />}
+            />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/not-found" replace />} />
+          </Routes>
+        </main>
+      </React.Fragment>
   );
 };
 
