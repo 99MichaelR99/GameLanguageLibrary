@@ -33,7 +33,7 @@ export async function saveGame(game) {
     createdBy: currentUser._id, // currently only admin id is saved even if a user created a post and admin relesed it
     isOfficial: game.isOfficial || false,
     platform: body.platform.toUpperCase(),
-    code: body.code.replace(/\s+/g, "_").toUpperCase(),
+    code: body.code.replace(/_/g, " ").toUpperCase(),
     voiceLanguages: body.voiceLanguages.sort(),
     subtitlesLanguages: body.subtitlesLanguages.sort(),
   };

@@ -46,7 +46,7 @@ const Post = mongoose.model(
       type: String,
       required: true,
       uppercase: true,
-      set: (value) => value.replace(/\s+/g, "_"), // Normalize spaces to underscores
+      set: (value) => value.replace(/_/g, " "), // Normalize spaces to underscores
       match: /^(?:\d{7}|[A-Za-z]{4}[_ ]\d{5})$/, // Regex for code format
     },
     voiceLanguages: {

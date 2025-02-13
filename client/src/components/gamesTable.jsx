@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import DataTable from "./common/dataTable";
+import EpicLink from "./common/epicLink";
 import Like from "./common/like";
 
 const gameColumnsConfig = [
@@ -9,7 +10,7 @@ const gameColumnsConfig = [
     path: "name",
     label: "Name",
     sortable: true,
-    content: (game) => <Link to={`/games/${game.gameID}`}>{game.name}</Link>,
+    content: (game) => <EpicLink to={`/games/${game.gameID}`}>{game.name}</EpicLink>,
   },
   { path: "platform", label: "Platform", sortable: true },
   {
@@ -39,7 +40,7 @@ const GamesTable = ({ games, sortColumn, onSort, onLike, onDelete }) => {
   // Modify the 'code' column based on user permissions
   columnsConfig[2].content = (game) =>
     user && user.isAdmin ? (
-      <Link to={`/games/${game.gameID}/${game._id}`}>{game.code}</Link>
+      <EpicLink to={`/games/${game.gameID}/${game._id}`}>{game.code}</EpicLink>
     ) : (
       <span>{game.code}</span>
     );

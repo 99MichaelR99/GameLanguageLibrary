@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import DataTable from "./common/dataTable";
 import SocialReaction from "./common/reaction";
+import EpicLink from "./common/epicLink";
 import withRouter from "../hoc/withRouter";
 
 const postColumnsConfig = [
@@ -59,7 +59,7 @@ const PostTable = ({
   // Modify the 'code' column based on user logic
   columnsConfig[2].content = (post) => {
     return user && (user._id === post.createdBy || user.isAdmin) ? (
-      <Link to={`/posts/${post._id}`}>{post.code}</Link>
+      <EpicLink to={`/posts/${post._id}`}>{post.code}</EpicLink>
     ) : (
       <span>{post.code}</span>
     );

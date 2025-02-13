@@ -46,7 +46,7 @@ export async function savePost(post) {
     createdBy: currentUser._id,
     gameName: body.gameName,
     platform: body.platform.toUpperCase(),
-    code: body.code.replace(/\s+/g, "_").toUpperCase(),
+    code: body.code.replace(/_/g, " ").toUpperCase(),
     voiceLanguages: body.voiceLanguages.sort(),
     subtitlesLanguages: body.subtitlesLanguages.sort(),
   };
