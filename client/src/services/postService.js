@@ -30,8 +30,8 @@ export async function checkIfPostExists(postID) {
   }
 }
 
-export function getPostsByUser(userId) {
-  return http.get(`${apiEndpoint}?createdBy=${userId}`);
+export function getPostsByUser(userID) {
+  return http.get(`${apiEndpoint}?createdBy=${userID}`);
 }
 
 export async function savePost(post) {

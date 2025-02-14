@@ -16,12 +16,11 @@ const PostsPage = () => {
       </Link>
     );
 
-  const renderTable = (data, sortColumn, onSort, onLike, onDelete) => (
+  const renderTable = (data, sortColumn, onSort, onDelete) => (
     <PostTable
       posts={data}
       sortColumn={sortColumn}
       onSort={onSort}
-      onLike={onLike}
       onDelete={onDelete}
     />
   );

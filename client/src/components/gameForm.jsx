@@ -20,7 +20,7 @@ class GameForm extends Form {
     },
     errors: {},
     multiSelectState: {},
-    blueprintPostId: null,
+    blueprintPostID: null,
   };
 
   async componentDidMount() {
@@ -41,7 +41,7 @@ class GameForm extends Form {
         .get("subtitlesLanguages")
         ?.split(",")
         .filter((lang) => lang.trim() !== "") || [];
-    const blueprintPostId = searchParams.get("postId");
+    const blueprintPostID = searchParams.get("postID");
 
     // Populate form state with query parameters if present
     if (gameName || platform || code) {
@@ -53,7 +53,7 @@ class GameForm extends Form {
           voiceLanguages,
           subtitlesLanguages,
         },
-        blueprintPostId,
+        blueprintPostID,
       });
     }
 
@@ -103,7 +103,7 @@ class GameForm extends Form {
   doSubmit = async () => {
     const { params, navigate } = this.props;
     const { gameID, versionID } = params;
-    const { blueprintPostId } = this.state;
+    const { blueprintPostID } = this.state;
     const data = {
       gameID,
       versionID,
@@ -114,9 +114,9 @@ class GameForm extends Form {
       toast.success("Game saved successfully!");
 
       // Delete the original blueprint post if its ID is available
-      if (blueprintPostId) {
+      if (blueprintPostID) {
         try {
-          await deletePost(blueprintPostId);
+          await deletePost(blueprintPostID);
           toast.info("Original blueprint post deleted.");
         } catch (error) {
           if (error.response && error.response.status !== 404) {

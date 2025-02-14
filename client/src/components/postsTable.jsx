@@ -48,7 +48,6 @@ const PostTable = ({
   posts,
   sortColumn,
   onSort,
-  onLike,
   onDelete,
   navigate,
 }) => {
@@ -68,7 +67,7 @@ const PostTable = ({
   // Conditionally add 'reaction' column for SocialReaction component
   columnsConfig.push({
     key: "reaction",
-    content: (post) => <SocialReaction postId={post._id} />,
+    content: (post) => <SocialReaction postID={post._id} />,
     sortable: false,
   });
 
@@ -96,7 +95,7 @@ const PostTable = ({
       code: post.code || "",
       voiceLanguages: post.voiceLanguages?.join(",") || "",
       subtitlesLanguages: post.subtitlesLanguages?.join(",") || "",
-      postId: post._id,
+      postID: post._id,
     }).toString();
 
     navigate(`/games/new?${queryParams}`);

@@ -16,7 +16,7 @@ import { useAuth } from "../../context/authContext";
 
 import "./reaction.css";
 
-const SocialReaction = ({ postId }) => {
+const SocialReaction = ({ postID }) => {
   const [reactions, setReactions] = useState({
     likes: 0,
     dislikes: 0,
@@ -28,7 +28,7 @@ const SocialReaction = ({ postId }) => {
   useEffect(() => {
     const loadReactions = async () => {
       try {
-        const { data } = await getPostReactions(postId);
+        const { data } = await getPostReactions(postID);
         setReactions({
           likes: data.likes,
           dislikes: data.dislikes,
@@ -47,7 +47,7 @@ const SocialReaction = ({ postId }) => {
 
     // Set up message listener
     channel.onmessage = (event) => {
-      if (event.data.postId === postId) {
+      if (event.data.postID === postID) {
         setReactions(event.data.reactions);
       }
     };
@@ -56,13 +56,13 @@ const SocialReaction = ({ postId }) => {
     return () => {
       channel.close();
     };
-  }, [postId]); // Reacts to postId changes
+  }, [postID]); // Reacts to postID changes
 
   const handleReaction = async (reactionType) => {
     if (!user) return; // Handle unauthenticated users
 
     // Check if the post exists before proceeding
-    const postExists = await checkIfPostExists(postId);
+    const postExists = await checkIfPostExists(postID);
     if (!postExists) {
       toast.error("This post has been deleted.");
       return; // Prevent reacting to deleted post
@@ -91,7 +91,7 @@ const SocialReaction = ({ postId }) => {
     });
 
     try {
-      const { data } = await updatePostReaction(postId, reactionType);
+      const { data } = await updatePostReaction(postID, reactionType);
       setReactions({
         likes: data.likes ?? 0,
         dislikes: data.dislikes ?? 0,
@@ -100,7 +100,7 @@ const SocialReaction = ({ postId }) => {
 
       // Ensure the reactionChannel is open before posting a message
       if (reactionChannel) {
-        reactionChannel.postMessage({ postId, reactions: data });
+        reactionChannel.postMessage({ postID, reactions: data });
       }
     } catch (error) {
       setReactions(originalReactions);

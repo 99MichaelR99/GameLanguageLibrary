@@ -4,8 +4,8 @@ import config from "../config.json";
 
 const apiEndpoint = config.apiUrl + "/reactions";
 
-export function getPostReactions(postId) {
-  return http.get(`${apiEndpoint}/post/${postId}`);
+export function getPostReactions(postID) {
+  return http.get(`${apiEndpoint}/post/${postID}`);
 }
 
 export function updatePostReaction(postID, reactionType) {
@@ -21,6 +21,6 @@ export function updatePostReaction(postID, reactionType) {
   });
 }*/
 
-export const getReactionCounts = async (postId) => {
-  return await http.get(`/${apiEndpoint}/${postId}/counts`);
+export const getReactionCounts = async (postID) => {
+  return await http.get(`/${apiEndpoint}/${postID}/counts`);
 };
