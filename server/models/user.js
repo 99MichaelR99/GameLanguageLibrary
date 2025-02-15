@@ -24,6 +24,25 @@ const userSchema = new mongoose.Schema({
     maxlength: 1024,
   },
   isAdmin: Boolean,
+
+  // Favorite games array now embedded within the user schema
+  favoriteGames: [
+    {
+      gameID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Game", // Reference to Game model
+        required: true,
+      },
+      versionID: {
+        type: String, // Unique version identifier (e.g., version code)
+        required: true,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 
 userSchema.methods.generateAuthToken = function () {

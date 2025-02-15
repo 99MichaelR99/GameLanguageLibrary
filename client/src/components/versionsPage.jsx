@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import GamesTable from "./gamesTable";
 import { getGame, deleteGame } from "../services/gameService";
 import withRouter from "../hoc/withRouter";

@@ -2,6 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { renderGameFormContent } from "./gameFormContent";
 import { getPost, savePost } from "../services/postService";
 import withRouter from "../hoc/withRouter";

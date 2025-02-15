@@ -1,5 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DataPage from "./common/dataPage";
 import PostTable from "./postsTable";
 import { getPosts, deletePost } from "../services/postService";

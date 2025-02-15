@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AuthContext from "../../context/authContext"; // Import AuthContext
 import FilteringPanel from "./filteringPanel";
 import SearchBox from "./searchBox";
 import PaginationController from "./paginationController";
@@ -7,11 +8,12 @@ import _ from "lodash";
 import "./dataPage.css";
 
 class DataPage extends Component {
+  static contextType = AuthContext; // Set contextType to AuthContext
+
   state = {
     data: [],
     searchQuery: "",
     currentPage: 1,
-    pageSize: 10,
     sortColumn: { path: "name", order: "asc" },
     filter: {
       showFilters: false,
@@ -34,32 +36,26 @@ class DataPage extends Component {
       ? this.props.transformData(newData)
       : newData;
 
-    // Retrieve pageSize from localStorage, default to 10 if not found
-    const storedPageSize = localStorage.getItem("pageSize");
-    const pageSize = storedPageSize ? parseInt(storedPageSize, 10) : 10;
-
-    this.setState({ data: transformedData, pageSize });
+    this.setState({ data: transformedData });
   }
 
   handleDelete = async (item) => {
     const { deleteHandler } = this.props;
     const { data } = this.state;
 
-    // Make a copy of data and remove the item
     const originalData = [...data];
     const updatedData = data.filter((i) => i._id !== item._id);
 
     this.setState({ data: updatedData });
 
     try {
-      // Call the appropriate delete handler passed via props
       await deleteHandler(item);
     } catch (ex) {
       this.setState({ data: originalData });
     }
   };
 
-  handleLike = (item) => {
+  handleFavorite = (item) => {
     const data = [...this.state.data];
     const index = data.findIndex((i) => i._id === item._id);
     data[index] = { ...data[index], liked: !data[index].liked };
@@ -70,12 +66,16 @@ class DataPage extends Component {
     this.setState({ currentPage: page });
   };
 
-  handlePageSizeChange = (pageSize) => {
-    if (pageSize >= 1 && pageSize <= 100) {
-      this.setState({ pageSize, currentPage: 1 });
+  handlePageSizeChange = (newPageSize) => {
+    if (newPageSize >= 1 && newPageSize <= 100) {
+      this.setState({ currentPage: 1 });
 
-      // Store the selected page size in localStorage
-      localStorage.setItem("pageSize", pageSize);
+      // Update pageSize via AuthContext (this.context)
+      if (this.context.updatePageSize) {
+        this.context.updatePageSize(newPageSize);
+      } else {
+        console.error("updatePageSize is not defined in AuthContext");
+      }
     }
   };
 
@@ -140,13 +140,8 @@ class DataPage extends Component {
   };
 
   getPageData = () => {
-    const {
-      data: allItems,
-      currentPage,
-      pageSize,
-      sortColumn,
-      searchQuery,
-    } = this.state;
+    const { data: allItems, currentPage, sortColumn, searchQuery } = this.state;
+    const { pageSize } = this.context; // Get pageSize from AuthContext
 
     let filteredItems = allItems;
 
@@ -156,8 +151,11 @@ class DataPage extends Component {
       );
     else filteredItems = this.applyFilters(allItems);
 
-    // Apply sorting before sending data to DataTable
-    const sortedItems = _.orderBy(filteredItems, [sortColumn.path], [sortColumn.order]);
+    const sortedItems = _.orderBy(
+      filteredItems,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
 
     const paginatedItems = paginate(sortedItems, currentPage, pageSize);
 
@@ -166,7 +164,8 @@ class DataPage extends Component {
 
   render() {
     const { renderHeader, renderTable } = this.props;
-    const { currentPage, pageSize, sortColumn, searchQuery, filter } = this.state;
+    const { currentPage, sortColumn, searchQuery, filter } = this.state;
+    const { pageSize } = this.context; // Get pageSize from AuthContext
 
     const { totalCount, data } = this.getPageData();
 
@@ -188,13 +187,13 @@ class DataPage extends Component {
               data,
               sortColumn,
               this.handleSort,
-              this.handleLike,
+              this.handleFavorite,
               this.handleDelete
             )}
           <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap">
             <PaginationController
               totalCount={totalCount}
-              pageSize={pageSize}
+              pageSize={pageSize} // Use pageSize from AuthContext
               currentPage={currentPage}
               onPageChange={this.handlePageChange}
               onPageSizeChange={this.handlePageSizeChange}

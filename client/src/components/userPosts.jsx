@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { getPostsByUser, deletePost } from "../services/postService";
-import PostTable from "./postsTable"; // Keep using PostTable
+import PostTable from "./postsTable";
 import { useAuth } from "../context/authContext";
 
 const UserPosts = () => {
@@ -49,7 +50,7 @@ const UserPosts = () => {
 
   return (
     <div>
-      <h2>User Posts</h2>
+      <h2>Your Posts</h2>
       <PostTable
         posts={posts}
         onDelete={handleDeletePost}

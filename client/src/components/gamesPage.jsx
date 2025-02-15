@@ -1,5 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DataPage from "./common/dataPage";
 import GamesTable from "./gamesTable";
 import { getGames, deleteGame } from "../services/gameService";
@@ -7,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
 const GamesPage = () => {
-  const { user } = useAuth(); // Use useAuth to access the user context
+  const { user } = useAuth();
 
   const renderHeader = () =>
     user?.isAdmin && (
@@ -16,13 +17,13 @@ const GamesPage = () => {
       </Link>
     );
 
-  const renderTable = (data, sortColumn, onSort, onLike, onDelete) => (
+  const renderTable = (data, sortColumn, onSort, onFavorite, onDelete) => (
     <GamesTable
       games={data}
       sortColumn={sortColumn}
       onSort={onSort}
       onDelete={onDelete}
-      onLike={onLike}
+      onFavorite={onFavorite}
     />
   );
 

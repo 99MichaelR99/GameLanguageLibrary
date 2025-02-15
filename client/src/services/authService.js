@@ -1,37 +1,39 @@
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Ensure jwt-decode is imported correctly
 import http from "./httpService";
 import config from "../config.json";
 
 const apiEndpoint = config.apiUrl + "/auth";
 const tokenKey = "token";
 
+// Set the JWT in HTTP service on app startup
 http.setJwt(getJwt());
 
 export async function login(email, password) {
   const { data: jwt } = await http.post(apiEndpoint, { email, password });
   localStorage.setItem(tokenKey, jwt);
+  http.setJwt(jwt); // Ensure Axios starts using the new token immediately
 }
 
 export function loginWithJwt(jwt) {
   localStorage.setItem(tokenKey, jwt);
+  http.setJwt(jwt); // Ensure token is applied to Axios immediately
 }
 
 export function logout() {
   localStorage.removeItem(tokenKey);
+  http.setJwt(null); // Clear token from Axios headers
 }
 
 export function getCurrentUser() {
   try {
     const jwt = getJwt();
-    if (!jwt) {
-      logout();
-      throw new Error("Token is not available");
-    }
-    return jwtDecode(jwt);
+    if (!jwt) return null; // If no token, return null (gracefully handle logout)
+
+    return jwtDecode(jwt); // Decode and return user info if token exists
   } catch (ex) {
     console.error("Error decoding JWT:", ex);
-    logout();
-    return null;
+    logout(); // Ensure the user is logged out if an error occurs
+    return null; // Return null if an error occurs during decoding
   }
 }
 

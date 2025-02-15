@@ -4,6 +4,7 @@ const _ = require("lodash");
 const Joi = require("joi");
 const { User, validate } = require("../models/user");
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 
 // Route to get current user's details
@@ -70,66 +71,63 @@ router.post("/", async (req, res) => {
     .send(_.pick(user, ["_id", "name", "email"]));
 });
 
-module.exports = router;
-
-/*const {User, validate} = require('../models/user');
-const mongoose = require('mongoose');
-const express = require('express');
-const router = express.Router();
-
-router.get('/', async (req, res) => {
-    const Users = await User.find().sort('name')
-    res.send(Users);
+// Get all favorite games for the logged-in user
+router.get("/me/favorites", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("favoriteGames");
+  res.send(user.favoriteGames || []); // Return the favorite games array
 });
 
-router.get('/:id', async (req, res) => {
-    const user = await User.findById(req.params.id);
+// Add or remove a favorite game version for the logged-in user
+router.put("/me/favorites", auth, async (req, res) => {
+  const { gameID, versionID } = req.body;
 
-    if (!user) return res.status(404).send('The user with the given ID was not found.');
+  // Validate the request body
+  if (!gameID || !versionID) {
+    return res.status(400).send("Game ID and version ID are required.");
+  }
 
-    res.send(user);
-});
+  const user = await User.findById(req.user._id);
 
-router.post('/', async (req, res) => {
-    const { error } = validate(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
+  // Check if the game version is already in the favorites list
+  const existingFavorite = user.favoriteGames.find(
+    (fav) => fav.gameID.toString() === gameID && fav.versionID === versionID
+  );
 
-    let user = await User.findOne({ email: req.body.email});
-    if(user) return res.status(400).send('User already registered');
-
-    user = new User({
-        name: req.body.name,
-        isAdmin: req.body.isAdmin,
-        email: req.body.email,
-        password: req.body.password
-    });
+  if (existingFavorite) {
+    // If already favorited, remove it (toggle off)
+    user.favoriteGames = user.favoriteGames.filter(
+      (fav) => fav.gameID.toString() !== gameID || fav.versionID !== versionID
+    );
     await user.save();
-
-    res.send(user);
+    return res.send({ message: "Game removed from favorites" });
+  } else {
+    // Add the game to the favorites
+    user.favoriteGames.push({ gameID, versionID, createdAt: new Date() });
+    await user.save();
+    return res.send({ message: "Game added to favorites" });
+  }
 });
 
-router.put('/:id', async (req, res) => {
-    const { error } = validate(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
-
-    const user = await User.findByIdAndUpdate(req.params.id, {
-        name: req.body.name,
-        isAdmin: req.body.isAdmin,
-        email: req.body.email,
-        password: req.body.password
-    }, { new: true });
-
-    if (!user) return res.status(404).send('The user with the given ID was not found.');
-
-    res.send(user);
+// Delete all favorite games for the logged-in user
+router.delete("/me/favorites", auth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.favoriteGames = [];
+  await user.save();
+  res.send({ message: "All favorites removed" });
 });
 
-router.delete('/:id', async (req, res) => {
-    const user = await User.findByIdAndDelete(req.params.id);
+// Delete a specific favorite game
+router.delete("/me/favorites/:gameID/:versionID", auth, async (req, res) => {
+  const { gameID, versionID } = req.params;
+  const user = await User.findById(req.user._id);
 
-    if (!user) return res.status(404).send('The user with the given ID was not found.');
+  // Remove the favorite game from the user's favorites
+  user.favoriteGames = user.favoriteGames.filter(
+    (fav) => fav.gameID.toString() !== gameID || fav.versionID !== versionID
+  );
+  await user.save();
 
-    res.send(user);
+  res.send({ message: "Favorite removed" });
 });
 
-module.exports = router;*/
+module.exports = router;
