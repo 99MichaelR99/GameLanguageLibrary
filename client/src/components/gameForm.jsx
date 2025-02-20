@@ -4,7 +4,7 @@ import Form from "./common/form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { renderGameFormContent } from "./gameFormContent";
-import { getGame, saveGame } from "../services/gameService";
+import { getGame, saveGame, deleteGame } from "../services/gameService";
 import { deletePost } from "../services/postService";
 import AuthContext from "../context/authContext";
 import withRouter from "../hoc/withRouter";
@@ -103,38 +103,55 @@ class GameForm extends Form {
   doSubmit = async () => {
     const { params, navigate } = this.props;
     const { gameID, versionID } = params;
-    const { blueprintPostID } = this.state;
-    const data = {
-      gameID,
-      versionID,
-      ...this.state.data,
-    };
-    try {
-      await saveGame(data);
-      toast.success("Game saved successfully!");
+    const { blueprintPostID, data } = this.state;
 
-      // Delete the original blueprint post if its ID is available
+    try {
+      // Fetch existing game if it exists
+      const existingGame =
+        gameID && gameID !== "new" ? (await getGame(gameID)).data : null;
+
+      // Check if game name has changed
+      const isNewGame = existingGame && existingGame.name !== data.gameName;
+
+      if (isNewGame && existingGame) {
+        // If game name has changed, delete the old game version first
+        await deleteGame(existingGame._id, versionID); // Delete the old game and version
+        toast.info(
+          "Old version deleted. Creating a new version with updated name."
+        );
+      }
+
+      // Prepare data based on whether it's a new game or update
+      const updatedData = isNewGame
+        ? { versionID, ...data } // Do not include gameID for new game
+        : { gameID, versionID, ...data }; // Include gameID for update
+
+      // Save the new or updated game
+      await saveGame(updatedData);
+      toast.success(
+        isNewGame
+          ? "New game created with updated name!"
+          : "Game updated successfully!"
+      );
+
+      // Handle blueprint post deletion if applicable
       if (blueprintPostID) {
-        try {
-          await deletePost(blueprintPostID);
-          toast.info("Original blueprint post deleted.");
-        } catch (error) {
-          if (error.response && error.response.status !== 404) {
+        await deletePost(blueprintPostID).catch((error) => {
+          if (error.response?.status !== 404) {
             toast.error("An error occurred while deleting the blueprint post.");
           }
-          // Ignore 404 error as the post may already be deleted
-        }
+        });
+        toast.info("Original blueprint post deleted.");
       }
+
+      // Navigate to the games page
       navigate("/games", { replace: true });
     } catch (error) {
-      // Check if the error is due to a duplicate game code
-      if (error.response && error.response.status === 400) {
-        const errorMessage =
-          error.response.data || "A game with this code already exists.";
-        toast.error(errorMessage);
-      } else {
-        toast.error("An error occurred while saving the game.");
-      }
+      toast.error(
+        error.response?.status === 400
+          ? error.response.data || "A game with this code already exists."
+          : "An error occurred while saving the game."
+      );
     }
   };
 

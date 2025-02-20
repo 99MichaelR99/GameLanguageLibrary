@@ -11,10 +11,16 @@ const IGDBImage = ({ gameName }) => {
           "http://localhost:5000/api/igdb/games",
           { gameName }
         );
-        if (data.length > 0 && data[0].cover && data[0].cover.image_id) {
-          const imageId = data[0].cover.image_id;
-          const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`;
-          setImageUrl(imageUrl);
+        if (data.length > 0) {
+          // Sort data by name
+          const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+          const selectedGame = sortedData[0]; // You can change the logic here if you want to select a different game
+
+          if (selectedGame.cover && selectedGame.cover.image_id) {
+            const imageId = selectedGame.cover.image_id;
+            const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`;
+            setImageUrl(imageUrl);
+          }
         }
       } catch (error) {
         console.error("Error fetching IGDB image:", error);
