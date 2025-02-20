@@ -1,0 +1,40 @@
+.versions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.image-container {
+  flex: 1; /* Takes less width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px; /* Adjust as needed */
+  margin-right: 30px; /* Adds spacing between image and table */
+}
+
+.image-container img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.table-container {
+  flex: 2; /* Takes more width */
+  display: flex;
+  flex-direction: column;
+}
+
+.new-version-container {
+  margin-bottom: 20px; /* Adds spacing between button and table */
+}

@@ -4,7 +4,7 @@
   "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "concurrently \"nodemon index.js\" \"nodemon proxyServer.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -15,10 +15,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "config": "^3.3.12",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
+    "dotenv": "^16.4.7",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "helmet": "^8.0.0",
@@ -34,6 +36,7 @@
   },
   "type": "commonjs",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "nodemon": "^3.1.9"
   }
 }

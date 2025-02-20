@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import _ from "lodash";
 import GamesTable from "./gamesTable";
 import { getGame, deleteGame } from "../services/gameService";
 import withRouter from "../hoc/withRouter";
 import AuthContext from "../context/authContext";
-import { Link } from "react-router-dom";
-import _ from "lodash";
+import IGDBImage from "./IGDBImage";
+import "./versionsPage.css";
 
 class VersionsPage extends Component {
   state = {
@@ -72,25 +74,37 @@ class VersionsPage extends Component {
         {(authContext) => {
           const { user } = authContext;
           return (
-            <div>
+            <div className="versions-container">
               <h1 className="text-center">Versions for {gameName}</h1>
-              <div className="d-flex">
-                {user?.isAdmin && (
-                  <Link
-                    to={`/games/${gameID}/new`}
-                    className="btn btn-primary mb-3"
-                  >
-                    New Version
-                  </Link>
-                )}
+
+              <div className="content-wrapper">
+                {/* Game Cover Image on the Left */}
+                <div className="image-container">
+                  <IGDBImage gameName={gameName} className="game-cover" />
+                </div>
+
+                {/* Table & New Version Button */}
+                <div className="table-container">
+                  {user?.isAdmin && (
+                    <div className="new-version-container">
+                      <Link
+                        to={`/games/${gameID}/new`}
+                        className="btn btn-primary"
+                      >
+                        New Version
+                      </Link>
+                    </div>
+                  )}
+
+                  <GamesTable
+                    className="table table-bordered w-100"
+                    games={data}
+                    sortColumn={sortColumn}
+                    onSort={this.handleSort}
+                    onDelete={this.handleDelete}
+                  />
+                </div>
               </div>
-              <GamesTable
-                className="table table-bordered w-100"
-                games={data}
-                sortColumn={sortColumn}
-                onSort={this.handleSort}
-                onDelete={this.handleDelete}
-              />
             </div>
           );
         }}
