@@ -75,7 +75,7 @@ router.post("/", [auth, admin], async (req, res) => {
   game.versions.sort((a, b) => a.code.localeCompare(b.code));
 
   const savedGame = await game.save();
-  res.send(savedGame);
+  res.status(201).send(savedGame);
 });
 
 router.post("/:id", [auth], async (req, res) => {
@@ -104,7 +104,7 @@ router.post("/:id", [auth], async (req, res) => {
 
   // Save the updated game
   const savedGame = await game.save();
-  res.send(savedGame);
+  res.status(201).send(savedGame);
 });
 
 router.put("/:id", [auth, admin], async (req, res) => {

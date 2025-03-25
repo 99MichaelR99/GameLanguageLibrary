@@ -25,7 +25,7 @@ class DataPage extends Component {
 
   async componentDidMount() {
     const { data } = await this.props.getData();
-    let newData = data.map((item) => {
+    /*let newData = data.map((item) => {
       if (item.gameName) {
         const { gameName, ...rest } = item;
         return { name: gameName, ...rest };
@@ -34,7 +34,15 @@ class DataPage extends Component {
     });
     const transformedData = this.props.transformData
       ? this.props.transformData(newData)
-      : newData;
+      : newData;*/
+
+    const transformedData = this.props.transformData
+      ? this.props.transformData(
+          data.map(({ gameName, ...rest }) =>
+            gameName ? { name: gameName, ...rest } : { ...rest }
+          )
+        )
+      : data;
 
     this.setState({ data: transformedData });
   }

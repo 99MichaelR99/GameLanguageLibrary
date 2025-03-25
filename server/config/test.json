@@ -1,0 +1,6 @@
+{
+  "port": 3001,
+  "db": "mongodb://localhost:27017/test",
+  "requiresAuth": false,
+  "JWT_PRIVATE_KEY": "f3e2a4b0c8e3d8f5a9b4d2e7f1c3a0b5d6e9f2a7c1b8e4d3f0a5c7b2e9d1f6a3"
+}

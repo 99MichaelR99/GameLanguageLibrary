@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"nodemon index.js\" \"nodemon proxyServer.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "engines": {
     "node": "22.x",
@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "config": "^3.3.12",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
@@ -37,6 +38,9 @@
   "type": "commonjs",
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "nodemon": "^3.1.9"
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
   }
 }

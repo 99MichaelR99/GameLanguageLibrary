@@ -38,7 +38,6 @@ router.get("/post/:postID", auth, async (req, res) => {
       counts.userReaction = userReaction.type;
     }
   }
-
   res.send(counts);
 });
 
@@ -58,7 +57,19 @@ router.post("/post/:postID", auth, async (req, res) => {
     // If same reaction type, remove it (toggle off)
     if (reaction.type === reactionType) {
       await reaction.deleteOne();
-      return res.send({ message: "Reaction removed" });
+
+      // Return the updated counts and a message after removal
+      const counts = await getReactionCounts(postID, userID);
+
+      // Ensure counts have the expected structure
+      counts.likes = counts.likes || 0;
+      counts.dislikes = counts.dislikes || 0;
+      counts.userReaction = counts.userReaction || null;
+
+      return res.send({
+        message: "Reaction removed",
+        ...counts, // Spread the counts object directly in the response
+      });
     }
 
     // Update existing reaction
@@ -79,26 +90,55 @@ router.post("/post/:postID", auth, async (req, res) => {
   res.send(counts);
 });
 
-// Get reaction statistics for a post
 router.get("/stats/:postID", auth, async (req, res) => {
   const postID = new mongoose.Types.ObjectId(req.params.postID);
 
+  // Aggregate to get likes and dislikes counts
   const stats = await Reaction.aggregate([
     { $match: { postID: postID } },
     {
       $group: {
         _id: "$type",
         count: { $sum: 1 },
-        users: { $push: "$userID" },
+        //users: { $push: "$userID" },
+      },
+    },
+    {
+      $project: {
+        _id: 0, // Exclude the _id field
+        type: "$_id", // Rename _id to 'type'
+        count: 1,
       },
     },
   ]);
 
-  res.send(stats);
+  // Use reduce to populate reactionCounts in a cleaner way
+  const reactionCounts = stats.reduce(
+    (acc, { type, count }) => {
+      if (type === "like") {
+        acc.likes = count;
+      } else if (type === "dislike") {
+        acc.dislikes = count;
+      }
+      return acc;
+    },
+    { likes: 0, dislikes: 0 }
+  );
+
+  res.send(reactionCounts);
+  //res.send(stats);
 });
 
 router.delete("/post/:postID", async (req, res) => {
   const postID = new mongoose.Types.ObjectId(req.params.postID);
+  const reactions = await Reaction.find({ postID });
+
+  if (reactions.length === 0) {
+    return res
+      .status(404)
+      .send({ message: "No reactions found for this post" });
+  }
+
   // Delete all reactions associated with that post
   await Reaction.deleteMany({ postID });
   res.send({ message: "Reactions deleted" });
