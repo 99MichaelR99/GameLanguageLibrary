@@ -57,7 +57,7 @@ const App = () => {
               element={<ProtectedRoute element={<PostsPage />} />}
             />
             <Route path="/not-found" element={<NotFound />} />
-            <Route path="*" element={<Navigate to="/not-found" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </React.Fragment>

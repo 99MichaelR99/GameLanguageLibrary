@@ -20,6 +20,7 @@ export function getPost(postID) {
 export async function checkIfPostExists(postID) {
   try {
     const response = await getPost(postID);
+    console.log("responsse:", response);
     return response.status === 200; // Post exists
   } catch (error) {
     if (error.response && error.response.status === 404) {
