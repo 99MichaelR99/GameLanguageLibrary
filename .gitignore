@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# env & secrets
+.env
+.env.*
+*.pem
+*.pfx
+*.key
+*.crt
+*.credentials.json
+
+# builds / logs
+dist/
+build/
+coverage/
+logs/
+server/log
