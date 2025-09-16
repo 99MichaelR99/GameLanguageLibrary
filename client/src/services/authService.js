@@ -8,10 +8,32 @@ const tokenKey = "token";
 // Set the JWT in HTTP service on app startup
 http.setJwt(getJwt());
 
-export async function login(email, password) {
+/*export async function login(email, password) {
   const { data: jwt } = await http.post(apiEndpoint, { email, password });
   localStorage.setItem(tokenKey, jwt);
   http.setJwt(jwt); // Ensure Axios starts using the new token immediately
+}*/
+
+export async function login(email, password) {
+  const { data } = await http.post(apiEndpoint, { email, password });
+
+  // Accept common shapes; your API may be returning { token } (or similar)
+  let jwt =
+    typeof data === "string"
+      ? data
+      : data?.token || data?.jwt || data?.accessToken;
+
+  if (typeof jwt !== "string") {
+    // Don’t save anything; surface a clear error so the form doesn’t redirect
+    throw new Error("Login endpoint did not return a token string.");
+  }
+
+  // If the server ever returns "Bearer <JWT>", remove the prefix.
+  // If there is no prefix, this is a no-op and changes nothing.
+  jwt = jwt.replace(/^Bearer\s+/i, "");
+
+  localStorage.setItem(tokenKey, jwt);
+  http.setJwt(jwt);
 }
 
 export function loginWithJwt(jwt) {
