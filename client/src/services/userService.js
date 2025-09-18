@@ -1,4 +1,65 @@
 import http from "./httpService";
+import { getGame } from "./gameService";
+
+const apiEndpoint = "/users";
+
+export function register(user) {
+  return http.post(apiEndpoint, {
+    name: user.name,
+    email: user.email,
+    password: user.password,
+  });
+}
+
+export function updateProfile(user) {
+  return http.put(`${apiEndpoint}/me`, {
+    name: user.name,
+    email: user.email,
+    oldPassword: user.oldPassword,
+    newPassword: user.newPassword,
+  });
+}
+
+const transformData = (allGames) => {
+  const games = Array.isArray(allGames) ? allGames : [allGames];
+  return games.flatMap((game) =>
+    game.versions.map((version) => ({
+      name: game.name,
+      gameID: game._id,
+      ...version,
+    }))
+  );
+};
+
+export async function getFavorites() {
+  try {
+    const favorites = await http.get(`${apiEndpoint}/me/favorites`);
+    const withDetails = await Promise.all(
+      favorites.data.map(async (fav) => {
+        const gameData = await getGame(fav.gameID);
+        const fameData = transformData(gameData.data);
+        return { ...fav, ...fameData[0] };
+      })
+    );
+    return withDetails;
+  } catch (error) {
+    console.error("Error fetching favorite games:", error);
+    return [];
+  }
+}
+
+export async function addFavorite(gameID, versionID) {
+  await http.put(`${apiEndpoint}/me/favorites`, { gameID, versionID });
+  const gameData = await getGame(gameID);
+  return { gameID, versionID, gameData };
+}
+
+export async function removeFavorite(gameID, versionID) {
+  await http.delete(`${apiEndpoint}/me/favorites/${gameID}/${versionID}`);
+  return { gameID, versionID };
+}
+
+/*import http from "./httpService";
 import config from "../config.json";
 import { getGame } from "./gameService";
 
@@ -85,4 +146,4 @@ export async function removeFavorite(gameID, versionID) {
     console.error("Error removing favorite:", error);
     throw error;
   }
-}
+}*/

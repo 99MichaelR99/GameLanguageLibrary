@@ -1,4 +1,62 @@
 import http from "./httpService";
+import auth from "./authService";
+
+const apiEndpoint = "/posts";
+const reactionApiEndpoint = "/reactions";
+
+function postUrl(id) {
+  return `${apiEndpoint}/${id}`;
+}
+
+export function getPosts() {
+  return http.get(apiEndpoint);
+}
+
+export function getPost(postID) {
+  return http.get(postUrl(postID));
+}
+
+export async function checkIfPostExists(postID) {
+  try {
+    const response = await getPost(postID);
+    return response.status === 200;
+  } catch (error) {
+    if (error.response && error.response.status === 404) return false;
+    console.error("Error checking if post exists:", error);
+    return false;
+  }
+}
+
+export function getPostsByUser(userID) {
+  return http.get(apiEndpoint, { params: { createdBy: userID } });
+}
+
+export async function savePost(post) {
+  const { _id: postID, ...body } = post;
+
+  const currentUser = auth.getCurrentUser();
+  if (!currentUser || !currentUser._id)
+    throw new Error("User must be authenticated to save a post.");
+
+  const newPost = {
+    createdBy: currentUser._id,
+    gameName: body.gameName,
+    platform: body.platform.toUpperCase(),
+    code: body.code.replace(/_/g, " ").toUpperCase(),
+    voiceLanguages: body.voiceLanguages.sort(),
+    subtitlesLanguages: body.subtitlesLanguages.sort(),
+  };
+
+  if (postID) return http.put(postUrl(postID), newPost);
+  return http.post(apiEndpoint, newPost);
+}
+
+export async function deletePost(postID) {
+  await http.delete(postUrl(postID));
+  await http.delete(`${reactionApiEndpoint}/post/${postID}`);
+}
+
+/*import http from "./httpService";
 import auth from "../services/authService";
 import config from "../config.json";
 
@@ -64,4 +122,4 @@ export async function deletePost(postID) {
   await http.delete(postUrl(postID));
   // Delete all reactions associated with that post
   await http.delete(`${reactionApiEndpoint}/post/${postID}`);
-}
+}*/

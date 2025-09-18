@@ -1,4 +1,59 @@
-import { jwtDecode } from "jwt-decode"; // Ensure jwt-decode is imported correctly
+import { jwtDecode } from "jwt-decode";
+import http from "./httpService";
+
+const apiEndpoint = "/auth";
+const tokenKey = "token";
+
+http.setJwt(getJwt());
+
+export async function login(email, password) {
+  const { data } = await http.post(apiEndpoint, { email, password });
+  let jwt =
+    typeof data === "string"
+      ? data
+      : data?.token || data?.jwt || data?.accessToken;
+  if (typeof jwt !== "string")
+    throw new Error("Login endpoint did not return a token string.");
+  jwt = jwt.replace(/^Bearer\s+/i, "");
+  localStorage.setItem(tokenKey, jwt);
+  http.setJwt(jwt);
+}
+
+export function loginWithJwt(jwt) {
+  localStorage.setItem(tokenKey, jwt);
+  http.setJwt(jwt);
+}
+
+export function logout() {
+  localStorage.removeItem(tokenKey);
+  http.setJwt(null);
+}
+
+export function getCurrentUser() {
+  try {
+    const jwt = getJwt();
+    if (!jwt) return null;
+    return jwtDecode(jwt);
+  } catch (ex) {
+    console.error("Error decoding JWT:", ex);
+    logout();
+    return null;
+  }
+}
+
+export function getJwt() {
+  return localStorage.getItem(tokenKey);
+}
+
+export default {
+  login,
+  loginWithJwt,
+  logout,
+  getCurrentUser,
+  getJwt,
+};
+
+/*import { jwtDecode } from "jwt-decode"; // Ensure jwt-decode is imported correctly
 import http from "./httpService";
 import config from "../config.json";
 
@@ -8,11 +63,11 @@ const tokenKey = "token";
 // Set the JWT in HTTP service on app startup
 http.setJwt(getJwt());
 
-/*export async function login(email, password) {
-  const { data: jwt } = await http.post(apiEndpoint, { email, password });
-  localStorage.setItem(tokenKey, jwt);
-  http.setJwt(jwt); // Ensure Axios starts using the new token immediately
-}*/
+// export async function login(email, password) {
+// const { data: jwt } = await http.post(apiEndpoint, { email, password });
+// localStorage.setItem(tokenKey, jwt);
+// http.setJwt(jwt); // Ensure Axios starts using the new token immediately
+//}
 
 export async function login(email, password) {
   const { data } = await http.post(apiEndpoint, { email, password });
@@ -64,9 +119,9 @@ export function getJwt() {
 }
 
 // Add event listener to log out user when window is closed
-/*window.addEventListener("beforeunload", function (event) {
-  logout();
-});*/
+//window.addEventListener("beforeunload", function (event) {
+//  logout();
+//});
 
 const authService = {
   login,
@@ -76,4 +131,4 @@ const authService = {
   getJwt,
 };
 
-export default authService;
+export default authService;*/
