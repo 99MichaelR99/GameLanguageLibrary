@@ -16,5 +16,6 @@ module.exports = function (app) {
   app.use("/api/auth", auth);
   app.use("/api/messages", messages);
   app.use("/api/reactions", reactions);
+  app.get("/api/health", (req, res) => res.json({ ok: true }));
   app.use(error);
 };

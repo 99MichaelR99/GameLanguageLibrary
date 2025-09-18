@@ -1,3 +1,33 @@
+const winston = require("winston");
+const mongoose = require("mongoose");
+const config = require("config");
+
+module.exports = function () {
+  if (process.env.NODE_ENV === "test") return;
+
+  mongoose.set("strictQuery", false);
+
+  const uri =
+    process.env.MONGODB_URI ||
+    (config.has("db")
+      ? config.get("db")
+      : "mongodb://127.0.0.1/GameLanguageVerify");
+
+  mongoose
+    .connect(uri)
+    .then(() =>
+      winston.info(
+        `Connected to MongoDB (${
+          uri.includes("mongodb+srv") ? "Atlas" : "local"
+        })...`
+      )
+    )
+    .catch((err) => {
+      winston.error("Failed to connect to MongoDB:", err.message);
+      process.exit(1);
+    });
+};
+
 /*const winston = require("winston");
 const mongoose = require("mongoose");
 const config = require("config");
@@ -11,7 +41,7 @@ module.exports = function () {
       winston.error("Failed to connect to MongoDB:", err.message)
     );
 };*/
-const winston = require("winston");
+/*const winston = require("winston");
 const mongoose = require("mongoose");
 
 module.exports = async function () {
@@ -22,4 +52,4 @@ module.exports = async function () {
     .connect(url)
     .then(() => winston.info("Connected to MongoDB..."))
     .catch((err) => winston.error("Failed to connect to MongoDB:", err));
-};
+};*/

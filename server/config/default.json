@@ -1,6 +1,6 @@
 {
-  "jwtPrivateKey": "mySecureKey",
-  "db": "mongodb://localhost/GameLanguageVerify",
-  "port": "3900",
+  "jwtPrivateKey": "dev_jwt_key",
+  "db": "mongodb://127.0.0.1/GameLanguageVerify",
+  "port": "3001",
   "requiresAuth": true
 }
