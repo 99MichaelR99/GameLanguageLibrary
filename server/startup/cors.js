@@ -7,45 +7,31 @@ const ALLOWED_ORIGINS = [
   "https://99MichaelR99.github.io/GameLanguageLibrary",
 ];
 
-module.exports = function (app) {
-  app.use(
-    cors({
-      origin: function (origin, callback) {
-        // allow requests with no origin (mobile apps, curl, Render health checks)
-        if (!origin) return callback(null, true);
-        if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
-        // also accept the gh-pages site without the trailing repo segment just in case
-        if (origin.startsWith("https://99MichaelR99.github.io"))
-          return callback(null, true);
-        return callback(new Error("Not allowed by CORS"));
-      },
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization", "x-auth-token"],
-      credentials: true,
-      maxAge: 86400, // cache preflight for a day
-    })
-  );
+const corsOptions = {
+  origin(origin, callback) {
+    // allow requests with no origin (Render health checks, curl, mobile apps)
+    if (!origin) return callback(null, true);
 
-  // ensure preflight requests succeed fast
-  app.options("*", cors());
+    // exact match or any GH Pages under your user site
+    if (
+      ALLOWED_ORIGINS.includes(origin) ||
+      origin.startsWith("https://99MichaelR99.github.io")
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-auth-token"],
+  credentials: true,
+  maxAge: 86400, // cache preflight for 1 day
 };
 
-/*const cors = require("cors");
-
 module.exports = function (app) {
-  app.use(
-    cors({
-      origin: [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://99MichaelR99.github.io",
-        "https://99MichaelR99.github.io/GameLanguageLibrary",
-      ],
-      credentials: true,
-    })
-  );
-};*/
+  // Apply CORS to all routes
+  app.use(cors(corsOptions));
 
-/*module.exports = function (app) {
-  app.use(cors());
-};*/
+  // Make sure preflight requests return the same headers
+  app.options("*", cors(corsOptions));
+};
