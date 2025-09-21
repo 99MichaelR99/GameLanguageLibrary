@@ -1,0 +1,114 @@
+[
+  {
+    "_id": { "$oid": "6777f423a9ab178c6a1ade3e" },
+    "name": "AC Valhalla",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PS4",
+        "code": "CUSA 18535",
+        "voiceLanguages": ["English", "Russian"],
+        "subtitlesLanguages": ["English", "German", "Russian"],
+        "isOfficial": false,
+        "_id": { "$oid": "67b7575fdaaca99ad5e8079d" }
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": { "$oid": "6777f431a9ab178c6a1ade4c" },
+    "name": "Dead Space",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PS5",
+        "code": "PPSA 03847",
+        "voiceLanguages": ["English"],
+        "subtitlesLanguages": ["English"],
+        "isOfficial": false,
+        "_id": { "$oid": "67ae21afac09abe72b0ded0c" }
+      }
+    ],
+    "__v": 2
+  },
+  {
+    "_id": { "$oid": "6777f443a9ab178c6a1ade5c" },
+    "name": "The last of us",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PS3",
+        "code": "BCES 01585",
+        "voiceLanguages": ["English", "Russian"],
+        "subtitlesLanguages": ["English", "Russian"],
+        "isOfficial": false,
+        "_id": { "$oid": "67ae21c6ac09abe72b0dee01" }
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": { "$oid": "6778574206bf191989185c89" },
+    "name": "Reality Fighters",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PSVITA",
+        "code": "PCSF 00022",
+        "voiceLanguages": ["Czech", "English", "Hungarian", "Polish"],
+        "subtitlesLanguages": ["Czech", "English", "Hungarian", "Polish"],
+        "isOfficial": false,
+        "_id": { "$oid": "67ae21c1ac09abe72b0dedd0" }
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": { "$oid": "6778581706bf191989185cae" },
+    "name": "Killzone: Liberation",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PSP",
+        "code": "UCES 00279",
+        "voiceLanguages": ["English"],
+        "subtitlesLanguages": ["English"],
+        "isOfficial": false,
+        "_id": { "$oid": "67ae21bdac09abe72b0ded9f" }
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": { "$oid": "677858f506bf191989185cc2" },
+    "name": "God of War",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PS2",
+        "code": "SLUS 97399",
+        "voiceLanguages": ["English"],
+        "subtitlesLanguages": ["English"],
+        "isOfficial": false,
+        "_id": { "$oid": "67ae21b9ac09abe72b0ded6e" }
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": { "$oid": "677a90878036c2df22409881" },
+    "name": "Deathloop",
+    "versions": [
+      {
+        "createdBy": { "$oid": "677bd25439af8099b589c62b" },
+        "platform": "PS5",
+        "code": "PPSA 01670",
+        "voiceLanguages": ["English", "Russian"],
+        "subtitlesLanguages": ["English", "Russian"],
+        "isOfficial": false,
+        "_id": { "$oid": "67ae21b4ac09abe72b0ded3d" }
+      }
+    ],
+    "__v": 4
+  }
+]

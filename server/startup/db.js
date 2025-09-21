@@ -7,24 +7,25 @@ module.exports = function () {
 
   mongoose.set("strictQuery", false);
 
-  const uri =
+  const raw =
     process.env.MONGODB_URI ||
     (config.has("db")
       ? config.get("db")
       : "mongodb://127.0.0.1/GameLanguageVerify");
+  const uri = String(raw).trim();
 
   mongoose
     .connect(uri)
     .then(() =>
       winston.info(
         `Connected to MongoDB (${
-          uri.includes("mongodb+srv") ? "Atlas" : "local"
+          uri.startsWith("mongodb+srv://") ? "Atlas" : "local"
         })...`
       )
     )
     .catch((err) => {
       winston.error("Failed to connect to MongoDB:", err.message);
-      process.exit(1);
+      if (process.env.NODE_ENV === "production") process.exit(1);
     });
 };
 

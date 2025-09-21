@@ -35,22 +35,30 @@ module.exports = function (app) {
     app.use(morgan("tiny"));
   }
 
-  // Optional: also log to Mongo if URI is available
-  const mongoUri =
+  // Optional: also log to Mongo if a valid-looking URI is available
+  const rawUri =
     process.env.MONGODB_URI || (config.has("db") ? config.get("db") : null);
+  const mongoUri = rawUri && String(rawUri).trim();
 
-  if (mongoUri) {
+  // Only attempt to add the MongoDB transport if the URI starts with mongodb:// or mongodb+srv://
+  if (mongoUri && /^mongodb(\+srv)?:\/\//i.test(mongoUri)) {
     try {
       winston.add(
         new winston.transports.MongoDB({
           db: mongoUri,
           level: "info",
-          // remove deprecated options
+          // no deprecated options here
         })
       );
     } catch (e) {
+      // Never crash the app if Mongo logging can't initialize
       winston.warn("Mongo logging disabled:", e.message);
     }
+  } else if (mongoUri) {
+    // URI was present but not valid-looking
+    winston.warn(
+      "Mongo logging disabled: MONGODB_URI does not look like a Mongo connection string."
+    );
   }
 };
 

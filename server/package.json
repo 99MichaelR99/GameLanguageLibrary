@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"nodemon index.js\" \"nodemon proxyServer.js\"",
-    "test": "jest"
+    "test": "jest",
+    "seed:games": "node scripts/seedGames.js",
+    "seed:games:replace": "node scripts/seedGames.js --replace",
+    "seed:games:admin": "node scripts/seedGames.js --admin \"99michaelr99@gmail.com\""
   },
   "engines": {
     "node": "22.x",
