@@ -3,6 +3,13 @@
 //   node scripts/seedGames.js
 //   node scripts/seedGames.js --replace
 //   node scripts/seedGames.js --admin you@mail.tld
+//
+// Behavior:
+// - Never uses _id/__v from the JSON
+// - Normalizes fields to match your schema
+// - Forces createdBy to a real user (admin preferred)
+// - Inserts one game at a time; appends new versions by code if game exists
+// - With --replace, drops 'games' collection first
 
 require("dotenv").config({
   path: require("path").join(__dirname, "..", ".env"),
@@ -17,28 +24,39 @@ const MONGODB_URI =
   (process.env.MONGODB_URI && String(process.env.MONGODB_URI).trim()) ||
   "mongodb://127.0.0.1/GameLanguageVerify";
 
+// CLI flags
 const doReplace = process.argv.includes("--replace");
 const adminEmailIdx = process.argv.indexOf("--admin");
 const adminEmail =
   adminEmailIdx !== -1 ? process.argv[adminEmailIdx + 1] : null;
 
-// Optional: try to resolve a real admin _id if you pass --admin
-let User;
+// Models (use your actual app models)
+let Game, User;
 try {
-  const loadedUser = require("../models/user");
-  User = loadedUser && loadedUser.User ? loadedUser.User : loadedUser;
-} catch {
+  const gameMod = require("../models/game");
+  Game = gameMod.Game || gameMod;
+} catch (e) {
+  console.error("Cannot load models/game.js. Make sure it exists.");
+  process.exit(1);
+}
+
+try {
+  const userMod = require("../models/user");
+  User = userMod.User || userMod;
+} catch (e) {
+  // Minimal fallback if your user model path is different
   const UserSchema = new mongoose.Schema({
     name: String,
     email: { type: String, unique: true },
     isAdmin: Boolean,
+    password: String,
   });
   User = mongoose.model("User", UserSchema);
 }
 
 const { ObjectId } = mongoose.Types;
 
-// Convert {"$oid":"..."} to ObjectId
+// Convert {"$oid":"..."} to ObjectId (if you ever keep them for anything else)
 function mongoExportReviver(key, value) {
   if (value && typeof value === "object" && "$oid" in value) {
     return new ObjectId(value.$oid);
@@ -46,39 +64,96 @@ function mongoExportReviver(key, value) {
   return value;
 }
 
-// Strip __v recursively
-function cleanDoc(doc) {
-  if (Array.isArray(doc)) return doc.map(cleanDoc);
+// Deep strip _id/__v and return a plain JS object
+function stripIds(doc) {
+  if (Array.isArray(doc)) return doc.map(stripIds);
   if (doc && typeof doc === "object") {
     const out = {};
     for (const [k, v] of Object.entries(doc)) {
-      if (k === "__v") continue;
-      out[k] = cleanDoc(v);
+      if (k === "_id" || k === "__v") continue;
+      out[k] = stripIds(v);
     }
     return out;
   }
   return doc;
 }
 
-async function resolveAdminIdFromEmail(email) {
-  if (!email) return null;
-  const user = await User.findOne({ email }).select("_id");
-  if (!user) {
-    console.warn(
-      `⚠️  --admin "${email}" not found; createdBy will not be overridden.`
-    );
-    return null;
-  }
-  console.log(`Using admin ${email} as createdBy: ${user._id}`);
-  return user._id;
+// Normalize a version to match your schema expectations
+function normalizeVersion(v, createdById) {
+  if (!v) return null;
+  const platform = String(v.platform || "")
+    .toUpperCase()
+    .trim();
+  // code: uppercase and replace underscores with a single space
+  const code = String(v.code || "")
+    .toUpperCase()
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const voiceLanguages = Array.isArray(v.voiceLanguages)
+    ? [...v.voiceLanguages].map(String).sort()
+    : [];
+  const subtitlesLanguages = Array.isArray(v.subtitlesLanguages)
+    ? [...v.subtitlesLanguages].map(String).sort()
+    : [];
+
+  const isOfficial = Boolean(v.isOfficial);
+
+  return {
+    createdBy: createdById, // force to resolved user
+    platform,
+    code,
+    voiceLanguages,
+    subtitlesLanguages,
+    isOfficial,
+  };
 }
 
-function forceCreatedBy(games, adminId) {
-  if (!adminId) return games;
-  return games.map((g) => ({
-    ...g,
-    versions: (g.versions || []).map((v) => ({ ...v, createdBy: adminId })),
-  }));
+async function resolveSeederUserId() {
+  // 1) explicit --admin email
+  if (adminEmail) {
+    const u = await User.findOne({ email: adminEmail }).select("_id");
+    if (u) {
+      console.log(`Using --admin ${adminEmail} (${u._id}) as createdBy.`);
+      return u._id;
+    }
+    console.warn(`--admin "${adminEmail}" not found; falling back to search.`);
+  }
+
+  // 2) any admin
+  const admin = await User.findOne({ isAdmin: true }).select("_id email");
+  if (admin) {
+    console.log(
+      `Using existing admin ${admin.email || admin._id} (${
+        admin._id
+      }) as createdBy.`
+    );
+    return admin._id;
+  }
+
+  // 3) any user
+  const anyUser = await User.findOne({}).select("_id email");
+  if (anyUser) {
+    console.log(
+      `No admin found; using first user ${anyUser.email || anyUser._id} (${
+        anyUser._id
+      }) as createdBy.`
+    );
+    return anyUser._id;
+  }
+
+  // 4) create a temporary admin to satisfy schema
+  const temp = await User.create({
+    name: "Seeder Admin",
+    email: `seeder-admin-${Date.now()}@example.com`,
+    isAdmin: true,
+    password: "unused", // hashed in real app, but this seed user is only for createdBy
+  });
+  console.log(
+    `Created temporary admin ${temp.email} (${temp._id}) as createdBy.`
+  );
+  return temp._id;
 }
 
 (async () => {
@@ -87,76 +162,150 @@ function forceCreatedBy(games, adminId) {
   await mongoose.connect(MONGODB_URI);
 
   const dbName = mongoose.connection.db.databaseName;
-  const col = mongoose.connection.db.collection("games");
-  console.log(
-    `Connected. Database: "${dbName}", Collection: "${col.collectionName}"`
-  );
-
-  const beforeCount = await col.countDocuments().catch(() => 0);
-  console.log(`Documents before: ${beforeCount}`);
-
-  const raw = fs.readFileSync(DATA_PATH, "utf8");
-  let games = JSON.parse(raw, mongoExportReviver);
-  games = cleanDoc(games);
-
-  // Sanity: only keep items with a 'name'
-  games = games.filter(
-    (g) => g && typeof g.name === "string" && g.name.trim().length > 0
-  );
-
-  const adminId = await resolveAdminIdFromEmail(adminEmail);
-  games = forceCreatedBy(games, adminId);
+  console.log(`Connected to database "${dbName}".`);
 
   if (doReplace) {
-    console.log("Dropping 'games' collection (if present) …");
     try {
-      await col.drop();
-      console.log("Dropped 'games'.");
+      await mongoose.connection.db.collection("games").drop();
+      console.log("Dropped 'games' collection.");
     } catch (e) {
       if (e.codeName === "NamespaceNotFound") {
-        console.log("No 'games' collection yet; skip drop.");
-      } else throw e;
-    }
-
-    if (games.length === 0) {
-      console.warn("No seed items with a 'name' found. Nothing to insert.");
-    } else {
-      const insertRes = await col.insertMany(games, { ordered: false });
-      console.log(
-        `✅ Inserted ${insertRes.insertedCount} games (authoritative replace).`
-      );
-    }
-  } else {
-    // Non-destructive upsert by name
-    const ops = games.map((g) => ({
-      replaceOne: {
-        filter: { name: g.name },
-        replacement: g,
-        upsert: true,
-      },
-    }));
-
-    if (ops.length === 0) {
-      console.warn("No upsert operations produced (missing 'name' fields?).");
-    } else {
-      const res = await col.bulkWrite(ops, { ordered: false });
-      // res contains: matchedCount, modifiedCount, upsertedCount, upsertedIds, etc.
-      console.log(
-        `✅ bulkWrite done. matched=${res.matchedCount || 0}, modified=${
-          res.modifiedCount || 0
-        }, upserted=${res.upsertedCount || 0}`
-      );
-      if (res.upsertedIds && Object.keys(res.upsertedIds).length) {
-        console.log("Upserted IDs:", res.upsertedIds);
+        console.log("No 'games' collection yet; skipping drop.");
+      } else {
+        throw e;
       }
     }
   }
 
-  const afterCount = await col.countDocuments();
-  console.log(`Documents after: ${afterCount}`);
+  // Load and sanitize JSON
+  const raw = fs.readFileSync(DATA_PATH, "utf8");
+  let seedGames = JSON.parse(raw, mongoExportReviver);
+  seedGames = stripIds(seedGames);
+
+  // Keep only items with a valid name
+  seedGames = seedGames.filter(
+    (g) => g && typeof g.name === "string" && g.name.trim().length > 0
+  );
+
+  if (seedGames.length === 0) {
+    console.warn("No seed items with a 'name' found. Nothing to do.");
+    await mongoose.disconnect();
+    return;
+  }
+
+  // Resolve a valid createdBy id to stamp on every version
+  const createdById = await resolveSeederUserId();
+
+  let insertedGames = 0;
+  let appendedVersions = 0;
+  let skippedVersions = 0;
+
+  // Insert games one by one (like manual app behavior)
+  for (const seed of seedGames) {
+    const name = seed.name.trim();
+    const versions = Array.isArray(seed.versions) ? seed.versions : [];
+
+    // normalize & de-duplicate by code (within this seed record)
+    const seenCodes = new Set();
+    const normalizedVersions = [];
+    for (const v of versions) {
+      const norm = normalizeVersion(v, createdById);
+      if (!norm || !norm.code) {
+        console.warn(
+          `⚠️  Skipping version with missing/invalid code in "${name}".`
+        );
+        skippedVersions++;
+        continue;
+      }
+      if (seenCodes.has(norm.code)) {
+        console.warn(
+          `⚠️  Duplicate code "${norm.code}" in "${name}" (seed file). Skipping one.`
+        );
+        skippedVersions++;
+        continue;
+      }
+      seenCodes.add(norm.code);
+      normalizedVersions.push(norm);
+    }
+
+    // Find existing game by name
+    let game = await Game.findOne({ name }).exec();
+
+    if (!game) {
+      // Create fresh game
+      if (normalizedVersions.length === 0) {
+        console.warn(`⚠️  "${name}" has no valid versions; skipping game.`);
+        continue;
+      }
+      try {
+        const created = await Game.create({
+          name,
+          versions: normalizedVersions,
+        });
+        console.log(
+          `✓ Inserted game "${name}" with ${normalizedVersions.length} version(s).`
+        );
+        insertedGames++;
+      } catch (err) {
+        // Duplicate version.code (global) may trigger E11000 if an index exists
+        if (err && err.code === 11000) {
+          console.warn(
+            `⚠️  Duplicate key while inserting "${name}" (likely a version code already exists elsewhere). Skipping game.`
+          );
+        } else {
+          console.warn(`⚠️  Failed to insert "${name}":`, err.message);
+        }
+      }
+    } else {
+      // Append only versions with codes not already present in this game
+      const existingCodes = new Set(game.versions.map((v) => v.code));
+      const toAppend = normalizedVersions.filter(
+        (v) => !existingCodes.has(v.code)
+      );
+
+      if (toAppend.length === 0) {
+        console.log(`• "${name}" exists; no new versions to add.`);
+        continue;
+      }
+
+      // Try to push one by one so we can skip individual duplicates safely
+      let added = 0;
+      for (const v of toAppend) {
+        try {
+          game.versions.push(v);
+          await game.save(); // save after each push to catch unique errors precisely
+          added++;
+        } catch (err) {
+          // Likely duplicate version.code (unique index) somewhere else
+          game = await Game.findById(game._id); // reload in case of partial save error
+          if (err && err.code === 11000) {
+            console.warn(
+              `⚠️  Skipped version "${v.code}" for "${name}" due to duplicate key.`
+            );
+            skippedVersions++;
+          } else {
+            console.warn(
+              `⚠️  Failed adding version "${v.code}" to "${name}": ${err.message}`
+            );
+            skippedVersions++;
+          }
+        }
+      }
+
+      if (added > 0) {
+        console.log(`↺ Updated "${name}": appended ${added} version(s).`);
+        appendedVersions += added;
+      } else {
+        console.log(`• "${name}" unchanged.`);
+      }
+    }
+  }
+
+  console.log(
+    `\n✅ Done. Inserted games: ${insertedGames}, appended versions: ${appendedVersions}, skipped versions: ${skippedVersions}.`
+  );
 
   await mongoose.disconnect();
-  console.log("Done.");
   process.exit(0);
 })().catch(async (err) => {
   console.error("❌ Seed failed:", err);

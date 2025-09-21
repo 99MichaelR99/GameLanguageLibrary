@@ -14,6 +14,24 @@ router.get("/", async (req, res) => {
   res.send(games);
 });
 
+/**
+ * NEW: Existence check that always returns 200
+ * GET /api/games/exists?name=Some+Game
+ * -> { exists: true, _id: "<id>" } or { exists: false }
+ */
+router.get("/exists", async (req, res) => {
+  const { name } = req.query; // Get the game name from the query parameter
+  if (!name) return res.json({ exists: false });
+
+  // Perform case-insensitive exact match for the game by name
+  const game = await Game.findOne({
+    name: { $regex: new RegExp(`^${name}$`, "i") },
+  });
+
+  if (!game) return res.json({ exists: false });
+  return res.json({ exists: true, _id: game._id });
+});
+
 router.get("/name", async (req, res) => {
   const { name } = req.query; // Get the game name from the query parameter
   if (!name) {
@@ -121,6 +139,7 @@ router.put("/:id", [auth, admin], async (req, res) => {
     req.params.id,
     {
       name: req.body.name,
+      // Sort versions by code alphabetically for each game
       versions: req.body.versions.sort((a, b) => a.code.localeCompare(b.code)),
     },
     { new: true }
@@ -156,9 +175,13 @@ router.put("/:id/:versionID", [auth, admin], async (req, res) => {
 // Route to delete a specific version of a game
 router.delete("/:id", [auth, admin], async (req, res) => {
   const game = await Game.findByIdAndDelete(req.params.id);
-
   if (!game)
     return res.status(404).send("The game with the given ID was not found.");
+
+  // Pull any favorites pointing at this game
+  await mongoose.connection.db
+    .collection("users")
+    .updateMany({}, { $pull: { favorites: { gameID: game._id } } });
 
   res.send(game);
 });
@@ -184,6 +207,12 @@ router.delete("/:id/:versionID", [auth, admin], async (req, res) => {
   // If no versions remain, delete the entire game
   if (game.versions.length === 0) {
     await Game.findByIdAndDelete(req.params.id);
+
+    // 🔽 Remove any favorites for this game
+    await mongoose.connection.db
+      .collection("users")
+      .updateMany({}, { $pull: { favorites: { gameID: game._id } } });
+
     return res.send(
       "The last version was deleted, and the game has been removed."
     );
@@ -191,6 +220,19 @@ router.delete("/:id/:versionID", [auth, admin], async (req, res) => {
 
   // Save the updated game
   await game.save();
+
+  // 🔽 Remove favorites that point to the deleted version only
+  await mongoose.connection.db.collection("users").updateMany(
+    {},
+    {
+      $pull: {
+        favorites: {
+          gameID: game._id,
+          versionID: new mongoose.Types.ObjectId(req.params.versionID),
+        },
+      },
+    }
+  );
 
   res.send(game);
 });

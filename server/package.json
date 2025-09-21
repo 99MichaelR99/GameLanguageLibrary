@@ -6,9 +6,10 @@
   "scripts": {
     "start": "concurrently \"nodemon index.js\" \"nodemon proxyServer.js\"",
     "test": "jest",
-    "seed:games": "node scripts/seedGames.js",
-    "seed:games:replace": "node scripts/seedGames.js --replace",
-    "seed:games:admin": "node scripts/seedGames.js --admin \"99michaelr99@gmail.com\""
+    "prune:favorites": "node scripts/pruneFavorites.js",
+    "seed:games": "node scripts/seedGames.js && node scripts/pruneFavorites.js",
+    "seed:games:replace": "node scripts/seedGames.js --replace && node scripts/pruneFavorites.js",
+    "seed:games:admin": "node scripts/seedGames.js --admin \"99michaelr99@gmail.com\" && node scripts/pruneFavorites.js"
   },
   "engines": {
     "node": "22.x",
