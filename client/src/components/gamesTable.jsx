@@ -104,9 +104,9 @@ const GamesTable = ({ games, sortColumn, onSort, onFavorite, onDelete }) => {
     key: "report",
     content: (game) => (
       <Link
-        to={`/contact-us?name=${encodeURIComponent(game.name)}&code=${
-          game.code
-        }`}
+        to={`/contact-us?name=${encodeURIComponent(
+          game.name
+        )}&code=${encodeURIComponent(game.code)}`}
         className="btn btn-warning btn-sm"
       >
         Report

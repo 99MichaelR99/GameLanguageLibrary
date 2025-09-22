@@ -17,7 +17,7 @@ const PostsPage = () => {
       </Link>
     );
 
-  const renderTable = (data, sortColumn, onSort, onDelete) => (
+  const renderTable = (data, sortColumn, onSort, _onFavorite, onDelete) => (
     <PostTable
       posts={data}
       sortColumn={sortColumn}

@@ -52,8 +52,16 @@ export async function savePost(post) {
 }
 
 export async function deletePost(postID) {
+  // 1) delete the post
   await http.delete(postUrl(postID));
-  await http.delete(`${reactionApiEndpoint}/post/${postID}`);
+
+  // 2) check if reactions exist; only then call DELETE
+  const { data } = await http.get(
+    `${reactionApiEndpoint}/post/${postID}/exists`
+  );
+  if (data?.exists) {
+    await http.delete(`${reactionApiEndpoint}/post/${postID}`);
+  }
 }
 
 /*import http from "./httpService";

@@ -2198,3 +2198,17 @@
 {"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-21T19:41:35.194Z"}
 {"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-21T20:10:47.605Z"}
 {"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-21T20:10:49.087Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-21T20:13:11.651Z"}
+{"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-21T20:13:13.027Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-22T07:23:59.384Z"}
+{"level":"error","message":"Failed to connect to MongoDB:","timestamp":"2025-09-22T07:24:29.490Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-22T07:25:22.683Z"}
+{"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-22T07:25:24.172Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-22T08:20:54.813Z"}
+{"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-22T08:20:56.195Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-22T08:21:05.173Z"}
+{"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-22T08:21:06.371Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-22T09:54:06.749Z"}
+{"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-22T09:54:08.169Z"}
+{"level":"info","message":"Listening on port 3001...","timestamp":"2025-09-22T09:54:26.161Z"}
+{"level":"info","message":"Connected to MongoDB (Atlas)...","timestamp":"2025-09-22T09:54:27.387Z"}

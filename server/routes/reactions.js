@@ -41,6 +41,13 @@ router.get("/post/:postID", auth, async (req, res) => {
   res.send(counts);
 });
 
+// GET /api/reactions/post/:postID/exists  -> { exists: true|false }
+router.get("/post/:postID/exists", auth, async (req, res) => {
+  const postID = new mongoose.Types.ObjectId(req.params.postID);
+  const exists = await Reaction.exists({ postID });
+  res.json({ exists: !!exists });
+});
+
 // Add or update a reaction
 router.post("/post/:postID", auth, async (req, res) => {
   const { error } = validate(req.body);

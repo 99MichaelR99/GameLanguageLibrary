@@ -23,6 +23,9 @@ const messageSchema = new mongoose.Schema({
     minlength: 10,
     maxlength: 2000,
   },
+  // Optional fields when the user chooses to provide game info
+  gameName: { type: String, minlength: 1, maxlength: 100, trim: true },
+  code: { type: String, minlength: 1, maxlength: 100, trim: true },
 });
 
 const Message = mongoose.model("Message", messageSchema);
@@ -32,6 +35,9 @@ function validateMessage(message) {
     name: Joi.string().min(2).max(50).required(),
     email: Joi.string().email().min(5).max(255).required(),
     message: Joi.string().min(10).max(2000).required(),
+    // Accept optional game info keys when present (empty string allowed from UI)
+    gameName: Joi.string().allow("").max(100).optional(),
+    code: Joi.string().allow("").max(100).optional(),
   });
 
   return schema.validate(message);

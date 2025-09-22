@@ -8,8 +8,8 @@ const HomePage = () => {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1>Welcome to GameLang Library</h1>
-        <p>Your go-to resource for finding and sharing game language data!</p>
+        <h1>Welcome to Video Games Language Library</h1>
+        <p>Your go-to resource for finding and sharing video game language data!</p>
       </header>
       <section className="home-content">
         <h2>About the Site</h2>

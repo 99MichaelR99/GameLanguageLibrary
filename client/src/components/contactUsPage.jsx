@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { saveMessage } from "../services/messageService";
 import AuthContext from "../context/authContext";
+import withRouter from "../hoc/withRouter"; // ⬅️ add this
 
 class ContactUs extends Form {
   state = {
@@ -26,13 +27,23 @@ class ContactUs extends Form {
 
   componentDidMount() {
     const { user } = this.context; // Access the user from context
-    const urlParams = new URLSearchParams(window.location.search);
+
+    // --- robust query extraction (works for HashRouter and BrowserRouter) ---
+    const routerSearch = this.props.location?.search || "";
+    const hash = window.location.hash || ""; // e.g. "#/contact-us?name=...&code=..."
+    const hashQuery = hash.includes("?")
+      ? hash.substring(hash.indexOf("?"))
+      : "";
+    const rawSearch = routerSearch || hashQuery || window.location.search || "";
+    const urlParams = new URLSearchParams(rawSearch);
+
+    // Start from current state data and fill in known values once
+    const nextData = { ...this.state.data };
 
     // Always fill in the logged-in user's name and email if they are logged in
     if (user) {
-      this.setState({
-        data: { ...this.state.data, name: user.name, email: user.email },
-      });
+      nextData.name = user.name;
+      nextData.email = user.email;
     }
 
     // Check if the user came from the report button (URL params are present)
@@ -40,15 +51,12 @@ class ContactUs extends Form {
     const codeParam = urlParams.get("code");
 
     if (gameNameParam || codeParam) {
-      this.setState((prevState) => ({
-        data: {
-          ...prevState.data,
-          gameName: gameNameParam || "",
-          code: codeParam || "",
-          provideGameInfo: true,
-        },
-      }));
+      nextData.gameName = gameNameParam || "";
+      nextData.code = codeParam || "";
+      nextData.provideGameInfo = true;
     }
+
+    this.setState({ data: nextData });
   }
 
   schema = {
@@ -62,20 +70,17 @@ class ContactUs extends Form {
       .max(this.state.limits.description)
       .required()
       .label("Description"),
-    gameName: Joi.string().optional().label("Game Name"),
-    code: Joi.string().optional().label("Code"),
-    provideGameInfo: Joi.boolean().optional(),
+    gameName: Joi.string().allow("").optional().label("Game Name"),
+    code: Joi.string().allow("").optional().label("Code"),
+    provideGameInfo: Joi.boolean().truthy("true").falsy("false").optional(),
   };
 
   handleChange = ({ currentTarget: input }) => {
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateProperty(input);
-    if (errorMessage) errors[input.name] = errorMessage;
-    else delete errors[input.name];
-
+    // Build next data first so validation sees coerced values
     const data = { ...this.state.data };
     const { limits } = this.state;
 
+    // Length limits for live typing
     if (
       (input.name === "description" &&
         input.value.length > limits.description) ||
@@ -83,25 +88,39 @@ class ContactUs extends Form {
     )
       return;
 
+    // Convert to boolean for consistency
     if (input.name === "provideGameInfo") {
-      // Convert to boolean for consistency
       data[input.name] = input.value === "true";
     } else {
       data[input.name] = input.value;
     }
 
+    // Validate the specific field after coercion
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty({
+      name: input.name,
+      value: data[input.name],
+    });
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
+
     this.setState({ data, errors });
   };
 
+  // 🔽 Only include gameName/code when provideGameInfo is true
   doSubmit = async () => {
     const { data } = this.state;
+
     const message = {
       name: data.name,
       email: data.email,
       message: `${data.subject}: ${data.description}`,
-      gameName: data.gameName,
-      code: data.code,
     };
+
+    if (data.provideGameInfo) {
+      if (data.gameName) message.gameName = data.gameName;
+      if (data.code) message.code = data.code;
+    }
 
     try {
       await saveMessage(message);
@@ -115,6 +134,7 @@ class ContactUs extends Form {
           description: "",
           gameName: "",
           code: "",
+          provideGameInfo: false,
         },
         errors: {},
       });
@@ -153,7 +173,7 @@ class ContactUs extends Form {
               name="provideGameInfo"
               id="provideGameInfo"
               className="form-control"
-              value={provideGameInfo}
+              value={provideGameInfo ? "true" : "false"} // keep options in sync with boolean
               onChange={this.handleChange}
             >
               <option value="false">No</option>
@@ -241,4 +261,4 @@ class ContactUs extends Form {
 
 ContactUs.contextType = AuthContext;
 
-export default ContactUs;
+export default withRouter(ContactUs); // ⬅️ wrap so location.search is available
